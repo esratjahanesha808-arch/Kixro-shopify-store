@@ -2,7 +2,13 @@
 
 A fully custom Shopify theme for **Kixro**, a premium footwear and lifestyle brand. Built on Online Store 2.0 with JSON templates, section groups, and a reusable design system.
 
-**Live preview (dev theme):** [mcr0nu-c1.myshopify.com](https://mcr0nu-c1.myshopify.com?preview_theme_id=151837507662)
+**Live store:** [mcr0nu-c1.myshopify.com](https://mcr0nu-c1.myshopify.com)
+
+| Page | Link |
+|------|------|
+| Homepage | [mcr0nu-c1.myshopify.com](https://mcr0nu-c1.myshopify.com) |
+| Shop | [mcr0nu-c1.myshopify.com/collections/all](https://mcr0nu-c1.myshopify.com/collections/all) |
+| About Us | [mcr0nu-c1.myshopify.com/pages/about-us](https://mcr0nu-c1.myshopify.com/pages/about-us) |
 
 ---
 
@@ -72,7 +78,7 @@ shopify auth login
 shopify theme dev
 ```
 
-Copy `shopify.theme.toml.example` or create `shopify.theme.toml` locally with your store and theme IDs (this file is gitignored if it contains private config — see repo for the pattern used during development).
+Copy `shopify.theme.toml` locally with your store and theme IDs (see `shopify.theme.toml` in this repo for the live theme pattern).
 
 Run theme check before pushing:
 
