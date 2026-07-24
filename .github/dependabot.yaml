@@ -1,6 +1,4 @@
+# Dependabot disabled for github-actions — Dawn upstream workflows were removed.
+# Re-enable here if you add third-party action dependencies later.
 version: 2
-updates:
-  - package-ecosystem: github-actions
-    directory: "/"
-    schedule:
-      interval: weekly
+updates: []

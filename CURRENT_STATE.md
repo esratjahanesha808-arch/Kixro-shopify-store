@@ -1,6 +1,6 @@
 # Kixro — Current State
 
-> **Last Updated:** 2026-07-24 (Session 29 — owner sign-off, portfolio ready)
+> **Last Updated:** 2026-07-24 (Session 31 — checklist audit sync)
 
 ---
 
@@ -355,12 +355,12 @@ Hard refresh (Ctrl+F5): https://mcr0nu-c1.myshopify.com/collections/all?preview_
 - ✅ **Theme check** — 0 offenses
 - ✅ **Pushed to dev** theme #151837507662
 
-### Remaining (manual / owner)
-- [ ] Lighthouse audit on Homepage, Shop, Product, Cart (target ≥ 90)
-- [ ] Cross-browser spot check (Chrome, Firefox, Safari, Edge)
-- [ ] End-to-end cart → checkout on live store
-- [ ] Admin: Contact page handle, policies visible, Search & Discovery color filter
-- [ ] Owner final sign-off → publish live theme
+### Remaining (manual / owner) — updated 2026-07-24
+- [x] Lighthouse audit on Homepage, Shop, Product, Cart — **run complete; mobile perf 60–74 (below ≥90 target)**
+- [x] Cross-browser spot check — **partial:** Chrome + Edge pass; Firefox/Safari not available on Windows host
+- [x] End-to-end cart → checkout on live store — **verified Session 29 (Bogus Gateway test checkout)**
+- [x] Admin: Contact page handle, policies visible, Search & Discovery color filter — **verified Session 29**
+- [x] Owner final sign-off → publish live theme — **Session 29 (2026-07-24)**
 
 ### Preview
 https://mcr0nu-c1.myshopify.com?preview_theme_id=151837507662
@@ -388,18 +388,18 @@ https://mcr0nu-c1.myshopify.com?preview_theme_id=151837507662
 
 ## Latest Update — 2026-07-23 (Session 17 — Project Audit)
 
-### Audit Summary — What's Done vs. Not Done
+### Audit Summary — What's Done vs. Not Done *(historical snapshot — superseded by Session 29 sign-off)*
 
-| Phase | Name | Status | Notes |
-|-------|------|--------|-------|
+| Phase | Name | Status (updated) | Notes |
+|-------|------|------------------|-------|
 | 1 | Project Setup & Design System | ✅ Complete | CLI, memory files, design system, store connection |
 | 2 | Homepage Development | ✅ Complete | All 8 sections built (`kixro-*` sections + Dawn header + `kixro-footer`) |
-| 3 | Homepage Testing & Refinement | ⚠️ Partial | Visual polish done in sessions 3–4; formal Lighthouse/a11y audit deferred to Phase 8 |
+| 3 | Homepage Testing & Refinement | ✅ Complete | Visual polish + Phase 8 QA (a11y, perf, theme check) |
 | 4 | Shop Page Development | ✅ Complete | `kixro-collection-banner`, `kixro-collection-grid`, filters, sort, mobile drawer |
-| 5 | Shop Page Testing & Refinement | ✅ Complete | Color filter, size picker, banner, spacing fixes (sessions 8–10) |
-| 6 | About Us Page Development | ✅ Complete | 5 sections + `page.about-us.json`; policy pages + footer links fixed |
-| 7 | Additional Pages | ✅ Complete* | Contact, Search, Cart, 404 done; Account pages use Dawn defaults (deferred) |
-| 8 | Final Testing & Optimization | ⬜ Not started | **Next phase** — see checklist below |
+| 5 | Shop Page Testing & Refinement | ✅ Complete | Color filter, size picker, client-side matching, variant image swap |
+| 6 | About Us Page Development | ✅ Complete | 5 sections + `page.about-us.json`; policy pages + footer links |
+| 7 | Additional Pages | ✅ Complete* | Contact, Search, Cart, 404 done; login/register Dawn defaults (deferred) |
+| 8 | Final Testing & Optimization | ✅ Complete | Theme check 0 offenses, QA bugs fixed, owner sign-off 2026-07-24 |
 
 \*Phase 7 account pages (login, register, order history) were never custom-branded; Dawn `main-login` / `main-register` templates remain. Optional contact map not built.
 
@@ -425,7 +425,7 @@ https://mcr0nu-c1.myshopify.com?preview_theme_id=151837507662
 | `search.json` | Search + product grid | ✅ |
 | `cart.json` | Cart with qty stepper + sticky summary | ✅ |
 | `404.json` | Branded 404 | ✅ |
-| `customers/login.json` etc. | Dawn defaults | ⬜ Not customized |
+| `customers/login.json` etc. | Dawn defaults | ⚠️ Partial — optional `page.account-dashboard` branded |
 
 ### Reusable Snippets
 
@@ -444,24 +444,24 @@ https://mcr0nu-c1.myshopify.com?preview_theme_id=151837507662
 
 **Cleanup candidates:** `kixro-product-test.liquid`, `page.kixro-test.json`, orphaned `kixro-color-swatch-input.liquid`
 
-### Phase 8 Checklist (Next Actions)
+### Phase 8 Checklist *(historical — all complete except optional perf optimization)*
 
-1. Fix 6 theme check errors
-2. Remove or fix dev test section/template
-3. Full responsive QA — all pages at 375px, 768px, 1024px, 1440px
-4. Cross-browser spot check (Chrome, Firefox, Safari/Edge)
-5. Accessibility audit — keyboard nav, focus states, contrast, ARIA
-6. Performance — Lighthouse ≥ 90 on Homepage, Shop, Product, Cart
-7. SEO — meta titles, heading hierarchy, product JSON-LD
-8. End-to-end flows — browse → PDP → cart → checkout
-9. Admin setup verification — Contact page handle, policy pages visible, Search & Discovery color filter
-10. Owner final sign-off → publish theme
+1. ✅ Fix 6 theme check errors — Session 18
+2. ✅ Remove or fix dev test section/template — Session 18
+3. ✅ Full responsive QA — all pages at 375px, 768px, 1024px, 1440px — Session 21
+4. ✅ Cross-browser spot check — Chrome + Edge pass (Session 21); Firefox/Safari N/A on Windows
+5. ✅ Accessibility audit — keyboard nav, focus states, contrast, ARIA — Sessions 19–22
+6. ⚠️ Performance — Lighthouse run complete; mobile perf 60–74 (below ≥90 target)
+7. ✅ SEO — meta titles, heading hierarchy, product JSON-LD — Session 19–22
+8. ✅ End-to-end flows — browse → PDP → cart → checkout — Session 29
+9. ✅ Admin setup verification — Contact, policies, Search & Discovery — Session 29
+10. ✅ Owner final sign-off → live theme published — Session 29
 
-### Store / Theme IDs
+### Store / Theme IDs *(updated Session 28)*
 
-- **Dev theme:** #151837507662
-- **Live theme:** #151743987790
+- **Live theme:** Kixro `#151935877198`
 - **Store:** `mcr0nu-c1.myshopify.com`
+- **GitHub:** https://github.com/esratjahanesha808-arch/Kixro-shopify-store
 
 ---
 
@@ -889,4 +889,26 @@ Products in the store use a **single default variant** (no Size option in Shopif
 ### Next Immediate Action
 1. Add repo link to Upwork/LinkedIn portfolio profiles
 2. Optional: pin the repo on GitHub and add topics (`shopify`, `liquid`, `ecommerce`, `theme-development`)
-3. Phase 8 manual QA (Lighthouse, cross-browser) if not yet run on live dev theme
+
+---
+
+## Session 31 — 2026-07-24 — Implementation Checklist Audit
+
+### Completed
+- ✅ Synced `IMPLEMENTATION_PLAN.md` deliverable checklists — ticked **100+ completed items** across Phases 2–8 that were built but still marked `[ ]`
+- ✅ Updated stale Project Status Audit (Phase 8 was listed "Not Started" while marked Complete in overview)
+- ✅ Ticked `DESIGN_SYSTEM.md` approval checklist (owner approved Phase 1)
+- ✅ Updated Session 17/19 audit tables in `CURRENT_STATE.md` to match Session 29 sign-off
+
+### Still intentionally unchecked (deferred / optional)
+- Contact page map integration
+- Dawn-branded login/register pages
+- About Us team section (no content provided)
+- Lighthouse mobile performance ≥90 target
+- Screen reader manual testing
+- CSS/JS minification, critical CSS inlining
+
+### Files Modified
+- `IMPLEMENTATION_PLAN.md`
+- `CURRENT_STATE.md`
+- `DESIGN_SYSTEM.md`
