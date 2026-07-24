@@ -1,5 +1,7 @@
 # Kixro — Custom Shopify Online Store 2.0 Theme
 
+![CI](https://github.com/esratjahanesha808-arch/Kixro-shopify-store/actions/workflows/ci.yml/badge.svg)
+
 A fully custom Shopify theme for **Kixro**, a premium footwear and lifestyle brand. Built on Online Store 2.0 with JSON templates, section groups, and a reusable design system.
 
 **Live store:** [mcr0nu-c1.myshopify.com](https://mcr0nu-c1.myshopify.com)

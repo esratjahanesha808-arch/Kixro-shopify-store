@@ -1,11 +1,10 @@
 # Kixro theme CI — Theme Check only (no Shopify store secrets required).
+# Runs on pushes to main only (avoids failed runs on stale Dependabot PR branches).
 
 name: CI
 
 on:
   push:
-    branches: [main]
-  pull_request:
     branches: [main]
 
 permissions:
