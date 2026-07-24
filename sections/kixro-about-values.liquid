@@ -1,0 +1,169 @@
+<div class="kixro-about-values">
+  <div class="kixro-container">
+    <div class="kixro-about-mission">
+      <header class="kixro-about-mission__head">
+        <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
+        <h2 class="kixro-about-mission__title">{{ section.settings.heading }}</h2>
+        {%- if section.settings.mission != blank -%}
+          <p class="kixro-about-mission__statement">{{ section.settings.mission }}</p>
+        {%- endif -%}
+      </header>
+
+      <div class="kixro-about-mission__gallery">
+        <figure class="kixro-about-mission__figure">
+          {%- if section.settings.mission_image_1 != blank -%}
+            {{
+              section.settings.mission_image_1
+              | image_url: width: 1200
+              | image_tag:
+                class: 'kixro-about-mission__img',
+                loading: 'lazy',
+                sizes: '(min-width: 1024px) 50vw, 100vw',
+                widths: '600, 900, 1200',
+                alt: 'Kixro premium footwear collection display'
+            }}
+          {%- else -%}
+            <img
+              class="kixro-about-mission__img"
+              src="{{ 'about-mission-1.png' | asset_url }}"
+              alt="Kixro premium footwear collection display"
+              loading="lazy"
+              width="1200"
+              height="800"
+            >
+          {%- endif -%}
+        </figure>
+        <figure class="kixro-about-mission__figure">
+          {%- if section.settings.mission_image_2 != blank -%}
+            {{
+              section.settings.mission_image_2
+              | image_url: width: 1200
+              | image_tag:
+                class: 'kixro-about-mission__img',
+                loading: 'lazy',
+                sizes: '(min-width: 1024px) 50vw, 100vw',
+                widths: '600, 900, 1200',
+                alt: 'Kixro artisan craftsmanship'
+            }}
+          {%- else -%}
+            <img
+              class="kixro-about-mission__img"
+              src="{{ 'about-mission-2.png' | asset_url }}"
+              alt="Kixro artisan craftsmanship"
+              loading="lazy"
+              width="1200"
+              height="800"
+            >
+          {%- endif -%}
+        </figure>
+      </div>
+
+      <div class="kixro-about-values__strip">
+        {%- for block in section.blocks -%}
+          <div class="kixro-about-values__item" {{ block.shopify_attributes }}>
+            <h3 class="kixro-about-values__item-title">{{ block.settings.title }}</h3>
+            <p class="kixro-about-values__item-text">{{ block.settings.description }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kixro About Values",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Mission & Values"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Mission"
+    },
+    {
+      "type": "textarea",
+      "id": "mission",
+      "label": "Mission statement",
+      "default": "To inspire confidence through modern, premium footwear that combines effortless style with all-day comfort."
+    },
+    {
+      "type": "image_picker",
+      "id": "mission_image_1",
+      "label": "Mission image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "mission_image_2",
+      "label": "Mission image 2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Premium Quality"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "We use only the best materials and craftsmanship to ensure every pair feels exceptional."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kixro About Values",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "title": "Premium Quality",
+            "description": "We use only the best materials and craftsmanship to ensure every pair feels exceptional."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Modern Style",
+            "description": "Contemporary designs that keep you on-trend and confident."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "All-Day Comfort",
+            "description": "Thoughtful construction that supports you from morning to night."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Confidence",
+            "description": "Empowering you to step out with confidence in every moment."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Authenticity",
+            "description": "Genuine design for real men living modern lives."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,34 @@
+{%- comment -%}
+  Read a single URL query parameter in Liquid (via content_for_header).
+  Usage: {% capture value %}{% render 'kixro-query-param', key: 'category' %}{% endcapture %}
+  Shopify Liquid has no native query-string access on collection pages.
+{%- endcomment -%}
+
+{% # theme-check-disable ContentForHeaderModification %}
+{%- liquid
+  assign query_key = key | default: blank
+  assign query_value = blank
+
+  capture content_for_query_string
+    echo content_for_header
+  endcapture
+
+  assign page_url = content_for_query_string | split: '"pageurl":"' | last | split: '"' | first | split: request.host | last | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&'
+
+  if page_url contains '?'
+    assign query_string = page_url | split: '?' | last
+    assign qry_parts = query_string | split: '&'
+    for part in qry_parts
+      assign key_and_value = part | split: '='
+      if key_and_value.size > 1
+        if key_and_value[0] == query_key
+          assign query_value = key_and_value[1]
+        endif
+      endif
+    endfor
+  endif
+
+  if query_value != blank
+    echo query_value | strip | strip_newlines
+  endif
+-%}

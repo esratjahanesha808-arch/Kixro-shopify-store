@@ -1,0 +1,71 @@
+{%- comment -%}
+  Kixro color filter — one swatch per unique color from product variants.
+{%- endcomment -%}
+
+{%- liquid
+  assign swatch_list = kixro_catalog_colors | default: '' | split: '|||'
+  assign color_filter = nil
+
+  for filter in results.filters
+    assign label_down = filter.label | downcase
+    assign param_down = filter.param_name | downcase
+    if label_down contains 'color' or label_down contains 'colour' or param_down contains 'color' or param_down contains 'colour'
+      assign color_filter = filter
+      break
+    endif
+  endfor
+-%}
+
+{%- if swatch_list.size > 0 and swatch_list[0] != blank -%}
+  <details
+    id="Details-kixro-color-{{ section.id }}"
+    class="kixro-color-filter facets__disclosure-vertical"
+    data-index="kixro-color"
+    data-kixro-filter-mode="client"
+    open
+  >
+    <summary class="kixro-color-filter__heading facets__summary caption-large focus-offset">
+      <span>{{ color_filter.label | default: 'Color' }}</span>
+      <svg class="kixro-color-filter__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="kixro-color-filter__panel facets__display-vertical">
+      <p class="kixro-color-filter__selected" data-kixro-color-selected aria-live="polite"></p>
+
+      <ul class="kixro-color-filter__swatches list-unstyled" role="list">
+        {%- assign swatch_seen = '' -%}
+        {%- for label in swatch_list -%}
+          {%- assign display_label = label | strip -%}
+          {%- if display_label != blank -%}
+            {%- assign label_down = display_label | downcase -%}
+            {%- if label_down == 'grey' -%}{%- assign label_down = 'gray' -%}{%- endif -%}
+            {%- assign label_key = label_down | append: ',' -%}
+            {%- unless swatch_seen contains label_key -%}
+              {%- assign swatch_seen = swatch_seen | append: label_key -%}
+            <li class="kixro-color-filter__swatch-item">
+              <button
+                type="button"
+                class="kixro-color-filter__swatch-btn"
+                data-kixro-color-btn
+                data-color-label="{{ display_label | escape }}"
+                aria-label="{{ display_label | escape }}"
+                aria-pressed="false"
+                title="{{ display_label | escape }}"
+              >
+                {% render 'kixro-color-swatch', color_name: display_label %}
+              </button>
+            </li>
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+
+      <button type="button" class="kixro-color-filter__clear hidden" data-kixro-color-clear>Clear color</button>
+    </div>
+  </details>
+{%- elsif request.design_mode -%}
+  <div class="kixro-color-filter kixro-color-filter--empty">
+    <p class="kixro-color-filter__empty-msg">
+      No Color variants found. Add a <strong>Color</strong> option on product variants in Shopify Admin.
+    </p>
+  </div>
+{%- endif -%}

@@ -1,0 +1,28 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Shopify CLI
+.shopify/
+
+# Secrets — never commit
+.env
+.env.*
+credentials.json
+token.json
+
+# Temporary / generated
+.tmp/
+*.zip
+
+# Dependencies
+node_modules/
+
+# Editor / local tooling
+.cursor/
+*.log
+
+# Playwright / test artifacts
+test-results/
+playwright-report/
+playwright/.cache/

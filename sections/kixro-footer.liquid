@@ -1,0 +1,314 @@
+<footer class="kixro-footer">
+  <div class="kixro-footer__pattern" aria-hidden="true"></div>
+
+  <div class="kixro-container kixro-footer__inner">
+
+    <div class="kixro-footer__grid">
+
+      {%- comment -%} Column 1 — Brand, social, back to top {%- endcomment -%}
+      <div class="kixro-footer__brand">
+        <a href="{{ routes.root_url }}" class="kixro-footer__logo-link" aria-label="{{ shop.name }}">
+          <img
+            src="{{ 'logo.png' | asset_url }}"
+            alt="{{ shop.name }}"
+            class="kixro-footer__logo"
+            width="160"
+            height="auto"
+            loading="lazy"
+          >
+        </a>
+
+        {%- if section.settings.tagline != blank -%}
+          <p class="kixro-footer__tagline">{{ section.settings.tagline }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.show_social -%}
+          <div class="kixro-footer__social">
+            {%- render 'social-icons', class: 'kixro-footer__social-list' -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_back_to_top -%}
+          <button type="button" class="kixro-footer__back-top" data-kixro-back-top aria-label="Back to top">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 15l-6-6-6 6"/>
+            </svg>
+            {{ section.settings.back_to_top_label }}
+          </button>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Column 2 — Site Map {%- endcomment -%}
+      {%- liquid
+        assign sitemap_menu = section.settings.sitemap_menu
+        assign about_page = pages['about-us']
+        if about_page == blank
+          for page in pages
+            if page.template_suffix == 'about-us' or page.template_suffix == 'about'
+              assign about_page = page
+              break
+            endif
+          endfor
+        endif
+        if section.settings.about_us_url != blank
+          assign about_us_href = section.settings.about_us_url
+        elsif about_page != blank
+          assign about_us_href = about_page.url
+        else
+          assign about_us_href = '/pages/about-us'
+        endif
+      -%}
+      <div class="kixro-footer__col">
+        <h3 class="kixro-footer__heading">{{ section.settings.sitemap_heading }}</h3>
+        <ul class="kixro-footer__links">
+          {%- if sitemap_menu != blank -%}
+            {%- for link in sitemap_menu.links -%}
+              <li>
+                <a href="{{ link.url }}"{% if link.active %} class="is-active"{% endif %}>{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          {%- endif -%}
+          <li>
+            <a href="{{ about_us_href }}">{{ section.settings.about_us_label | default: 'About Us' }}</a>
+          </li>
+        </ul>
+      </div>
+
+      {%- comment -%} Column 3 — Legal & policies {%- endcomment -%}
+      {%- liquid
+        assign privacy_page = pages['privacy-policy']
+        assign refund_page = pages['refund-policy']
+        assign shipping_page = pages['shipping-policy']
+
+        if shop.privacy_policy != blank and shop.privacy_policy.url != blank
+          assign privacy_href = shop.privacy_policy.url
+        elsif privacy_page != blank and privacy_page.published_at != blank
+          assign privacy_href = privacy_page.url
+        else
+          assign privacy_href = '/policies/privacy-policy'
+        endif
+
+        if shop.refund_policy != blank and shop.refund_policy.url != blank
+          assign refund_href = shop.refund_policy.url
+        elsif refund_page != blank and refund_page.published_at != blank
+          assign refund_href = refund_page.url
+        elsif section.settings.refund_policy_url != blank
+          assign refund_href = section.settings.refund_policy_url
+        else
+          assign refund_href = '/policies/refund-policy'
+        endif
+
+        if shop.shipping_policy != blank and shop.shipping_policy.url != blank
+          assign shipping_href = shop.shipping_policy.url
+        elsif shipping_page != blank and shipping_page.published_at != blank
+          assign shipping_href = shipping_page.url
+        elsif section.settings.shipping_policy_url != blank
+          assign shipping_href = section.settings.shipping_policy_url
+        else
+          assign shipping_href = '/policies/shipping-policy'
+        endif
+
+        if shop.terms_of_service != blank and shop.terms_of_service.url != blank
+          assign terms_href = shop.terms_of_service.url
+        elsif section.settings.terms_policy_url != blank
+          assign terms_href = section.settings.terms_policy_url
+        else
+          assign terms_href = '/policies/terms-of-service'
+        endif
+      -%}
+      <div class="kixro-footer__col">
+        <h3 class="kixro-footer__heading">{{ section.settings.legal_heading }}</h3>
+        <ul class="kixro-footer__links">
+          <li>
+            <a href="{{ about_us_href }}">{{ section.settings.about_us_label | default: 'About Us' }}</a>
+          </li>
+          <li>
+            <a href="{{ refund_href }}">{{ section.settings.refund_policy_label | default: 'Return & Refund Policy' }}</a>
+          </li>
+          <li>
+            <a href="{{ shipping_href }}">{{ section.settings.shipping_policy_label | default: 'Shipping Policy' }}</a>
+          </li>
+          {%- if section.settings.show_privacy_policy -%}
+            <li>
+              <a href="{{ privacy_href }}">{{ section.settings.privacy_policy_label | default: 'Privacy Policy' }}</a>
+            </li>
+          {%- endif -%}
+
+          {%- if section.settings.show_terms_policy -%}
+            <li>
+              <a href="{{ terms_href }}">{{ section.settings.terms_policy_label | default: 'Terms of Service' }}</a>
+            </li>
+          {%- endif -%}
+
+          {%- if section.settings.legal_menu != blank -%}
+            {%- for link in section.settings.legal_menu.links -%}
+              <li>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  {%- comment -%} Full-width copyright bar {%- endcomment -%}
+  <div class="kixro-footer__bar">
+    <div class="kixro-container">
+      <p class="kixro-footer__copyright">
+        Copyright &copy; {{ 'now' | date: '%Y' }}, {{ shop.name }}, All Rights Reserved
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var btn = document.querySelector('[data-kixro-back-top]');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Kixro Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Brand description",
+      "default": "Premium footwear for those who move with purpose. Step into something extraordinary."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social icons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Site Map column"
+    },
+    {
+      "type": "text",
+      "id": "sitemap_heading",
+      "label": "Site Map heading",
+      "default": "Site Map"
+    },
+    {
+      "type": "link_list",
+      "id": "sitemap_menu",
+      "label": "Site Map menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Legal column"
+    },
+    {
+      "type": "text",
+      "id": "legal_heading",
+      "label": "Legal heading",
+      "default": "Help & Legal"
+    },
+    {
+      "type": "text",
+      "id": "about_us_url",
+      "label": "About Us page path",
+      "default": "/pages/about-us",
+      "info": "Leave blank to auto-detect your About Us page."
+    },
+    {
+      "type": "text",
+      "id": "about_us_label",
+      "label": "About Us link label",
+      "default": "About Us"
+    },
+    {
+      "type": "text",
+      "id": "refund_policy_label",
+      "label": "Refund policy link label",
+      "default": "Return & Refund Policy"
+    },
+    {
+      "type": "text",
+      "id": "refund_policy_url",
+      "label": "Refund policy path (optional override)",
+      "info": "Auto-detects from Shopify policies. Default: /policies/refund-policy"
+    },
+    {
+      "type": "text",
+      "id": "shipping_policy_label",
+      "label": "Shipping policy link label",
+      "default": "Shipping Policy"
+    },
+    {
+      "type": "text",
+      "id": "shipping_policy_url",
+      "label": "Shipping policy path (optional override)",
+      "info": "Auto-detects from Shopify policies. Default: /policies/shipping-policy"
+    },
+    {
+      "type": "text",
+      "id": "privacy_policy_label",
+      "label": "Privacy policy link label",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_privacy_policy",
+      "label": "Show Privacy Policy link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_terms_policy",
+      "label": "Show Terms of Service link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "terms_policy_label",
+      "label": "Terms of Service link label",
+      "default": "Terms of Service"
+    },
+    {
+      "type": "text",
+      "id": "terms_policy_url",
+      "label": "Terms of Service path (optional override)",
+      "info": "Auto-detects from Shopify policies. Default: /policies/terms-of-service"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Additional legal links menu (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Back to top"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_back_to_top",
+      "label": "Show back to top button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "back_to_top_label",
+      "label": "Back to top label",
+      "default": "Back to top"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kixro Footer"
+    }
+  ]
+}
+{% endschema %}

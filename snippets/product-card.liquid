@@ -1,0 +1,166 @@
+{%- comment -%}
+
+  Kixro Reusable Product Card Snippet
+
+  Usage: {% render 'product-card', product: product %}
+
+  Used by: kixro-newly-dropped, kixro-featured-collection, search, collection pages
+
+{%- endcomment -%}
+
+
+
+{%- liquid
+
+  assign card_product = product
+
+  assign featured_img  = card_product.featured_image
+
+  assign img_width = featured_img.width | default: 600
+
+  assign img_height = featured_img.height | default: 800
+
+-%}
+
+
+
+<div class="kixro-product-card" itemscope itemtype="https://schema.org/Product">
+
+  <a
+
+    href="{{ card_product.url }}"
+
+    class="kixro-product-card__image-wrap"
+
+    aria-label="{{ card_product.title | escape }}"
+
+    tabindex="-1"
+
+  >
+
+    {%- if featured_img != blank -%}
+
+      <img
+        class="kixro-product-card__image"
+        src="{{ featured_img | image_url: width: 600 }}"
+        srcset="{{ featured_img | image_url: width: 400 }} 400w,
+                {{ featured_img | image_url: width: 600 }} 600w,
+                {{ featured_img | image_url: width: 800 }} 800w"
+        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 50vw"
+        alt="{{ featured_img.alt | default: card_product.title | escape }}"
+        loading="lazy"
+        decoding="async"
+        width="{{ img_width }}"
+        height="{{ img_height }}"
+        itemprop="image"
+        data-default-src="{{ featured_img | image_url: width: 600 }}"
+        data-default-srcset="{{ featured_img | image_url: width: 400 }} 400w, {{ featured_img | image_url: width: 600 }} 600w, {{ featured_img | image_url: width: 800 }} 800w"
+        data-default-width="{{ img_width }}"
+        data-default-height="{{ img_height }}"
+        data-default-alt="{{ featured_img.alt | default: card_product.title | escape }}"
+      >
+
+    {%- else -%}
+
+      <div class="kixro-product-card__placeholder" role="img" aria-label="No product image">
+
+        No image
+
+      </div>
+
+    {%- endif -%}
+
+  </a>
+
+
+
+  <div class="kixro-product-card__body">
+
+    <p class="kixro-product-card__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+
+      <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
+
+      <meta itemprop="price" content="{{ card_product.price | divided_by: 100.0 }}">
+
+      <meta itemprop="availability" content="https://schema.org/{% if card_product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+      {%- if card_product.compare_at_price > card_product.price -%}
+
+        <span class="kixro-product-card__compare-price">
+
+          {{ card_product.compare_at_price | money }}
+
+        </span>
+
+        <span class="kixro-product-card__sale-price">{{ card_product.price | money }}</span>
+
+      {%- else -%}
+
+        {{ card_product.price | money }}
+
+      {%- endif -%}
+
+    </p>
+
+
+
+    <a href="{{ card_product.url }}" class="kixro-product-card__title" itemprop="url">
+
+      <span itemprop="name">{{ card_product.title }}</span>
+
+    </a>
+
+
+
+    <div class="kixro-product-card__actions">
+
+      {%- if card_product.available -%}
+
+        <button
+
+          type="button"
+
+          class="kixro-btn kixro-btn--primary"
+
+          data-kixro-add-to-cart
+          data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+          data-default-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+
+          aria-label="Add {{ card_product.title | escape }} to cart"
+
+        >
+
+          Add to Cart
+
+        </button>
+
+        <a
+
+          href="{{ card_product.url }}"
+
+          class="kixro-btn kixro-btn--accent"
+
+          aria-label="Buy {{ card_product.title | escape }} now"
+
+        >
+
+          Buy Now
+
+        </a>
+
+      {%- else -%}
+
+        <button class="kixro-btn kixro-btn--secondary" disabled aria-disabled="true">
+
+          Sold Out
+
+        </button>
+
+      {%- endif -%}
+
+    </div>
+
+  </div>
+
+</div>
+

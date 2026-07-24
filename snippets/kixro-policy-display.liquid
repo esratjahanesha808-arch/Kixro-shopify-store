@@ -1,0 +1,72 @@
+{%- comment -%}
+  Renders a Kixro-styled policy page.
+  Accepts: policy_type (privacy | refund | shipping)
+{%- endcomment -%}
+{%- liquid
+  case policy_type
+    when 'privacy'
+      assign policy = shop.privacy_policy
+      assign fallback_title = 'Privacy Policy'
+    when 'refund'
+      assign policy = shop.refund_policy
+      assign fallback_title = 'Return & Refund Policy'
+    when 'shipping'
+      assign policy = shop.shipping_policy
+      assign fallback_title = 'Shipping Policy'
+    else
+      assign policy = nil
+      assign fallback_title = 'Policy'
+  endcase
+
+  if policy == blank or policy.body == blank
+    for shop_policy in shop.policies
+      assign policy_title_down = shop_policy.title | downcase
+      assign keyword_match = false
+
+      if policy_type == 'privacy' and policy_title_down contains 'privacy'
+        assign keyword_match = true
+      endif
+
+      if policy_type == 'refund'
+        if policy_title_down contains 'refund' or policy_title_down contains 'return'
+          assign keyword_match = true
+        endif
+      endif
+
+      if policy_type == 'shipping' and policy_title_down contains 'shipping'
+        assign keyword_match = true
+      endif
+
+      if keyword_match
+        assign policy = shop_policy
+        break
+      endif
+    endfor
+  endif
+
+  assign policy_title = policy.title | default: page.title | default: fallback_title
+  assign policy_body = policy.body
+-%}
+
+<div class="kixro-policy-page section-kixro-policy-padding">
+  <div class="kixro-container kixro-policy-page__inner">
+    <span class="kixro-section-label">Help & Legal</span>
+    <h1 class="kixro-policy-page__title">{{ policy_title }}</h1>
+    <div class="kixro-policy-page__body rte">
+      {%- if policy_body != blank -%}
+        {{ policy_body }}
+      {%- elsif page.content != blank -%}
+        {{ page.content }}
+      {%- else -%}
+        <p>Policy content has not been added yet. Please add it in Shopify Admin → Settings → Policies.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .section-kixro-policy-padding {
+    padding-top: 48px;
+    padding-bottom: 64px;
+  }
+</style>

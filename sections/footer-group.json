@@ -1,0 +1,28 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "kixro_footer": {
+      "type": "kixro-footer",
+      "settings": {
+        "tagline": "Premium footwear for those who move with purpose. Step into something extraordinary.",
+        "show_social": true,
+        "sitemap_heading": "Site Map",
+        "sitemap_menu": "main-menu",
+        "legal_heading": "Help & Legal",
+        "about_us_url": "/pages/about-us",
+        "about_us_label": "About Us",
+        "refund_policy_label": "Return & Refund Policy",
+        "shipping_policy_label": "Shipping Policy",
+        "show_privacy_policy": true,
+        "show_terms_policy": true,
+        "terms_policy_label": "Terms of Service",
+        "show_back_to_top": true,
+        "back_to_top_label": "Back to top"
+      }
+    }
+  },
+  "order": [
+    "kixro_footer"
+  ]
+}

@@ -1,0 +1,120 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+{%- liquid
+  case section.settings.policy_type
+    when 'privacy'
+      assign policy = shop.privacy_policy
+      assign fallback_title = 'Privacy Policy'
+    when 'refund'
+      assign policy = shop.refund_policy
+      assign fallback_title = 'Return & Refund Policy'
+    when 'shipping'
+      assign policy = shop.shipping_policy
+      assign fallback_title = 'Shipping Policy'
+    else
+      assign policy = nil
+      assign fallback_title = page.title
+  endcase
+
+  if policy == blank or policy.body == blank
+    for shop_policy in shop.policies
+      assign policy_title_down = shop_policy.title | downcase
+      assign keyword_match = false
+
+      if section.settings.policy_type == 'privacy' and policy_title_down contains 'privacy'
+        assign keyword_match = true
+      endif
+
+      if section.settings.policy_type == 'refund'
+        if policy_title_down contains 'refund' or policy_title_down contains 'return'
+          assign keyword_match = true
+        endif
+      endif
+
+      if section.settings.policy_type == 'shipping' and policy_title_down contains 'shipping'
+        assign keyword_match = true
+      endif
+
+      if keyword_match
+        assign policy = shop_policy
+        break
+      endif
+    endfor
+  endif
+
+  assign policy_title = policy.title | default: page.title | default: fallback_title
+  assign policy_body = policy.body
+-%}
+
+<div class="kixro-policy-page section-{{ section.id }}-padding">
+  <div class="kixro-container kixro-policy-page__inner">
+    <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
+    <h1 class="kixro-policy-page__title">{{ policy_title }}</h1>
+    <div class="kixro-policy-page__body rte">
+      {%- if policy_body != blank -%}
+        {{ policy_body }}
+      {%- elsif page.content != blank -%}
+        {{ page.content }}
+      {%- else -%}
+        <p>{{ section.settings.empty_message }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kixro Policy Page",
+  "settings": [
+    {
+      "type": "select",
+      "id": "policy_type",
+      "label": "Shopify policy to display",
+      "options": [
+        { "value": "privacy", "label": "Privacy Policy" },
+        { "value": "refund", "label": "Refund Policy" },
+        { "value": "shipping", "label": "Shipping Policy" }
+      ],
+      "default": "privacy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Help & Legal"
+    },
+    {
+      "type": "text",
+      "id": "empty_message",
+      "label": "Empty state message",
+      "default": "Policy content has not been added yet. Please add it in Shopify Admin → Settings → Policies."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 64
+    }
+  ],
+  "presets": [{ "name": "Kixro Policy Page" }]
+}
+{% endschema %}

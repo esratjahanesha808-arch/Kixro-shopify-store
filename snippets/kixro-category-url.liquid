@@ -1,0 +1,33 @@
+{%- comment -%}
+  Resolves category URLs — virtual category pages for shoes/sandals/loafers,
+  native Shopify collection when available for other handles (e.g. boots).
+  Accepts: link (string), handle (optional override)
+{%- endcomment -%}
+
+{%- liquid
+  assign resolved_url = link | default: routes.all_products_collection_url
+  assign collection_handle = handle
+
+  if collection_handle == blank and link contains '/collections/'
+    assign collection_handle = link | split: '/collections/' | last | split: '?' | first | split: '/' | first
+  endif
+
+  if collection_handle != blank
+    if collection_handle == 'shoes'
+      assign resolved_url = routes.all_products_collection_url | append: '?category=shoes'
+    elsif collection_handle == 'sandals'
+      assign resolved_url = routes.all_products_collection_url | append: '?category=sandals'
+    elsif collection_handle == 'loafers'
+      assign resolved_url = routes.all_products_collection_url | append: '?category=loafers'
+    else
+      assign target_collection = collections[collection_handle]
+      if target_collection != blank
+        assign resolved_url = target_collection.url
+      else
+        assign resolved_url = routes.all_products_collection_url
+      endif
+    endif
+  endif
+-%}
+
+{{- resolved_url -}}

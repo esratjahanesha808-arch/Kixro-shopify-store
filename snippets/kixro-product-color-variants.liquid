@@ -1,0 +1,62 @@
+{%- comment -%}
+  JSON map of color (lowercase key) → variant image + id for collection color filter.
+  Usage: {% render 'kixro-product-color-variants', product: product, option_name: 'Color' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign color_option_name = option_name | default: 'Color' | downcase | strip
+  assign color_option_index = nil
+
+  for option in product.options_with_values
+    assign opt_name = option.name | downcase | strip
+    if opt_name == color_option_name or opt_name == 'color' or opt_name == 'colour'
+      assign color_option_index = option.position
+      break
+    endif
+  endfor
+-%}
+{%- if color_option_index -%}
+{
+{%- assign map_first = true -%}
+{%- assign map_seen = '' -%}
+{%- for variant in product.variants -%}
+  {%- liquid
+    case color_option_index
+      when 1
+        assign map_color_value = variant.option1
+      when 2
+        assign map_color_value = variant.option2
+      when 3
+        assign map_color_value = variant.option3
+    endcase
+  -%}
+  {%- if map_color_value != blank -%}
+    {%- assign map_color_key = map_color_value | strip | downcase -%}
+    {%- if map_color_key == 'grey' -%}{%- assign map_color_key = 'gray' -%}{%- endif -%}
+    {%- assign map_seen_token = map_color_key | append: ',' -%}
+    {%- unless map_seen contains map_seen_token -%}
+      {%- assign map_seen = map_seen | append: map_seen_token -%}
+      {%- assign map_variant_img = variant.featured_image | default: variant.image | default: product.featured_image -%}
+      {%- if map_variant_img != blank -%}
+        {%- capture map_srcset -%}
+{{- map_variant_img | image_url: width: 400 }} 400w, {{ map_variant_img | image_url: width: 600 }} 600w, {{ map_variant_img | image_url: width: 800 }} 800w
+        {%- endcapture -%}
+        {%- unless map_first -%},{%- endunless -%}
+        {{ map_color_key | json }}:{
+          "id":{{ variant.id }},
+          "color":{{ map_color_value | strip | json }},
+          "src":{{ map_variant_img | image_url: width: 600 | json }},
+          "srcset":{{ map_srcset | strip | json }},
+          "width":{{ map_variant_img.width | default: 600 }},
+          "height":{{ map_variant_img.height | default: 800 }},
+          "alt":{{ map_variant_img.alt | default: product.title | json }}
+        }
+        {%- assign map_first = false -%}
+      {%- endif -%}
+    {%- endunless -%}
+  {%- endif -%}
+{%- endfor -%}
+}
+{%- else -%}
+{}
+{%- endif -%}

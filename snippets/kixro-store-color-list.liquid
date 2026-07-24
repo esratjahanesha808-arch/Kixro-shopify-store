@@ -1,0 +1,102 @@
+{%- comment -%}
+  Builds deduplicated store color list from ALL products (Shopify Color variant option only).
+  Outputs: pipe-separated colors in capture `kixro_store_colors_out`
+  Accepts: color_order (comma string for sort priority)
+{%- endcomment -%}
+
+{%- liquid
+  assign color_option_name = option_name | default: 'Color'
+  assign color_order = color_order | default: 'Black, White, Navy, Brown, Grey, Beige, Tan, Red, Blue, Green, Pink, Orange, Bronze'
+  assign color_keys = ''
+  assign color_labels = ''
+
+  for product in collections.all.products limit: 250
+    capture product_colors_capture
+      render 'kixro-product-colors', product: product, option_name: color_option_name
+    endcapture
+    assign product_colors_line = product_colors_capture | strip
+    if product_colors_line == blank
+      continue
+    endif
+
+    assign color_parts = product_colors_line | split: '|'
+    for color_part in color_parts
+      assign display = color_part | strip
+      if display == blank
+        continue
+      endif
+      assign down = display | downcase
+      if down == 'grey'
+        assign down = 'gray'
+      endif
+      assign key = down | append: '||'
+      unless color_keys contains key
+        assign color_keys = color_keys | append: key
+        if color_labels != blank
+          assign color_labels = color_labels | append: '|||'
+        endif
+        assign color_labels = color_labels | append: display
+      endunless
+    endfor
+  endfor
+
+  assign ordered_output = ''
+  assign unordered_output = ''
+  assign placed_keys = ''
+
+  if color_labels != blank
+    assign order_list = color_order | split: ','
+    for order_color in order_list
+      assign order_clean = order_color | strip
+      if order_clean == blank
+        continue
+      endif
+      assign order_down = order_clean | downcase
+      if order_down == 'grey'
+        assign order_down = 'gray'
+      endif
+      assign order_key = order_down | append: '||'
+
+      if color_keys contains order_key
+        unless placed_keys contains order_key
+          assign placed_keys = placed_keys | append: order_key
+          assign label_parts = color_labels | split: '|||'
+          for label_part in label_parts
+            assign label_display = label_part | strip
+            assign label_down = label_display | downcase
+            if label_down == 'grey'
+              assign label_down = 'gray'
+            endif
+            if label_down == order_down
+              if ordered_output != blank
+                assign ordered_output = ordered_output | append: '|||'
+              endif
+              assign ordered_output = ordered_output | append: label_display
+              break
+            endif
+          endfor
+        endunless
+      endif
+    endfor
+
+    assign label_parts = color_labels | split: '|||'
+    for label_part in label_parts
+      assign label_display = label_part | strip
+      assign label_down = label_display | downcase
+      if label_down == 'grey'
+        assign label_down = 'gray'
+      endif
+      assign label_key = label_down | append: '||'
+      unless placed_keys contains label_key
+        assign placed_keys = placed_keys | append: label_key
+        if unordered_output != blank
+          assign unordered_output = unordered_output | append: '|||'
+        endif
+        assign unordered_output = unordered_output | append: label_display
+      endunless
+    endfor
+  endif
+
+  assign kixro_store_colors_out = ordered_output | append: unordered_output
+-%}
+{{- kixro_store_colors_out -}}

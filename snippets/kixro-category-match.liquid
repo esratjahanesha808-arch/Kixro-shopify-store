@@ -1,0 +1,35 @@
+{%- comment -%}
+  Outputs "true" when product belongs to the virtual category.
+  Accepts: product, category (shoes | sandals | loafers | boots)
+{%- endcomment -%}
+
+{%- liquid
+  assign category_key = category | downcase | strip
+  assign tags_joined = product.tags | join: ',' | downcase
+  assign title_down = product.title | downcase
+  assign type_down = product.type | downcase
+  assign is_match = false
+
+  case category_key
+    when 'shoes'
+      unless tags_joined contains 'boot' or tags_joined contains 'sandals' or tags_joined contains 'loafer' or title_down contains 'loafer' or title_down contains 'boot' or title_down contains 'mule'
+        if tags_joined contains 'shoe' or type_down == 'shoe' or title_down contains 'sneakers' or title_down contains 'walking shoes'
+          assign is_match = true
+        endif
+      endunless
+    when 'sandals'
+      if tags_joined contains 'sandals' or title_down contains 'sandals' or title_down contains 'clogs'
+        assign is_match = true
+      endif
+    when 'boots'
+      if tags_joined contains 'boot' or title_down contains 'boot'
+        assign is_match = true
+      endif
+    when 'loafers'
+      if title_down contains 'loafer' or title_down contains 'mule'
+        assign is_match = true
+      endif
+  endcase
+-%}
+
+{%- if is_match -%}true{%- endif -%}

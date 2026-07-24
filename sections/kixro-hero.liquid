@@ -1,0 +1,565 @@
+<style>
+  .kixro-hero {
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.hero_height }}vh;
+    min-height: 480px;
+    overflow: hidden;
+    background: #0A1628;
+  }
+
+  @media (max-width: 768px) {
+    .kixro-hero { height: 80vh; min-height: 420px; }
+  }
+
+  /* Slides */
+  .kixro-hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+  }
+
+  .kixro-hero__slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .kixro-hero__slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Gradient overlay */
+  .kixro-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      rgba(5, 22, 37, 0.78) 0%,
+      rgba(5, 22, 37, 0.40) 55%,
+      rgba(5, 22, 37, 0.05) 100%
+    );
+  }
+
+  /* Content */
+  .kixro-hero__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--kixro-pad-xl);
+    max-width: var(--kixro-max);
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .kixro-hero__content { padding: 0 var(--kixro-pad-md); }
+  }
+  @media (max-width: 989px) {
+    .kixro-hero__content {
+      padding: 0 var(--kixro-pad-sm);
+      align-items: flex-end;
+      padding-bottom: calc(var(--kixro-3xl) + 48px);
+    }
+  }
+
+  .kixro-hero__text {
+    max-width: 620px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+
+  .kixro-hero__slide.is-active .kixro-hero__text {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kixro-hero__text { opacity: 1; transform: none; transition: none; }
+  }
+
+  .kixro-hero__eyebrow {
+    display: inline-block;
+    font-family: var(--kixro-font-body);
+    font-size: var(--kixro-text-caption);
+    font-weight: var(--kixro-w-semibold);
+    letter-spacing: var(--kixro-ls-wider);
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: var(--kixro-md);
+  }
+
+  .kixro-hero__heading {
+    font-family: var(--kixro-font-heading);
+    font-size: var(--kixro-text-hero);
+    font-weight: var(--kixro-w-extrabold);
+    color: var(--kixro-white);
+    line-height: var(--kixro-lh-tight);
+    letter-spacing: var(--kixro-ls-tight);
+    margin: 0 0 var(--kixro-lg);
+  }
+
+  @media (max-width: 768px) {
+    .kixro-hero__heading { font-size: var(--kixro-text-h1); }
+  }
+
+  .kixro-hero__subtext {
+    font-family: var(--kixro-font-body);
+    font-size: var(--kixro-text-body-lg);
+    color: rgba(255,255,255,0.78);
+    line-height: var(--kixro-lh-relaxed);
+    margin: 0 0 var(--kixro-xl);
+    max-width: 480px;
+  }
+
+  @media (max-width: 768px) {
+    .kixro-hero__subtext { font-size: var(--kixro-text-body); }
+  }
+
+  .kixro-hero__actions {
+    display: flex;
+    gap: var(--kixro-md);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  /* ── Premium Hero Buttons ── */
+  .kixro-btn--hero-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 42px;
+    font-family: var(--kixro-font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    color: var(--kixro-primary);
+    background: #FFFFFF;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.4),
+      0 4px 24px rgba(255,255,255,0.25),
+      0 2px 8px rgba(0,0,0,0.25);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s ease,
+                color 0.2s ease;
+  }
+
+  /* Shimmer sweep on primary button */
+  .kixro-btn--hero-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.55) 50%,
+      rgba(255,255,255,0) 100%
+    );
+    transform: skewX(-15deg);
+    transition: left 0.55s ease;
+  }
+
+  .kixro-btn--hero-primary:hover::before {
+    left: 130%;
+  }
+
+  .kixro-btn--hero-primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.6),
+      0 8px 40px rgba(255,255,255,0.4),
+      0 4px 16px rgba(0,0,0,0.2);
+    color: var(--kixro-primary);
+  }
+
+  .kixro-btn--hero-primary:active {
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  /* Glass secondary button */
+  .kixro-btn--hero-glass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 42px;
+    font-family: var(--kixro-font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    color: #FFFFFF;
+    background: rgba(255,255,255,0.10);
+    border: 1.5px solid rgba(255,255,255,0.55);
+    border-radius: 50px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.2),
+      0 4px 16px rgba(0,0,0,0.15);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s ease,
+                background 0.3s ease,
+                border-color 0.3s ease;
+  }
+
+  .kixro-btn--hero-glass:hover {
+    background: rgba(255,255,255,0.22);
+    border-color: rgba(255,255,255,0.85);
+    color: #FFFFFF;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      0 8px 32px rgba(0,0,0,0.2),
+      0 0 20px rgba(255,255,255,0.12);
+  }
+
+  .kixro-btn--hero-glass:active {
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  @media (max-width: 768px) {
+    .kixro-btn--hero-primary,
+    .kixro-btn--hero-glass {
+      padding: 13px 28px;
+      font-size: 11px;
+    }
+  }
+
+  /* Dots navigation */
+  .kixro-hero__dots {
+    position: absolute;
+    bottom: var(--kixro-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--kixro-xs);
+    z-index: 10;
+  }
+
+  .kixro-hero__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--kixro-r-full);
+    background: rgba(255,255,255,0.4);
+    border: none;
+    cursor: pointer;
+    transition: all var(--kixro-t-base);
+    padding: 0;
+  }
+
+  .kixro-hero__dot.is-active {
+    background: var(--kixro-white);
+    width: 28px;
+  }
+
+  /* Slide counter */
+  .kixro-hero__counter {
+    position: absolute;
+    bottom: var(--kixro-xl);
+    right: var(--kixro-pad-xl);
+    font-family: var(--kixro-font-body);
+    font-size: var(--kixro-text-caption);
+    font-weight: var(--kixro-w-medium);
+    color: rgba(255,255,255,0.6);
+    letter-spacing: var(--kixro-ls-wide);
+  }
+
+  @media (max-width: 768px) {
+    .kixro-hero__counter { display: none; }
+  }
+</style>
+
+{%- liquid
+  assign slide_count = 0
+  if section.settings.slide_1_image != blank or section.settings.slide_1_fallback != blank
+    assign slide_count = slide_count | plus: 1
+  endif
+  if section.settings.slide_2_image != blank or section.settings.slide_2_fallback != blank
+    assign slide_count = slide_count | plus: 1
+  endif
+  if section.settings.slide_3_image != blank or section.settings.slide_3_fallback != blank
+    assign slide_count = slide_count | plus: 1
+  endif
+-%}
+
+<section
+  class="kixro-hero"
+  id="kixro-hero-{{ section.id }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-interval="{{ section.settings.interval }}"
+  aria-label="{{ 'sections.hero.aria_label' | t | default: 'Hero slideshow' }}"
+  aria-roledescription="carousel"
+  tabindex="0"
+>
+
+  {%- for i in (1..3) -%}
+    {%- liquid
+      assign img_key   = 'slide_' | append: i | append: '_image'
+      assign fall_key  = 'slide_' | append: i | append: '_fallback'
+      assign head_key  = 'slide_' | append: i | append: '_heading'
+      assign sub_key   = 'slide_' | append: i | append: '_subtext'
+      assign btn1_key  = 'slide_' | append: i | append: '_btn1_label'
+      assign btn1u_key = 'slide_' | append: i | append: '_btn1_url'
+      assign btn2_key  = 'slide_' | append: i | append: '_btn2_label'
+      assign btn2u_key = 'slide_' | append: i | append: '_btn2_url'
+      assign eye_key   = 'slide_' | append: i | append: '_eyebrow'
+
+      assign slide_img      = section.settings[img_key]
+      assign slide_fallback = section.settings[fall_key]
+      assign slide_heading  = section.settings[head_key]
+      assign slide_subtext  = section.settings[sub_key]
+      assign slide_btn1     = section.settings[btn1_key]
+      assign slide_btn1_url = section.settings[btn1u_key]
+      assign slide_btn2     = section.settings[btn2_key]
+      assign slide_btn2_url = section.settings[btn2u_key]
+      assign slide_eyebrow  = section.settings[eye_key]
+    -%}
+
+    {%- if slide_img != blank or slide_fallback != blank -%}
+      <div
+        class="kixro-hero__slide{% if forloop.first %} is-active{% endif %}"
+        data-slide="{{ forloop.index }}"
+        aria-hidden="{% unless forloop.first %}true{% endunless %}"
+      >
+        {%- if slide_img != blank -%}
+          <img
+            class="kixro-hero__slide-img"
+            src="{{ slide_img | image_url: width: 1920 }}"
+            srcset="{{ slide_img | image_url: width: 768 }} 768w,
+                    {{ slide_img | image_url: width: 1200 }} 1200w,
+                    {{ slide_img | image_url: width: 1920 }} 1920w"
+            sizes="100vw"
+            alt="{{ slide_img.alt | default: slide_heading | escape }}"
+            {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+            width="1920" height="1080"
+          >
+        {%- elsif slide_fallback != blank -%}
+          <img
+            class="kixro-hero__slide-img"
+            src="{{ slide_fallback | asset_url }}"
+            alt="{{ slide_heading | escape }}"
+            {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+            width="1920" height="1080"
+          >
+        {%- endif -%}
+
+        <div class="kixro-hero__overlay"></div>
+
+        <div class="kixro-hero__content">
+          <div class="kixro-hero__text">
+            {%- if slide_eyebrow != blank -%}
+              <span class="kixro-hero__eyebrow">{{ slide_eyebrow }}</span>
+            {%- endif -%}
+
+            {%- if slide_heading != blank -%}
+              {%- if forloop.first -%}
+                <h1 class="kixro-hero__heading">{{ slide_heading }}</h1>
+              {%- else -%}
+                <h2 class="kixro-hero__heading">{{ slide_heading }}</h2>
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if slide_subtext != blank -%}
+              <p class="kixro-hero__subtext">{{ slide_subtext }}</p>
+            {%- endif -%}
+
+            <div class="kixro-hero__actions">
+              {%- if slide_btn1 != blank -%}
+                <a href="{{ slide_btn1_url | default: routes.all_products_collection_url }}" class="kixro-btn--hero-primary">
+                  {{ slide_btn1 }}
+                </a>
+              {%- endif -%}
+              {%- if slide_btn2 != blank -%}
+                <a href="{{ slide_btn2_url | default: '/collections/new-arrivals' }}" class="kixro-btn--hero-glass">
+                  {{ slide_btn2 }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if slide_count > 1 -%}
+    <div class="kixro-hero__dots" aria-label="Slideshow navigation">
+      {%- for i in (1..slide_count) -%}
+        <button
+          class="kixro-hero__dot{% if forloop.first %} is-active{% endif %}"
+          data-goto="{{ forloop.index }}"
+          aria-label="Go to slide {{ forloop.index }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+
+    <div class="kixro-hero__counter" aria-hidden="true">
+      <span class="kixro-hero__current">01</span> / <span>0{{ slide_count }}</span>
+    </div>
+
+    <div class="visually-hidden" aria-live="polite" aria-atomic="true" id="kixro-hero-live-{{ section.id }}"></div>
+  {%- endif -%}
+</section>
+
+<script>
+  (function() {
+    const hero    = document.getElementById('kixro-hero-{{ section.id }}');
+    if (!hero) return;
+
+    const slides   = hero.querySelectorAll('.kixro-hero__slide');
+    const dots     = hero.querySelectorAll('.kixro-hero__dot');
+    const counter  = hero.querySelector('.kixro-hero__current');
+    const liveRegion = document.getElementById('kixro-hero-live-{{ section.id }}');
+    const autoplay = hero.dataset.autoplay === 'true';
+    const interval = parseInt(hero.dataset.interval || '5000', 10);
+
+    let current = 0;
+    let timer   = null;
+
+    function goTo(idx) {
+      slides[current].classList.remove('is-active');
+      slides[current].setAttribute('aria-hidden', 'true');
+      if (dots[current]) dots[current].classList.remove('is-active');
+
+      current = (idx + slides.length) % slides.length;
+
+      slides[current].classList.add('is-active');
+      slides[current].setAttribute('aria-hidden', 'false');
+      if (dots[current]) dots[current].classList.add('is-active');
+      if (counter) counter.textContent = String(current + 1).padStart(2, '0');
+      if (liveRegion) {
+        const heading = slides[current].querySelector('.kixro-hero__heading');
+        liveRegion.textContent = heading ? `Slide ${current + 1}: ${heading.textContent.trim()}` : `Slide ${current + 1}`;
+      }
+    }
+
+    function startTimer() {
+      if (!autoplay || slides.length < 2) return;
+      timer = setInterval(() => goTo(current + 1), interval);
+    }
+
+    function stopTimer() { clearInterval(timer); }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        stopTimer();
+        goTo(parseInt(dot.dataset.goto, 10) - 1);
+        startTimer();
+      });
+    });
+
+    hero.addEventListener('mouseenter', stopTimer);
+    hero.addEventListener('mouseleave', startTimer);
+    hero.addEventListener('focusin', stopTimer);
+    hero.addEventListener('focusout', startTimer);
+
+    hero.addEventListener('keydown', (event) => {
+      if (slides.length < 2) return;
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        stopTimer();
+        goTo(current - 1);
+        startTimer();
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        stopTimer();
+        goTo(current + 1);
+        startTimer();
+      }
+    });
+
+    startTimer();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Kixro Hero",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "range",
+      "id": "hero_height",
+      "label": "Hero height (vh)",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "default": 85
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-advance slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "interval",
+      "label": "Slide interval (ms)",
+      "min": 3000,
+      "max": 8000,
+      "step": 500,
+      "default": 5000
+    },
+    { "type": "header", "content": "Slide 1" },
+    { "type": "image_picker", "id": "slide_1_image", "label": "Slide 1 image" },
+    { "type": "text", "id": "slide_1_fallback", "label": "Fallback asset filename", "default": "hero-1.png" },
+    { "type": "text", "id": "slide_1_eyebrow", "label": "Eyebrow label", "default": "New Collection" },
+    { "type": "text", "id": "slide_1_heading", "label": "Heading", "default": "Sneakers That Defy Your Everyday Look" },
+    { "type": "textarea", "id": "slide_1_subtext", "label": "Supporting text", "default": "Discover footwear crafted for those who move with purpose — premium styles, built for the streets." },
+    { "type": "text", "id": "slide_1_btn1_label", "label": "Button 1 label", "default": "Shop Now" },
+    { "type": "url", "id": "slide_1_btn1_url", "label": "Button 1 URL" },
+    { "type": "text", "id": "slide_1_btn2_label", "label": "Button 2 label", "default": "New Arrivals" },
+    { "type": "url", "id": "slide_1_btn2_url", "label": "Button 2 URL" },
+
+    { "type": "header", "content": "Slide 2" },
+    { "type": "image_picker", "id": "slide_2_image", "label": "Slide 2 image" },
+    { "type": "text", "id": "slide_2_fallback", "label": "Fallback asset filename", "default": "hero-2.png" },
+    { "type": "text", "id": "slide_2_eyebrow", "label": "Eyebrow label", "default": "Best Sellers" },
+    { "type": "text", "id": "slide_2_heading", "label": "Heading", "default": "Move Boldly, Step Differently" },
+    { "type": "textarea", "id": "slide_2_subtext", "label": "Supporting text", "default": "Our best-loved styles — reimagined. Comfort meets bold design in every pair." },
+    { "type": "text", "id": "slide_2_btn1_label", "label": "Button 1 label", "default": "Shop Best Sellers" },
+    { "type": "url", "id": "slide_2_btn1_url", "label": "Button 1 URL" },
+    { "type": "text", "id": "slide_2_btn2_label", "label": "Button 2 label" },
+    { "type": "url", "id": "slide_2_btn2_url", "label": "Button 2 URL" },
+
+    { "type": "header", "content": "Slide 3" },
+    { "type": "image_picker", "id": "slide_3_image", "label": "Slide 3 image" },
+    { "type": "text", "id": "slide_3_fallback", "label": "Fallback asset filename", "default": "hero-3.png" },
+    { "type": "text", "id": "slide_3_eyebrow", "label": "Eyebrow label", "default": "Trending Now" },
+    { "type": "text", "id": "slide_3_heading", "label": "Heading", "default": "Your Style, Your Statement" },
+    { "type": "textarea", "id": "slide_3_subtext", "label": "Supporting text", "default": "Trending silhouettes for the season. Express who you are with every step." },
+    { "type": "text", "id": "slide_3_btn1_label", "label": "Button 1 label", "default": "Explore Trending" },
+    { "type": "url", "id": "slide_3_btn1_url", "label": "Button 1 URL" },
+    { "type": "text", "id": "slide_3_btn2_label", "label": "Button 2 label" },
+    { "type": "url", "id": "slide_3_btn2_url", "label": "Button 2 URL" }
+  ],
+  "presets": [
+    {
+      "name": "Kixro Hero"
+    }
+  ]
+}
+{% endschema %}

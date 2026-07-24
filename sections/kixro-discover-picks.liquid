@@ -1,0 +1,182 @@
+<div class="kixro-section" style="background:var(--kixro-bg);">
+  <div class="kixro-container">
+
+    <div class="kixro-section-header">
+      <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
+      <h2 class="kixro-section-title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="kixro-section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="kixro-picks-grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign pick_image    = block.settings.image
+          assign pick_fallback = block.settings.fallback_image
+          assign pick_label    = block.settings.label
+          assign pick_title    = block.settings.title
+          assign pick_url      = block.settings.link | default: routes.all_products_collection_url
+          assign pick_btn      = block.settings.btn_label | default: 'Shop Now'
+        -%}
+
+        <a
+          href="{{ pick_url }}"
+          class="kixro-pick-card"
+          aria-label="{{ pick_title | escape }}"
+          style="position:relative;"
+          {{ block.shopify_attributes }}
+        >
+          {%- if pick_image != blank -%}
+            <img
+              src="{{ pick_image | image_url: width: 900 }}"
+              srcset="{{ pick_image | image_url: width: 600 }} 600w,
+                      {{ pick_image | image_url: width: 900 }} 900w,
+                      {{ pick_image | image_url: width: 1200 }} 1200w"
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              alt="{{ pick_title | escape }}"
+              width="{{ pick_image.width }}"
+              height="{{ pick_image.height }}"
+              loading="lazy"
+              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+            >
+          {%- elsif pick_fallback != blank -%}
+            <img
+              src="{{ pick_fallback | asset_url }}"
+              alt="{{ pick_title | escape }}"
+              width="900"
+              height="600"
+              loading="lazy"
+              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+            >
+          {%- endif -%}
+
+          <div class="kixro-pick-card__overlay"></div>
+
+          <div class="kixro-pick-card__content">
+            {%- if pick_label != blank -%}
+              <span class="kixro-pick-card__label">{{ pick_label }}</span>
+            {%- endif -%}
+            <span class="kixro-pick-card__title">{{ pick_title }}</span>
+            <span class="kixro-btn kixro-btn--white kixro-btn--sm" style="display:inline-flex;">
+              {{ pick_btn }}
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kixro Discover Picks",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Curated For You"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Discover Your Kixro Picks"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Four curated worlds. One signature style."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pick",
+      "name": "Pick Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card image"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "Fallback asset filename"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Eyebrow label",
+          "default": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card title",
+          "default": "New Arrivals"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kixro Discover Picks",
+      "blocks": [
+        {
+          "type": "pick",
+          "settings": {
+            "fallback_image": "pick-new-arrivals.png",
+            "label": "Just In",
+            "title": "New Arrivals",
+            "btn_label": "Shop New Arrivals"
+          }
+        },
+        {
+          "type": "pick",
+          "settings": {
+            "fallback_image": "pick-best-sellers.png",
+            "label": "Fan Favourites",
+            "title": "Best Sellers",
+            "btn_label": "Shop Best Sellers"
+          }
+        },
+        {
+          "type": "pick",
+          "settings": {
+            "fallback_image": "pick-trending-now.png",
+            "label": "Right Now",
+            "title": "Trending Now",
+            "btn_label": "See What's Trending"
+          }
+        },
+        {
+          "type": "pick",
+          "settings": {
+            "fallback_image": "pick-kixro-essentials.png",
+            "label": "Must Haves",
+            "title": "Kixro Essentials",
+            "btn_label": "Shop Essentials"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

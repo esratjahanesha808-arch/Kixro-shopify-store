@@ -1,0 +1,235 @@
+<div class="kixro-about-philosophy">
+  <div class="kixro-container">
+    <div class="kixro-about-split-row kixro-about-split-row--style">
+      <div class="kixro-about-split-row__content">
+        <span class="kixro-section-label">{{ section.settings.philosophy_eyebrow }}</span>
+        <h2 class="kixro-about-philosophy__title">{{ section.settings.philosophy_heading }}</h2>
+        <div class="kixro-about-philosophy__text rte">{{ section.settings.philosophy_text }}</div>
+        {%- if section.settings.philosophy_points != blank -%}
+          <ul class="kixro-about-philosophy__list">
+            {%- assign points = section.settings.philosophy_points | newline_to_br | split: '<br />' -%}
+            {%- for point in points -%}
+              {%- assign trimmed = point | strip -%}
+              {%- if trimmed != blank -%}
+                <li>{{ trimmed }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+      <div class="kixro-about-split-row__media">
+        {%- if section.settings.philosophy_image != blank -%}
+          {{
+            section.settings.philosophy_image
+            | image_url: width: 1000
+            | image_tag:
+              class: 'kixro-about-split-row__img',
+              loading: 'lazy',
+              sizes: '(min-width: 1024px) 480px, 100vw',
+              widths: '400, 600, 1000',
+              alt: section.settings.philosophy_heading
+          }}
+        {%- else -%}
+          <img
+            class="kixro-about-split-row__img"
+            src="{{ 'about-style.png' | asset_url }}"
+            alt="{{ section.settings.philosophy_heading | escape }}"
+            loading="lazy"
+            width="1000"
+            height="750"
+          >
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="kixro-about-split-row kixro-about-split-row--reverse kixro-about-split-row--accent">
+      <div class="kixro-about-split-row__content">
+        <span class="kixro-section-label">{{ section.settings.community_eyebrow }}</span>
+        <h2 class="kixro-about-philosophy__title">{{ section.settings.community_heading }}</h2>
+        <div class="kixro-about-philosophy__text rte">{{ section.settings.community_text }}</div>
+        {%- if section.settings.community_points != blank -%}
+          <ul class="kixro-about-philosophy__list">
+            {%- assign community_points = section.settings.community_points | newline_to_br | split: '<br />' -%}
+            {%- for point in community_points -%}
+              {%- assign trimmed = point | strip -%}
+              {%- if trimmed != blank -%}
+                <li>{{ trimmed }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+      <div class="kixro-about-split-row__media">
+        {%- if section.settings.community_image != blank -%}
+          {{
+            section.settings.community_image
+            | image_url: width: 1000
+            | image_tag:
+              class: 'kixro-about-split-row__img',
+              loading: 'lazy',
+              sizes: '(min-width: 1024px) 480px, 100vw',
+              widths: '400, 600, 1000',
+              alt: section.settings.community_heading
+          }}
+        {%- else -%}
+          <img
+            class="kixro-about-split-row__img"
+            src="{{ 'about-path.png' | asset_url }}"
+            alt="{{ section.settings.community_heading | escape }}"
+            loading="lazy"
+            width="1000"
+            height="750"
+          >
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.promise_heading != blank -%}
+      <div class="kixro-about-split-row kixro-about-split-row--promise">
+        <div class="kixro-about-split-row__content kixro-about-promise__content">
+          <span class="kixro-section-label">Our Commitment</span>
+          <h2 class="kixro-about-promise__title">{{ section.settings.promise_heading }}</h2>
+          {%- if section.settings.promise_points != blank -%}
+            <ul class="kixro-about-promise__list">
+              {%- assign promise_points = section.settings.promise_points | newline_to_br | split: '<br />' -%}
+              {%- for point in promise_points -%}
+                {%- assign trimmed = point | strip -%}
+                {%- if trimmed != blank -%}
+                  <li>{{ trimmed }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+          {%- if section.settings.promise_closing != blank -%}
+            <p class="kixro-about-promise__closing">{{ section.settings.promise_closing }}</p>
+          {%- endif -%}
+        </div>
+        <div class="kixro-about-split-row__media">
+          {%- if section.settings.promise_image != blank -%}
+            {{
+              section.settings.promise_image
+              | image_url: width: 1000
+              | image_tag:
+                class: 'kixro-about-split-row__img',
+                loading: 'lazy',
+                sizes: '(min-width: 1024px) 480px, 100vw',
+                widths: '400, 600, 1000',
+                alt: section.settings.promise_heading
+            }}
+          {%- else -%}
+            <img
+              class="kixro-about-split-row__img"
+              src="{{ 'about-promise.png' | asset_url }}"
+              alt="{{ section.settings.promise_heading | escape }}"
+              loading="lazy"
+              width="1000"
+              height="750"
+            >
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kixro About Philosophy",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product Philosophy"
+    },
+    {
+      "type": "text",
+      "id": "philosophy_eyebrow",
+      "label": "Eyebrow",
+      "default": "Product Philosophy"
+    },
+    {
+      "type": "text",
+      "id": "philosophy_heading",
+      "label": "Heading",
+      "default": "Style without compromise"
+    },
+    {
+      "type": "richtext",
+      "id": "philosophy_text",
+      "label": "Description",
+      "default": "<p>We believe that footwear should be an expression of your personal style, not a compromise. At Kixro, we blend modern trends with timeless design to create shoes that feel intentional, elevated, and unmistakably you.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "philosophy_points",
+      "label": "Philosophy points (one per line)",
+      "default": "Everyday confidence — shoes that make you feel polished\nEffortless style — modern designs that complement your aesthetic\nAll-day comfort — premium materials that support your every move\nVersatility — footwear that transitions from work to weekend\nIntentional living — shoes that reflect your confidence"
+    },
+    {
+      "type": "image_picker",
+      "id": "philosophy_image",
+      "label": "Style section image"
+    },
+    {
+      "type": "header",
+      "content": "Lifestyle & Community"
+    },
+    {
+      "type": "text",
+      "id": "community_eyebrow",
+      "label": "Eyebrow",
+      "default": "Lifestyle & Community"
+    },
+    {
+      "type": "text",
+      "id": "community_heading",
+      "label": "Heading",
+      "default": "Walk your own path"
+    },
+    {
+      "type": "richtext",
+      "id": "community_text",
+      "label": "Description",
+      "default": "<p>Kixro is made for men who walk their own path with confidence and purpose.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "community_points",
+      "label": "Community points (one per line)",
+      "default": "Young men stepping into their confidence\nTrend-conscious individuals who value modern style\nGo-getters who need footwear that keeps pace\nMen who believe great shoes make a statement"
+    },
+    {
+      "type": "image_picker",
+      "id": "community_image",
+      "label": "Walk your own path image"
+    },
+    {
+      "type": "header",
+      "content": "Our Promise"
+    },
+    {
+      "type": "text",
+      "id": "promise_heading",
+      "label": "Promise heading",
+      "default": "Our Promise"
+    },
+    {
+      "type": "textarea",
+      "id": "promise_points",
+      "label": "Promise points (one per line)",
+      "default": "Premium materials that feel luxurious\nModern designs that elevate your style\nAll-day comfort that supports your lifestyle\nConfidence in every step\nFootwear designed for the modern man"
+    },
+    {
+      "type": "text",
+      "id": "promise_closing",
+      "label": "Closing line",
+      "default": "Step into confidence with Kixro."
+    },
+    {
+      "type": "image_picker",
+      "id": "promise_image",
+      "label": "Promise section image"
+    }
+  ],
+  "presets": [{ "name": "Kixro About Philosophy" }]
+}
+{% endschema %}

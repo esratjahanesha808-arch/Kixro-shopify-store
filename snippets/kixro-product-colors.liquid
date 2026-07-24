@@ -1,0 +1,33 @@
+{%- comment -%}
+  Pipe-separated Color option values from Shopify variants (preserves store casing).
+  Usage: {% render 'kixro-product-colors', product: product, option_name: 'Color' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign color_tokens = ''
+  assign color_seen = ''
+  assign color_option_name = option_name | default: 'Color' | downcase | strip
+
+  for option in product.options_with_values
+    assign opt_name = option.name | downcase | strip
+    if opt_name == color_option_name or opt_name == 'color' or opt_name == 'colour'
+      for value in option.values
+        if value != blank
+          assign val_display = value | strip
+          assign val_down = val_display | downcase
+          if val_down == 'grey'
+            assign val_down = 'gray'
+          endif
+          assign seen_key = val_down | append: ','
+          unless color_seen contains seen_key
+            assign color_seen = color_seen | append: seen_key
+            if color_tokens != blank
+              assign color_tokens = color_tokens | append: '|'
+            endif
+            assign color_tokens = color_tokens | append: val_display
+          endunless
+        endif
+      endfor
+    endif
+  endfor
+-%}{{- color_tokens -}}

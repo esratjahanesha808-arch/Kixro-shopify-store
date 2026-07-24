@@ -1,0 +1,85 @@
+{%- comment -%}
+  Size picker — line item property when product has no size variants.
+  Availability driven by Shopify category metafield "Shoe size" when present.
+{%- endcomment -%}
+
+{%- assign sizes = '6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12,13' | split: ',' -%}
+
+{%- capture shoe_sizes_capture -%}
+  {%- render 'kixro-product-shoe-sizes', product: product -%}
+{%- endcapture -%}
+{%- assign shoe_sizes_line = shoe_sizes_capture | strip -%}
+{%- assign use_metafield_sizes = false -%}
+{%- if shoe_sizes_line != blank -%}
+  {%- assign use_metafield_sizes = true -%}
+  {%- assign metafield_sizes = shoe_sizes_line | split: '|' -%}
+{%- endif -%}
+
+{%- assign first_available_index = nil -%}
+{%- for size in sizes -%}
+  {%- assign trimmed_size = size | strip -%}
+  {%- assign size_available = true -%}
+  {%- if use_metafield_sizes -%}
+    {%- assign size_available = false -%}
+    {%- for mf_size in metafield_sizes -%}
+      {%- assign mf_clean = mf_size | strip -%}
+      {%- if mf_clean == trimmed_size -%}
+        {%- assign size_available = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+  {%- if size_available and first_available_index == nil -%}
+    {%- assign first_available_index = forloop.index0 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<div
+  class="kixro-size-picker product-form__input product-form__input--pill"
+  data-kixro-size-picker
+  {% if use_metafield_sizes %}data-kixro-use-metafield-sizes="true"{% endif %}
+  {{ block.shopify_attributes }}
+>
+  <fieldset class="kixro-size-picker__fieldset">
+    <legend class="form__label">Select Size <span aria-hidden="true">*</span></legend>
+    <div class="kixro-size-picker__options">
+      {%- for size in sizes -%}
+        {%- assign trimmed_size = size | strip -%}
+        {%- assign size_available = true -%}
+        {%- if use_metafield_sizes -%}
+          {%- assign size_available = false -%}
+          {%- for mf_size in metafield_sizes -%}
+            {%- assign mf_clean = mf_size | strip -%}
+            {%- if mf_clean == trimmed_size -%}
+              {%- assign size_available = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+        {%- assign input_id = 'kixro-size-' | append: section.id | append: '-' | append: forloop.index -%}
+        <div class="kixro-size-picker__option">
+          <input
+            type="radio"
+            id="{{ input_id }}"
+            name="properties[Size]"
+            value="{{ trimmed_size | escape }}"
+            form="{{ product_form_id }}"
+            class="kixro-size-picker__input"
+            data-kixro-size-option
+            data-size-available="{{ size_available }}"
+            {% if size_available and forloop.index0 == first_available_index %}checked required{% endif %}
+            {% unless size_available %}disabled aria-disabled="true"{% endunless %}
+          >
+          <label
+            for="{{ input_id }}"
+            class="kixro-size-picker__label{% unless size_available %} is-unavailable{% endunless %}"
+            {% unless size_available %}title="Out of stock" aria-label="{{ trimmed_size | escape }} — Out of stock"{% endunless %}
+          >
+            {{ trimmed_size }}
+          </label>
+        </div>
+      {%- endfor -%}
+    </div>
+    <p class="kixro-size-picker__status" data-kixro-size-status role="status" aria-live="polite" hidden></p>
+  </fieldset>
+</div>

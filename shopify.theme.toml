@@ -1,0 +1,4 @@
+# Single live Kixro theme — Admin "Edit theme" and CLI both use this ID
+[environments.default]
+theme = "151935877198"
+store = "mcr0nu-c1.myshopify.com"

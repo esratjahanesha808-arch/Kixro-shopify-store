@@ -1,0 +1,197 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="kixro-account section-{{ section.id }}-padding">
+  <div class="kixro-container">
+    {%- unless customer -%}
+      <div class="kixro-account__welcome-card">
+        <div class="kixro-account__welcome-copy">
+          <h1 class="kixro-account__welcome-title">{{ section.settings.sign_in_heading }}</h1>
+          <p class="kixro-account__welcome-text">{{ section.settings.sign_in_text }}</p>
+        </div>
+        <a href="{{ routes.account_login_url }}" class="kixro-btn kixro-btn--primary">
+          {{ section.settings.sign_in_button }}
+        </a>
+      </div>
+    {%- else -%}
+      <div class="kixro-account__toolbar">
+        <div class="kixro-page-header kixro-page-header--compact">
+          <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
+          <h1 class="kixro-page-header__title">{{ section.settings.heading }}</h1>
+        </div>
+        <a href="{{ routes.account_logout_url }}" class="kixro-account__logout">
+          {{ section.settings.logout_label }}
+        </a>
+      </div>
+
+      {%- if customer.orders.size == 0 -%}
+        <div class="kixro-account__welcome-card">
+          <div class="kixro-account__welcome-copy">
+            <h2 class="kixro-account__welcome-title">{{ section.settings.empty_heading }}</h2>
+            <p class="kixro-account__welcome-text">{{ section.settings.empty_text }}</p>
+          </div>
+          <a href="{{ routes.root_url }}" class="kixro-btn kixro-btn--primary">
+            {{ section.settings.empty_button }}
+          </a>
+        </div>
+      {%- else -%}
+        <div class="kixro-account__orders">
+          <h2 class="kixro-account__orders-title">{{ section.settings.orders_heading }}</h2>
+          {% paginate customer.orders by 20 %}
+            <div class="kixro-account__orders-table-wrap">
+              <table class="kixro-account__orders-table">
+                <thead>
+                  <tr>
+                    <th scope="col">{{ 'customer.orders.order_number' | t }}</th>
+                    <th scope="col">{{ 'customer.orders.date' | t }}</th>
+                    <th scope="col">{{ 'customer.orders.payment_status' | t }}</th>
+                    <th scope="col">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                    <th scope="col">{{ 'customer.orders.total' | t }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%- for order in customer.orders -%}
+                    <tr>
+                      <td data-label="{{ 'customer.orders.order_number' | t }}">
+                        <a href="{{ order.customer_url }}">{{ order.name }}</a>
+                      </td>
+                      <td data-label="{{ 'customer.orders.date' | t }}">
+                        {{ order.created_at | time_tag: format: 'date' }}
+                      </td>
+                      <td data-label="{{ 'customer.orders.payment_status' | t }}">
+                        {{ order.financial_status_label }}
+                      </td>
+                      <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">
+                        {{ order.fulfillment_status_label }}
+                      </td>
+                      <td data-label="{{ 'customer.orders.total' | t }}">
+                        {{ order.total_net_amount | money_with_currency }}
+                      </td>
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+            </div>
+            {%- if paginate.pages > 1 -%}
+              <nav class="kixro-account__pagination" aria-label="{{ 'general.pagination.label' | t }}">
+                {%- if paginate.previous -%}
+                  <a href="{{ paginate.previous.url }}">{{ 'general.pagination.previous' | t }}</a>
+                {%- endif -%}
+                <span>{{ paginate.current_page }} / {{ paginate.pages }}</span>
+                {%- if paginate.next -%}
+                  <a href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }}</a>
+                {%- endif -%}
+              </nav>
+            {%- endif -%}
+          {% endpaginate %}
+        </div>
+      {%- endif -%}
+
+      <div class="kixro-account__details">
+        <h2 class="kixro-account__details-title">{{ 'customer.account.details' | t }}</h2>
+        <p class="kixro-account__details-name">{{ customer.name }}</p>
+        <p class="kixro-account__details-email">{{ customer.email }}</p>
+        {%- if customer.default_address -%}
+          <div class="kixro-account__address rte">{{ customer.default_address | format_address }}</div>
+        {%- endif -%}
+        <a href="{{ routes.account_addresses_url }}" class="kixro-account__addresses-link">
+          {{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})
+        </a>
+      </div>
+    {%- endunless -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kixro Account",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "My account"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Account"
+    },
+    {
+      "type": "text",
+      "id": "sign_in_heading",
+      "label": "Sign in heading",
+      "default": "Welcome"
+    },
+    {
+      "type": "text",
+      "id": "sign_in_text",
+      "label": "Sign in text",
+      "default": "Sign in to view your orders and account details."
+    },
+    {
+      "type": "text",
+      "id": "sign_in_button",
+      "label": "Sign in button",
+      "default": "Sign in"
+    },
+    {
+      "type": "text",
+      "id": "empty_heading",
+      "label": "Empty orders heading",
+      "default": "Welcome"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty orders text",
+      "default": "Ready to shop?"
+    },
+    {
+      "type": "text",
+      "id": "empty_button",
+      "label": "Empty orders button",
+      "default": "Shop now"
+    },
+    {
+      "type": "text",
+      "id": "orders_heading",
+      "label": "Orders heading",
+      "default": "Order history"
+    },
+    {
+      "type": "text",
+      "id": "logout_label",
+      "label": "Log out label",
+      "default": "Log out"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ]
+}
+{% endschema %}

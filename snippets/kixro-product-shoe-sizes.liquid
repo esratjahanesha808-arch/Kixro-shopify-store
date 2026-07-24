@@ -1,0 +1,31 @@
+{%- comment -%}
+  Pipe-separated shoe sizes from Shopify category metafield (Shoe size).
+  Usage: {% render 'kixro-product-shoe-sizes', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign size_tokens = ''
+  assign size_seen = ''
+
+  assign size_meta = product.metafields.shopify['shoe-size'].value
+  if size_meta == blank
+    assign size_meta = product.metafields.shopify.size.value
+  endif
+
+  if size_meta != blank
+    for entry in size_meta
+      assign raw_label = entry.label | default: entry.title | default: entry
+      assign size_label = raw_label | strip
+      if size_label != blank
+        assign size_key = size_label | downcase | append: ','
+        unless size_seen contains size_key
+          assign size_seen = size_seen | append: size_key
+          if size_tokens != blank
+            assign size_tokens = size_tokens | append: '|'
+          endif
+          assign size_tokens = size_tokens | append: size_label
+        endunless
+      endif
+    endfor
+  endif
+-%}{{- size_tokens -}}

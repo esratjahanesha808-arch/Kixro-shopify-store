@@ -1,0 +1,309 @@
+{{ 'component-facets.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'kixro-facets.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<collection-component data-collection-id="{{ collection.id }}">
+<div class="kixro-shop section-{{ section.id }}-padding">
+  <div class="kixro-container">
+
+    {%- liquid
+      capture kixro_virtual_category_capture
+        render 'kixro-query-param', key: 'category'
+      endcapture
+      assign kixro_virtual_category = kixro_virtual_category_capture | strip | downcase
+      assign kixro_virtual_count = 0
+      assign color_option_name = section.settings.color_option_name | default: 'Color'
+      assign color_order = section.settings.filter_colors | default: 'Black, White, Navy, Brown, Grey, Beige, Tan, Red, Blue, Green, Pink, Orange, Bronze'
+
+      if kixro_virtual_category != blank
+        for product in collections.all.products limit: 250
+          capture kixro_match_capture
+            render 'kixro-category-match', product: product, category: kixro_virtual_category
+          endcapture
+          assign kixro_match_trimmed = kixro_match_capture | strip
+          if kixro_match_trimmed == 'true'
+            assign kixro_virtual_count = kixro_virtual_count | plus: 1
+          endif
+        endfor
+      endif
+
+      capture kixro_catalog_colors_capture
+        render 'kixro-store-color-list', option_name: color_option_name, color_order: color_order
+      endcapture
+      assign kixro_catalog_colors = kixro_catalog_colors_capture | strip
+    -%}
+
+    <script type="application/json" id="KixroCatalogColors">[
+      {%- assign catalog_first = true -%}
+      {%- for product in collections.all.products limit: 250 -%}
+        {%- if kixro_virtual_category != blank -%}
+          {%- capture kixro_match_capture -%}
+            {%- render 'kixro-category-match', product: product, category: kixro_virtual_category -%}
+          {%- endcapture -%}
+          {%- assign kixro_match_trimmed = kixro_match_capture | strip -%}
+          {%- unless kixro_match_trimmed == 'true' -%}{%- continue -%}{%- endunless -%}
+        {%- endif -%}
+        {%- capture catalog_colors_capture -%}
+          {%- render 'kixro-product-colors', product: product, option_name: color_option_name -%}
+        {%- endcapture -%}
+        {%- capture catalog_variants_capture -%}
+          {%- render 'kixro-product-color-variants', product: product, option_name: color_option_name -%}
+        {%- endcapture -%}
+        {%- assign catalog_colors_line = catalog_colors_capture | strip -%}
+        {%- assign catalog_variants_json = catalog_variants_capture | strip -%}
+        {%- if catalog_colors_line != blank -%}
+          {%- unless catalog_first -%},{%- endunless -%}
+          {"handle":{{ product.handle | json }},"colors":{{ catalog_colors_line | split: '|' | json }},"variants":{% if catalog_variants_json != blank %}{{ catalog_variants_json }}{% else %}{}{% endif %}}
+          {%- assign catalog_first = false -%}
+        {%- endif -%}
+      {%- endfor -%}
+    ]</script>
+
+    {%- liquid
+      assign grid_per_page = section.settings.products_per_page
+      if section.settings.enable_filtering
+        assign grid_per_page = 250
+      endif
+    -%}
+
+    {%- paginate collection.products by grid_per_page -%}
+
+      <div class="kixro-shop__layout facets-vertical">
+
+        {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+          <aside class="kixro-shop__sidebar kixro-shop__sidebar--desktop facets-wrapper" id="main-collection-filters" data-id="{{ section.id }}">
+            <p class="kixro-shop__filter-title">Filter by</p>
+            {% render 'facets',
+              results: collection,
+              enable_filtering: section.settings.enable_filtering,
+              enable_sorting: false,
+              filter_type: 'vertical',
+              paginate: paginate,
+              kixro_custom_color_filter: true,
+              kixro_catalog_colors: kixro_catalog_colors,
+              kixro_facets_mode: 'desktop',
+              section: section
+            %}
+          </aside>
+        {%- endif -%}
+
+        <div class="kixro-shop__main product-grid-container" id="ProductGridContainer">
+
+          {%- comment -%} Toolbar — count + sort + mobile filter {%- endcomment -%}
+          <div class="kixro-shop__toolbar">
+            <div class="kixro-shop__toolbar-start">
+            <p class="kixro-shop__range" data-kixro-default-range="
+              {%- if kixro_virtual_category != blank -%}
+                {%- if kixro_virtual_count > 0 -%}
+                  1&ndash;{{ kixro_virtual_count }} of {{ kixro_virtual_count }} products
+                {%- else -%}
+                  0 products
+                {%- endif -%}
+              {%- elsif collection.products_count > 0 -%}
+                {{ paginate.current_offset | plus: 1 }}&ndash;{{ paginate.current_offset | plus: collection.products.size }} of {{ collection.products_count }} products
+              {%- else -%}
+                0 products
+              {%- endif -%}
+            ">
+              {%- if kixro_virtual_category != blank -%}
+                {%- if kixro_virtual_count > 0 -%}
+                  1&ndash;{{ kixro_virtual_count }} of {{ kixro_virtual_count }} products
+                {%- else -%}
+                  0 products
+                {%- endif -%}
+              {%- elsif collection.products_count > 0 -%}
+                {{ paginate.current_offset | plus: 1 }}&ndash;{{ paginate.current_offset | plus: collection.products.size }} of {{ collection.products_count }} products
+              {%- else -%}
+                0 products
+              {%- endif -%}
+            </p>
+            </div>
+
+            <div class="kixro-shop__toolbar-end">
+            {%- if section.settings.enable_sorting -%}
+              <facet-filters-form class="kixro-shop__sort-wrap">
+                <form id="FacetSortForm">
+                  <label for="SortBy" class="kixro-shop__sort-label">Sort</label>
+                  {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                  <select name="sort_by" id="SortBy" class="kixro-shop__sort-select">
+                    {%- for option in collection.sort_options -%}
+                      <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected{% endif %}>
+                        {{ option.name }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                </form>
+              </facet-filters-form>
+            {%- endif -%}
+
+            {%- if section.settings.enable_filtering -%}
+              <div class="kixro-shop__mobile-filter">
+                {% render 'facets',
+                  results: collection,
+                  enable_filtering: section.settings.enable_filtering,
+                  enable_sorting: false,
+                  filter_type: 'vertical',
+                  paginate: paginate,
+                  kixro_custom_color_filter: true,
+                  kixro_catalog_colors: kixro_catalog_colors,
+                  kixro_facets_mode: 'mobile',
+                  section: section
+                %}
+              </div>
+            {%- endif -%}
+            </div>
+          </div>
+
+          {%- if kixro_virtual_category != blank and kixro_virtual_count == 0 -%}
+            <div class="collection kixro-shop__empty" id="product-grid" data-id="{{ section.id }}">
+              <h2>No products found</h2>
+              <p>Try adjusting your filters or browse our full collection.</p>
+              <a href="{{ routes.all_products_collection_url }}" class="kixro-btn kixro-btn--primary">Shop All</a>
+            </div>
+          {%- elsif kixro_virtual_category == blank and collection.products.size == 0 -%}
+            <div class="collection kixro-shop__empty" id="product-grid" data-id="{{ section.id }}">
+              <h2>No products found</h2>
+              <p>Try adjusting your filters or browse our full collection.</p>
+              <a href="{{ routes.all_products_collection_url }}" class="kixro-btn kixro-btn--primary">Shop All</a>
+            </div>
+          {%- else -%}
+            <div class="collection">
+              <ul class="kixro-product-grid kixro-shop__grid" id="product-grid" data-id="{{ section.id }}">
+                {%- if kixro_virtual_category != blank -%}
+                  {%- for product in collections.all.products limit: 250 -%}
+                    {%- capture kixro_match_capture -%}
+                      {%- render 'kixro-category-match', product: product, category: kixro_virtual_category -%}
+                    {%- endcapture -%}
+                    {%- assign kixro_match_trimmed = kixro_match_capture | strip -%}
+                    {%- unless kixro_match_trimmed == 'true' -%}{%- continue -%}{%- endunless -%}
+                    {%- capture product_color_tokens -%}
+                      {%- render 'kixro-product-colors', product: product, option_name: section.settings.color_option_name -%}
+                    {%- endcapture -%}
+                    {%- assign product_color_tokens = product_color_tokens | strip -%}
+                    <li
+                      class="kixro-shop__grid-item"
+                      data-product-handle="{{ product.handle | escape }}"
+                      {% if product_color_tokens != blank %} data-kixro-colors="{{ product_color_tokens | escape }}"{% endif %}
+                    >
+                      {% render 'product-card', product: product %}
+                    </li>
+                  {%- endfor -%}
+                {%- else -%}
+                {%- for product in collection.products -%}
+                  {%- capture product_color_tokens -%}
+                    {%- render 'kixro-product-colors', product: product, option_name: section.settings.color_option_name -%}
+                  {%- endcapture -%}
+                  {%- assign product_color_tokens = product_color_tokens | strip -%}
+                  <li
+                    class="kixro-shop__grid-item"
+                    data-product-handle="{{ product.handle | escape }}"
+                    {% if product_color_tokens != blank %} data-kixro-colors="{{ product_color_tokens | escape }}"{% endif %}
+                  >
+                    {% render 'product-card', product: product %}
+                  </li>
+                {%- endfor -%}
+                {%- endif -%}
+              </ul>
+
+              {%- if kixro_virtual_category == blank and paginate.pages > 1 -%}
+                <nav class="kixro-shop__pagination" aria-label="Pagination">
+                  {%- if paginate.previous -%}
+                    <a href="{{ paginate.previous.url }}" class="kixro-shop__page-btn" aria-label="Previous page">&larr;</a>
+                  {%- endif -%}
+                  {%- for part in paginate.parts -%}
+                    {%- if part.is_link -%}
+                      <a href="{{ part.url }}" class="kixro-shop__page-num">{{ part.title }}</a>
+                    {%- elsif part.title == paginate.current_page -%}
+                      <span class="kixro-shop__page-num is-current" aria-current="page">{{ part.title }}</span>
+                    {%- else -%}
+                      <span class="kixro-shop__page-ellipsis">{{ part.title }}</span>
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if paginate.next -%}
+                    <a href="{{ paginate.next.url }}" class="kixro-shop__page-btn" aria-label="Next page">&rarr;</a>
+                  {%- endif -%}
+                </nav>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+      </div>
+
+    {%- endpaginate -%}
+
+  </div>
+</div>
+</collection-component>
+
+{% schema %}
+{
+  "name": "Kixro Collection Grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 9,
+      "label": "Products per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Color filter"
+    },
+    {
+      "type": "text",
+      "id": "color_option_name",
+      "label": "Color option name on products",
+      "default": "Color",
+      "info": "Must match the variant option name in Shopify (e.g. Color). Enable Color filter in Search & Discovery for best results."
+    },
+    {
+      "type": "textarea",
+      "id": "filter_colors",
+      "label": "Colors to show",
+      "default": "Black, White, Navy, Brown, Grey, Beige, Tan, Red, Blue, Green, Pink, Orange, Bronze",
+      "info": "Sort order for swatches. Swatches appear only for Color variant values that exist on products in Shopify."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 12,
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 32,
+      "label": "Padding bottom"
+    }
+  ]
+}
+{% endschema %}

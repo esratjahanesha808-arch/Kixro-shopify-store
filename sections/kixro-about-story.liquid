@@ -1,0 +1,69 @@
+<div class="kixro-about-story">
+  <div class="kixro-container">
+    <div class="kixro-about-story__grid">
+      <div class="kixro-about-story__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 900
+            | image_tag:
+              class: 'kixro-about-story__img',
+              loading: 'lazy',
+              sizes: '(min-width: 1024px) 440px, 100vw',
+              widths: '400, 600, 900',
+              alt: section.settings.heading
+          }}
+        {%- else -%}
+          <img
+            class="kixro-about-story__img"
+            src="{{ 'category-shoes.png' | asset_url }}"
+            alt="{{ section.settings.heading | escape }}"
+            loading="lazy"
+            width="900"
+            height="900"
+          >
+        {%- endif -%}
+      </div>
+
+      <div class="kixro-about-story__content">
+        <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
+        <h2 class="kixro-section-title kixro-about-story__title">{{ section.settings.heading }}</h2>
+        <div class="kixro-about-story__text rte">
+          {{ section.settings.story }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kixro About Story",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Story image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Brand Story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Modern style meets everyday comfort"
+    },
+    {
+      "type": "richtext",
+      "id": "story",
+      "label": "Story content",
+      "default": "<p>Welcome to Kixro, where modern style meets everyday comfort. Born from a passion for premium footwear, Kixro was created for the young man who demands more from his shoes — more style, more confidence, and more comfort, from the first step of the day to the last.</p><p>We believe that great footwear can transform your confidence, elevate your style, and carry you through every moment with ease. That's why we craft every pair of Kixro shoes with precision, premium materials, and modern designs that feel as good as they look.</p><p>Kixro is more than just a shoe brand — it's a statement of confidence, style, and intentional living. For the trendsetters, the go-getters, and the style-conscious men who walk their own path, Kixro is your perfect companion for every step of the journey.</p>"
+    }
+  ],
+  "presets": [{ "name": "Kixro About Story" }]
+}
+{% endschema %}

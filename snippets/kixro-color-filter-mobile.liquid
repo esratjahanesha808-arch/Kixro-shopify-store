@@ -1,0 +1,90 @@
+{%- comment -%}
+  Mobile drawer color filter — same client-side logic as desktop kixro-color-filter.
+{%- endcomment -%}
+
+{%- liquid
+  assign swatch_list = kixro_catalog_colors | default: '' | split: '|||'
+  assign color_filter = nil
+
+  for filter in results.filters
+    assign label_down = filter.label | downcase
+    assign param_down = filter.param_name | downcase
+    if label_down contains 'color' or label_down contains 'colour' or param_down contains 'color' or param_down contains 'colour'
+      assign color_filter = filter
+      break
+    endif
+  endfor
+-%}
+
+{%- if swatch_list.size > 0 and swatch_list[0] != blank -%}
+  <details
+    id="Details-Mobile-kixro-color-{{ section.id }}"
+    class="mobile-facets__details js-filter kixro-color-filter-mobile"
+    data-index="mobile-kixro-color"
+    data-kixro-filter-mode="client"
+  >
+    <summary class="mobile-facets__summary focus-inset">
+      <div>
+        <span>{{ color_filter.label | default: 'Color' }}</span>
+        <span class="mobile-facets__arrow">
+          {{- 'icon-arrow.svg' | inline_asset_content -}}
+        </span>
+      </div>
+    </summary>
+    <div
+      id="FacetMobile-kixro-color-{{ section.id }}"
+      class="mobile-facets__submenu gradient"
+    >
+      <button
+        class="mobile-facets__close-button link link--text focus-inset"
+        aria-expanded="true"
+        type="button"
+      >
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+        <span>{{ color_filter.label | default: 'Color' }}</span>
+      </button>
+
+      <p class="kixro-color-filter__selected" data-kixro-color-selected aria-live="polite"></p>
+
+      <ul class="kixro-color-filter__swatches kixro-color-filter__swatches--mobile list-unstyled" role="list">
+        {%- assign swatch_seen = '' -%}
+        {%- for label in swatch_list -%}
+          {%- assign display_label = label | strip -%}
+          {%- if display_label != blank -%}
+            {%- assign label_down = display_label | downcase -%}
+            {%- if label_down == 'grey' -%}{%- assign label_down = 'gray' -%}{%- endif -%}
+            {%- assign label_key = label_down | append: ',' -%}
+            {%- unless swatch_seen contains label_key -%}
+              {%- assign swatch_seen = swatch_seen | append: label_key -%}
+            <li class="kixro-color-filter__swatch-item">
+              <button
+                type="button"
+                class="kixro-color-filter__swatch-btn"
+                data-kixro-color-btn
+                data-color-label="{{ display_label | escape }}"
+                aria-label="{{ display_label | escape }}"
+                aria-pressed="false"
+                title="{{ display_label | escape }}"
+              >
+                {% render 'kixro-color-swatch', color_name: display_label %}
+              </button>
+            </li>
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+
+      <button type="button" class="kixro-color-filter__clear hidden" data-kixro-color-clear>Clear color</button>
+
+      <div class="mobile-facets__footer gradient">
+        <button
+          type="button"
+          class="button button--primary"
+          onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+        >
+          {{ 'products.facets.apply' | t }}
+        </button>
+      </div>
+    </div>
+  </details>
+{%- endif -%}

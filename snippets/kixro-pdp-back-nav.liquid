@@ -1,0 +1,42 @@
+{% comment %}
+  PDP back control — header bar (product pages) or inline fallback.
+  Uses browser history when same-origin referrer exists,
+  otherwise falls back to the product's primary collection or all products.
+
+  Accepts:
+  - product: {Object} Product liquid object
+  - variant: {String} Optional. Pass "header" for compact header icon style.
+{% endcomment %}
+
+{%- liquid
+  assign kixro_pdp_back_url = routes.all_products_collection_url
+
+  if product.collections.size > 0
+    for collection in product.collections
+      unless collection.handle == 'all' or collection.handle == 'frontpage'
+        assign kixro_pdp_back_url = collection.url
+        break
+      endunless
+    endfor
+
+    if kixro_pdp_back_url == routes.all_products_collection_url
+      assign kixro_pdp_back_url = product.collections.first.url
+    endif
+  endif
+-%}
+
+<nav
+  class="kixro-pdp__back-nav{% if variant == 'header' %} kixro-pdp__back-nav--header{% endif %}"
+  aria-label="Back"
+>
+  <a
+    href="{{ kixro_pdp_back_url }}"
+    class="kixro-pdp__back-btn{% if variant == 'header' %} kixro-pdp__back-btn--header link focus-inset{% endif %}"
+    onclick="if (window.history.length > 1 && document.referrer && new URL(document.referrer).origin === window.location.origin) { event.preventDefault(); window.history.back(); }"
+  >
+    <span class="kixro-pdp__back-btn-icon svg-wrapper" aria-hidden="true">
+      {{- 'icon-caret.svg' | inline_asset_content -}}
+    </span>
+    <span class="kixro-pdp__back-btn-label">Back</span>
+  </a>
+</nav>

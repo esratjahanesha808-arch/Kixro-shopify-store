@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "kixro-account-page",
+      "settings": {
+        "eyebrow": "My account",
+        "heading": "Account",
+        "empty_heading": "Welcome",
+        "empty_text": "Ready to shop?",
+        "empty_button": "Shop now",
+        "padding_top": 48,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

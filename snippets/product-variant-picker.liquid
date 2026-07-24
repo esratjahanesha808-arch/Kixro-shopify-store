@@ -1,0 +1,127 @@
+{% comment %}
+  Renders product variant-picker — color swatches + size pills on PDP.
+{% endcomment %}
+
+{%- liquid
+  assign size_option = nil
+  for option in product.options_with_values
+    assign opt_name_down = option.name | downcase
+    if opt_name_down contains 'size'
+      assign size_option = option
+    endif
+  endfor
+-%}
+
+{%- if product.has_only_default_variant -%}
+  {% render 'kixro-size-picker',
+    product: product,
+    product_form_id: product_form_id,
+    section: section,
+    block: block
+  %}
+{%- else -%}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    data-section="{{ section.id }}"
+    data-product-handle="{{ product.handle }}"
+    data-product-title="{{ product.title | escape }}"
+    data-product-id="{{ product.id }}"
+    data-currency-code="{{ cart.currency.iso_code }}"
+    {% # theme-check-disable %}
+    data-selected-price-amount="{{ product.selected_or_first_available_variant.price | default: 0 | money_amount | escape }}"
+    {% # theme-check-enable %}
+    {{ block.shopify_attributes }}
+  >
+    {%- for option in product.options_with_values -%}
+      {%- liquid
+        assign opt_name_down = option.name | downcase
+        assign is_color = false
+        assign is_size = false
+        if opt_name_down contains 'color' or opt_name_down contains 'colour'
+          assign is_color = true
+        endif
+        if opt_name_down contains 'size'
+          assign is_size = true
+        endif
+
+        assign swatch_count = option.values | map: 'swatch' | compact | size
+        assign picker_type = block.settings.picker_type
+        if is_size
+          assign picker_type = 'button'
+        elsif is_color
+          if swatch_count > 0 and block.settings.swatch_shape != 'none'
+            assign picker_type = 'swatch'
+          else
+            assign picker_type = 'kixro_color'
+          endif
+        endif
+      -%}
+
+      {%- if is_color and picker_type == 'kixro_color' -%}
+        <fieldset class="js product-form__input product-form__input--swatch kixro-color-variant-picker">
+          <legend class="form__label">{{ option.name }}</legend>
+          <div class="kixro-color-variant-picker__options">
+            {%- for value in option.values -%}
+              {%- capture input_id -%}{{ section.id }}-color-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
+              {%- capture input_name -%}{{ option.name }}-{{ option.position }}{%- endcapture -%}
+              <div class="kixro-color-variant-picker__option">
+                <input
+                  type="radio"
+                  id="{{ input_id }}"
+                  name="{{ input_name | escape }}"
+                  value="{{ value | escape }}"
+                  form="{{ product_form_id }}"
+                  class="kixro-color-variant-picker__input visually-hidden"
+                  data-option-value-id="{{ value.id }}"
+                  data-option-name="{{ option.name | escape }}"
+                  {% if value.selected %}checked{% endif %}
+                  {% unless value.available %}disabled{% endunless %}
+                >
+                <label for="{{ input_id }}" class="kixro-color-variant-picker__label{% unless value.available %} is-unavailable{% endunless %}">
+                  {% render 'kixro-color-swatch', color_name: value %}
+                  <span class="visually-hidden">{{ value | escape }}</span>
+                </label>
+              </div>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- else -%}
+        {%- liquid
+          assign fieldset_class = 'js product-form__input product-form__input--'
+          if picker_type == 'swatch'
+            assign fieldset_class = fieldset_class | append: 'swatch kixro-color-swatch-picker'
+          else
+            assign fieldset_class = fieldset_class | append: 'pill'
+            if is_size
+              assign fieldset_class = fieldset_class | append: ' kixro-size-picker'
+            endif
+          endif
+        -%}
+        <fieldset class="{{ fieldset_class }}">
+          <legend class="form__label">
+            {%- if is_size -%}Select Size{%- else -%}{{ option.name }}{%- endif -%}
+          </legend>
+          {% render 'product-variant-options',
+            product: product,
+            option: option,
+            block: block,
+            picker_type: picker_type
+          %}
+        </fieldset>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <script type="application/json" data-selected-variant>
+      {{ product.selected_or_first_available_variant | json }}
+    </script>
+  </variant-selects>
+
+  {%- if size_option == nil -%}
+    {% render 'kixro-size-picker',
+      product: product,
+      product_form_id: product_form_id,
+      section: section,
+      block: block
+    %}
+  {%- endif -%}
+{%- endif -%}

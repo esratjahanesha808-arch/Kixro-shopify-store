@@ -1,0 +1,114 @@
+<div class="kixro-section" style="background:var(--kixro-surface);">
+  <div class="kixro-container">
+
+    <div class="kixro-section-header">
+      <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
+      <h2 class="kixro-section-title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="kixro-section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- assign source_collection = collections[section.settings.collection] -%}
+    {%- assign products_to_show  = section.settings.products_to_show -%}
+    {%- assign tag_filter = section.settings.tag_filter -%}
+
+    <div class="kixro-product-grid">
+      {%- liquid
+        if source_collection != blank and source_collection.products_count > 0
+          for product in source_collection.products limit: products_to_show
+            render 'product-card', product: product
+          endfor
+        else
+          assign shown = 0
+          for product in collections.all.products limit: 60
+            if shown >= products_to_show
+              break
+            endif
+            if tag_filter == blank or product.tags contains tag_filter
+              render 'product-card', product: product
+              assign shown = shown | plus: 1
+            endif
+          endfor
+        endif
+      -%}
+    </div>
+
+    {%- if section.settings.show_cta -%}
+      <div class="kixro-section-cta">
+        <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="kixro-btn kixro-btn--primary kixro-btn--lg">
+          {{ section.settings.cta_label }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kixro Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Editor's Choice"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Hand-picked styles our team can't stop wearing."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection to display"
+    },
+    {
+      "type": "text",
+      "id": "tag_filter",
+      "label": "Filter by product tag",
+      "info": "Only show products with this tag. Leave blank to show all."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "See More Collections"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kixro Featured Collection"
+    }
+  ]
+}
+{% endschema %}

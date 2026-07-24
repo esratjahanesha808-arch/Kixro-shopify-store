@@ -1,0 +1,57 @@
+{
+
+  "sections": {
+
+    "kixro_collection_banner": {
+
+      "type": "kixro-collection-banner",
+
+      "settings": {
+
+        "eyebrow": "Shop Collection",
+
+        "show_product_count": true,
+
+        "show_description": true,
+
+        "default_description": "Explore our curated selection of premium footwear — crafted for comfort, built for style.",
+
+        "subtext": "Free shipping on orders over $100 · Easy 30-day returns"
+
+      }
+
+    },
+
+    "kixro_collection_grid": {
+
+      "type": "kixro-collection-grid",
+
+      "settings": {
+
+        "products_per_page": 9,
+
+        "enable_filtering": true,
+
+        "enable_sorting": true,
+
+        "padding_top": 8,
+
+        "padding_bottom": 32
+
+      }
+
+    }
+
+  },
+
+  "order": [
+
+    "kixro_collection_banner",
+
+    "kixro_collection_grid"
+
+  ]
+
+}
+
+

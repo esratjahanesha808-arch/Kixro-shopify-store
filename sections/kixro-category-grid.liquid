@@ -1,0 +1,145 @@
+<div class="kixro-section" style="background:var(--kixro-surface);">
+  <div class="kixro-container">
+
+    <div class="kixro-section-header">
+      <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
+      <h2 class="kixro-section-title">{{ section.settings.heading }}</h2>
+    </div>
+
+    <div class="kixro-category-grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign cat_image   = block.settings.image
+          assign cat_fallback = block.settings.fallback_image
+          assign cat_name    = block.settings.label
+          assign cat_link_setting = block.settings.link | default: '/collections/all'
+        -%}
+        {%- capture cat_url -%}{% render 'kixro-category-url', link: cat_link_setting %}{%- endcapture -%}
+
+        <a
+          href="{{ cat_url | strip }}"
+          class="kixro-category-card"
+          aria-label="Shop {{ cat_name | escape }}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if cat_image != blank -%}
+            <img
+              src="{{ cat_image | image_url: width: 600 }}"
+              srcset="{{ cat_image | image_url: width: 400 }} 400w,
+                      {{ cat_image | image_url: width: 600 }} 600w,
+                      {{ cat_image | image_url: width: 800 }} 800w"
+              sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 50vw"
+              alt="{{ cat_name | escape }}"
+              loading="lazy"
+              width="600" height="800"
+            >
+          {%- elsif cat_fallback != blank -%}
+            <img
+              src="{{ cat_fallback | asset_url }}"
+              alt="{{ cat_name | escape }}"
+              loading="lazy"
+              width="600" height="800"
+            >
+          {%- endif -%}
+
+          <div class="kixro-category-card__overlay"></div>
+
+          <div class="kixro-category-card__label">
+            <span class="kixro-category-card__name">{{ cat_name }}</span>
+            <span class="kixro-category-card__cta">
+              Shop Now
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kixro Category Grid",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Shop by Style"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Find Your Perfect Pair"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category image"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "Fallback asset filename",
+          "default": "category-shoes.png"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Category name",
+          "default": "Shoes"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kixro Category Grid",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "fallback_image": "category-shoes.png",
+            "label": "Shoes"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "fallback_image": "category-boots.png",
+            "label": "Boots"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "fallback_image": "category-loafers.png",
+            "label": "Loafers"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "fallback_image": "category-sandals.png",
+            "label": "Sandals"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

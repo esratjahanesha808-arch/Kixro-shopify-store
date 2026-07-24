@@ -1,0 +1,106 @@
+{%- liquid
+  capture kixro_virtual_category_capture
+    render 'kixro-query-param', key: 'category'
+  endcapture
+  assign kixro_virtual_category = kixro_virtual_category_capture | strip | downcase
+  assign kixro_banner_title = collection.title
+  assign kixro_banner_count = collection.products_count
+
+  case kixro_virtual_category
+    when 'shoes'
+      assign kixro_banner_title = 'Shoes'
+      assign kixro_banner_description = 'Step into style with our curated range of sneakers and everyday footwear — built for comfort from street to office.'
+    when 'sandals'
+      assign kixro_banner_title = 'Sandals'
+      assign kixro_banner_description = 'Lightweight sandals and clogs designed for warm days, easy wear, and all-day comfort.'
+    when 'boots'
+      assign kixro_banner_title = 'Boots'
+    when 'loafers'
+      assign kixro_banner_title = 'Loafers'
+      assign kixro_banner_description = 'Refined slip-ons and mules for effortless style — polished enough for work, relaxed enough for weekends.'
+  endcase
+
+  if kixro_virtual_category != blank
+    assign kixro_banner_count = 0
+    for product in collections.all.products limit: 250
+      capture kixro_match_capture
+        render 'kixro-category-match', product: product, category: kixro_virtual_category
+      endcapture
+      assign kixro_match_trimmed = kixro_match_capture | strip
+      if kixro_match_trimmed == 'true'
+        assign kixro_banner_count = kixro_banner_count | plus: 1
+      endif
+    endfor
+  endif
+-%}
+
+<div class="kixro-collection-hero">
+  <div class="kixro-container">
+    <div class="kixro-section-header kixro-collection-hero__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      <h1 class="kixro-section-title">{{ kixro_banner_title }}</h1>
+      <span class="kixro-collection-hero__rule" aria-hidden="true"></span>
+
+      {%- if section.settings.show_product_count -%}
+        <p class="kixro-collection-hero__count">
+          {{ kixro_banner_count }}
+          {% if kixro_banner_count == 1 %} style{% else %} styles{% endif %}
+          available
+        </p>
+      {%- endif -%}
+
+      {%- if kixro_virtual_category != blank and kixro_banner_description != blank -%}
+        <p class="kixro-collection-hero__desc">{{ kixro_banner_description }}</p>
+      {%- elsif section.settings.show_description and collection.description != blank -%}
+        <div class="kixro-collection-hero__desc">{{ collection.description }}</div>
+      {%- elsif section.settings.default_description != blank -%}
+        <p class="kixro-collection-hero__desc">{{ section.settings.default_description }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.subtext != blank -%}
+        <p class="kixro-collection-hero__subtext">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Kixro Collection Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Shop Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "default_description",
+      "label": "Description",
+      "default": "Explore our curated selection of premium footwear — crafted for comfort, built for style."
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Supporting line",
+      "default": "Free shipping on orders over $100 · Easy 30-day returns"
+    }
+  ]
+}
+{% endschema %}

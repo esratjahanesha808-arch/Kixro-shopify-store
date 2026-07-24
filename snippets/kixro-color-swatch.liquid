@@ -1,0 +1,57 @@
+{%- comment -%}
+  Renders a color circle — uses Shopify swatch when available, else hex fallback.
+{%- endcomment -%}
+
+{%- liquid
+  assign color_key = color_name | downcase | strip
+  assign swatch_hex = '#cccccc'
+  assign swatch_style = ''
+
+  if swatch.image
+    assign swatch_image = swatch.image | image_url: width: 80
+    assign swatch_style = '--swatch--background: url(' | append: swatch_image | append: '); background-image: url(' | append: swatch_image | append: '); background-size: cover; background-position: center;'
+  elsif swatch.color
+    assign swatch_rgb = 'rgb(' | append: swatch.color.rgb | append: ')'
+    assign swatch_style = '--swatch--background: ' | append: swatch_rgb | append: '; background-color: ' | append: swatch_rgb | append: ';'
+  else
+    case color_key
+      when 'black'
+        assign swatch_hex = '#000000'
+      when 'white'
+        assign swatch_hex = '#ffffff'
+      when 'navy', 'navy blue'
+        assign swatch_hex = '#1B4965'
+      when 'brown'
+        assign swatch_hex = '#6B4226'
+      when 'bronze'
+        assign swatch_hex = '#8C6239'
+      when 'grey', 'gray'
+        assign swatch_hex = '#808080'
+      when 'beige', 'tan'
+        assign swatch_hex = '#D2B48C'
+      when 'red'
+        assign swatch_hex = '#C0392B'
+      when 'blue'
+        assign swatch_hex = '#2980B9'
+      when 'green'
+        assign swatch_hex = '#27AE60'
+      when 'pink'
+        assign swatch_hex = '#F8BBD0'
+      when 'orange'
+        assign swatch_hex = '#E67E22'
+      when 'gold', 'yellow'
+        assign swatch_hex = '#F1C40F'
+      when 'cream', 'ivory'
+        assign swatch_hex = '#FBF5EF'
+      when 'burgundy', 'maroon'
+        assign swatch_hex = '#800020'
+    endcase
+    assign swatch_style = '--swatch--background: ' | append: swatch_hex | append: '; background-color: ' | append: swatch_hex | append: ';'
+  endif
+-%}
+
+<span
+  class="swatch kixro-color-swatch{% if color_key == 'white' or color_key == 'cream' or color_key == 'ivory' %} swatch--light{% endif %}"
+  style="{{ swatch_style }}"
+  aria-hidden="true"
+></span>

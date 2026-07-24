@@ -1,0 +1,175 @@
+{
+  "sections": {
+    "kixro_hero": {
+      "type": "kixro-hero",
+      "settings": {
+        "hero_height": 85,
+        "autoplay": true,
+        "interval": 5000,
+        "slide_1_fallback": "hero-1.png",
+        "slide_1_eyebrow": "New Collection 2026",
+        "slide_1_heading": "Sneakers That Defy Your Everyday Look",
+        "slide_1_subtext": "Discover footwear crafted for those who move with purpose — premium styles, built for the streets.",
+        "slide_1_btn1_label": "Shop Now",
+        "slide_1_btn1_url": "/collections/all",
+        "slide_1_btn2_label": "New Arrivals",
+        "slide_1_btn2_url": "/collections/new-arrivals",
+        "slide_2_fallback": "hero-2.png",
+        "slide_2_eyebrow": "Best Sellers",
+        "slide_2_heading": "Move Boldly, Step Differently",
+        "slide_2_subtext": "Our best-loved styles — reimagined. Comfort meets bold design in every pair.",
+        "slide_2_btn1_label": "Shop Best Sellers",
+        "slide_2_btn1_url": "/collections/best-sellers",
+        "slide_2_btn2_label": "",
+        "slide_3_fallback": "hero-3.png",
+        "slide_3_eyebrow": "Trending Now",
+        "slide_3_heading": "Your Style, Your Statement",
+        "slide_3_subtext": "Trending silhouettes for the season. Express who you are with every step.",
+        "slide_3_btn1_label": "Explore Trending",
+        "slide_3_btn1_url": "/collections/trending-now",
+        "slide_3_btn2_label": ""
+      }
+    },
+    "kixro_newly_dropped": {
+      "type": "kixro-newly-dropped",
+      "settings": {
+        "eyebrow": "Fresh Drops",
+        "heading": "Newly Dropped Collections",
+        "subtitle": "The latest styles, just landed. Be the first to step into something new.",
+        "collection": "new-arrivals",
+        "tag_filter": "new-arrivals",
+        "products_to_show": 12,
+        "show_cta": true,
+        "cta_label": "See More Collections",
+        "cta_url": "/collections/all"
+      }
+    },
+    "kixro_category_grid": {
+      "type": "kixro-category-grid",
+      "blocks": {
+        "cat_shoes": {
+          "type": "category",
+          "settings": {
+            "fallback_image": "category-shoes.png",
+            "label": "Shoes",
+            "link": "/collections/shoes"
+          }
+        },
+        "cat_boots": {
+          "type": "category",
+          "settings": {
+            "fallback_image": "category-boots.png",
+            "label": "Boots",
+            "link": "/collections/boots"
+          }
+        },
+        "cat_loafers": {
+          "type": "category",
+          "settings": {
+            "fallback_image": "category-loafers.png",
+            "label": "Loafers",
+            "link": "/collections/loafers"
+          }
+        },
+        "cat_sandals": {
+          "type": "category",
+          "settings": {
+            "fallback_image": "category-sandals.png",
+            "label": "Sandals",
+            "link": "/collections/sandals"
+          }
+        }
+      },
+      "block_order": ["cat_shoes", "cat_boots", "cat_loafers", "cat_sandals"],
+      "settings": {
+        "eyebrow": "Shop by Style",
+        "heading": "Find Your Perfect Pair"
+      }
+    },
+    "kixro_discover_picks": {
+      "type": "kixro-discover-picks",
+      "blocks": {
+        "pick_new_arrivals": {
+          "type": "pick",
+          "settings": {
+            "fallback_image": "pick-new-arrivals.png",
+            "label": "Just In",
+            "title": "New Arrivals",
+            "btn_label": "Shop New Arrivals",
+            "link": "/collections/new-arrivals"
+          }
+        },
+        "pick_best_sellers": {
+          "type": "pick",
+          "settings": {
+            "fallback_image": "pick-best-sellers.png",
+            "label": "Fan Favourites",
+            "title": "Best Sellers",
+            "btn_label": "Shop Best Sellers",
+            "link": "/collections/best-sellers"
+          }
+        },
+        "pick_trending": {
+          "type": "pick",
+          "settings": {
+            "fallback_image": "pick-trending-now.png",
+            "label": "Right Now",
+            "title": "Trending Now",
+            "btn_label": "See What's Trending",
+            "link": "/collections/trending-now"
+          }
+        },
+        "pick_essentials": {
+          "type": "pick",
+          "settings": {
+            "fallback_image": "pick-kixro-essentials.png",
+            "label": "Must Haves",
+            "title": "Kixro Essentials",
+            "btn_label": "Shop Essentials",
+            "link": "/collections/kixro-essentials"
+          }
+        }
+      },
+      "block_order": ["pick_new_arrivals", "pick_best_sellers", "pick_trending", "pick_essentials"],
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "Discover Your Kixro Picks",
+        "subtitle": "Four curated worlds. One signature style."
+      }
+    },
+    "kixro_featured_collection": {
+      "type": "kixro-featured-collection",
+      "settings": {
+        "eyebrow": "Editor's Choice",
+        "heading": "Featured Collection",
+        "subtitle": "Hand-picked styles our team can't stop wearing.",
+        "collection": "best-sellers",
+        "tag_filter": "best-sellers",
+        "products_to_show": 12,
+        "show_cta": true,
+        "cta_label": "See More Collections",
+        "cta_url": "/collections/all"
+      }
+    },
+    "kixro_brand_cta": {
+      "type": "kixro-brand-cta",
+      "settings": {
+        "bg_fallback": "banner-cta.png",
+        "overlay_opacity": 70,
+        "eyebrow": "The Kixro Promise",
+        "heading": "Build Your Style With Confident Steps By Wearing Our Sneakers.",
+        "subtext": "",
+        "btn_label": "Shop Now",
+        "btn_url": "/collections/all"
+      }
+    }
+  },
+  "order": [
+    "kixro_hero",
+    "kixro_category_grid",
+    "kixro_newly_dropped",
+    "kixro_discover_picks",
+    "kixro_featured_collection",
+    "kixro_brand_cta"
+  ]
+}
