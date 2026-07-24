@@ -871,3 +871,22 @@ Products in the store use a **single default variant** (no Size option in Shopif
 1. View homepage preview and check all sections render correctly
 2. Build Phase 2.8 — Footer section
 3. Begin Phase 3 — Homepage Testing & Refinement
+
+---
+
+## Session 30 — 2026-07-24 — GitHub Repository Published
+
+### Completed
+- ✅ Expanded `.gitignore` — excludes `.env`, credentials, `.tmp/`, `node_modules/`, `.cursor/`, test artifacts
+- ✅ Added portfolio-ready `README.md` with preview link, features, stack, and local dev instructions
+- ✅ Initialized git repository and pushed **496 files** to GitHub
+- ✅ Remote: https://github.com/esratjahanesha808-arch/Kixro-shopify-store.git (branch: `main`)
+
+### Files Modified
+- `.gitignore` — expanded
+- `README.md` — NEW
+
+### Next Immediate Action
+1. Add repo link to Upwork/LinkedIn portfolio profiles
+2. Optional: pin the repo on GitHub and add topics (`shopify`, `liquid`, `ecommerce`, `theme-development`)
+3. Phase 8 manual QA (Lighthouse, cross-browser) if not yet run on live dev theme
