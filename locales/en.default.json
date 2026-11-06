@@ -532,5 +532,68 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "kixro": {
+    "account": {
+      "my_account": "MY ACCOUNT",
+      "sign_out": "Sign Out",
+      "order_history": "Order History",
+      "account_settings": "Account Settings",
+      "no_orders_title": "No orders yet",
+      "no_orders_text": "You haven't placed any orders with us yet. When you do, they'll appear here.",
+      "start_shopping": "Start Shopping",
+      "view_details": "View Details",
+      "personal_information": "Personal Information",
+      "full_name": "Full Name",
+      "email": "Email",
+      "orders_placed": "Orders Placed",
+      "total_spent": "Total Spent",
+      "saved_addresses": "Saved Addresses",
+      "manage": "Manage",
+      "manage_all": "Manage all",
+      "default_badge": "Default",
+      "no_addresses": "No saved addresses yet.",
+      "add_address": "Add address",
+      "create_account": "Create Account",
+      "pagination_of": "{{ current }} of {{ total }}"
+    },
+    "collection": {
+      "filter_by": "Filter by",
+      "sort": "Sort",
+      "no_products_heading": "No products found",
+      "no_products_text": "Try adjusting your filters or browse our full collection.",
+      "shop_all": "Shop All",
+      "no_match_heading": "No products found",
+      "no_match_text": "There are no products matching this filter option.",
+      "clear_filter": "Clear Filter"
+    },
+    "category_filter": {
+      "label": "Category",
+      "all": "All Categories",
+      "shoes": "Shoes",
+      "boots": "Boots",
+      "loafers": "Loafers",
+      "sandals": "Sandals",
+      "new_arrivals": "New Arrivals",
+      "best_sellers": "Best Sellers",
+      "trending_now": "Trending Now",
+      "essentials": "Curated Essentials"
+    },
+    "color_filter": {
+      "clear": "Clear color"
+    },
+    "pdp": {
+      "back": "Back"
+    },
+    "contact": {
+      "email_label": "Email",
+      "phone_label": "Phone",
+      "hours_label": "Hours",
+      "address_label": "Address"
+    },
+    "policy": {
+      "fallback_title": "Policy",
+      "our_commitment": "Our Commitment"
+    }
   }
 }

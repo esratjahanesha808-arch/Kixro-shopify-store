@@ -4,8 +4,8 @@
     "theme_name": "Kixro",
     "theme_version": "1.0.0",
     "theme_author": "Kixro",
-    "theme_documentation_url": "https://github.com/esratjahanesha808-arch/Kixro-shopify-store",
-    "theme_support_url": "https://github.com/esratjahanesha808-arch/Kixro-shopify-store/issues"
+    "theme_documentation_url": "https://kixro.example.com/docs",
+    "theme_support_url": "https://kixro.example.com/support"
   },
   {
     "name": "t:settings_schema.logo.name",

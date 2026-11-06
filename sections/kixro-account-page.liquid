@@ -28,7 +28,7 @@
             {{ section.settings.sign_in_button | default: 'Sign In' }}
           </a>
           <a href="{{ routes.account_register_url }}" class="kixro-btn kixro-btn--secondary">
-            Create Account
+            {{ 'kixro.account.create_account' | t }}
           </a>
         </div>
       </div>
@@ -172,19 +172,19 @@
             </div>
             <div class="kixro-profile__settings-card-body">
               <div class="kixro-profile__info-row">
-                <span class="kixro-profile__info-label">Full Name</span>
+                <span class="kixro-profile__info-label">{{ 'kixro.account.full_name' | t }}</span>
                 <span class="kixro-profile__info-value">{{ customer.name }}</span>
               </div>
               <div class="kixro-profile__info-row">
-                <span class="kixro-profile__info-label">Email</span>
+                <span class="kixro-profile__info-label">{{ 'kixro.account.email' | t }}</span>
                 <span class="kixro-profile__info-value">{{ customer.email }}</span>
               </div>
               <div class="kixro-profile__info-row">
-                <span class="kixro-profile__info-label">Orders Placed</span>
+                <span class="kixro-profile__info-label">{{ 'kixro.account.orders_placed' | t }}</span>
                 <span class="kixro-profile__info-value">{{ customer.orders_count }}</span>
               </div>
               <div class="kixro-profile__info-row">
-                <span class="kixro-profile__info-label">Total Spent</span>
+                <span class="kixro-profile__info-label">{{ 'kixro.account.total_spent' | t }}</span>
                 <span class="kixro-profile__info-value">{{ customer.total_spent | money_with_currency }}</span>
               </div>
             </div>
@@ -198,14 +198,14 @@
                 Saved Addresses
               </h2>
               <a href="{{ routes.account_addresses_url }}" class="kixro-profile__settings-link">
-                Manage
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                {{ 'kixro.account.manage' | t }}
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
             <div class="kixro-profile__settings-card-body">
               {%- if customer.default_address -%}
                 <div class="kixro-profile__address-block">
-                  <span class="kixro-profile__address-badge">Default</span>
+                  <span class="kixro-profile__address-badge">{{ 'kixro.account.default_badge' | t }}</span>
                   <address class="kixro-profile__address-formatted">
                     {{- customer.default_address | format_address -}}
                   </address>
@@ -213,13 +213,13 @@
                 {%- if customer.addresses_count > 1 -%}
                   <p class="kixro-profile__address-extra">
                     + {{ customer.addresses_count | minus: 1 }} more address{{ customer.addresses_count | minus: 1 | pluralize: '', 'es' }}
-                    — <a href="{{ routes.account_addresses_url }}">Manage all</a>
+                    — <a href="{{ routes.account_addresses_url }}">{{ 'kixro.account.manage_all' | t }}</a>
                   </p>
                 {%- endif -%}
               {%- else -%}
                 <div class="kixro-profile__empty-mini">
-                  <p>No saved addresses yet.</p>
-                  <a href="{{ routes.account_addresses_url }}" class="kixro-profile__settings-link">Add address</a>
+                  <p>{{ 'kixro.account.no_addresses' | t }}</p>
+                  <a href="{{ routes.account_addresses_url }}" class="kixro-profile__settings-link">{{ 'kixro.account.add_address' | t }}</a>
                 </div>
               {%- endif -%}
             </div>

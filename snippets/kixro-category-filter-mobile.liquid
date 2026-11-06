@@ -59,7 +59,7 @@
 >
   <summary class="mobile-facets__summary focus-inset">
     <div>
-      <span>Category</span>
+      <span>{{ 'kixro.category_filter.label' | t }}</span>
       <span class="mobile-facets__arrow">
         {{- 'icon-arrow.svg' | inline_asset_content -}}
       </span>
@@ -75,7 +75,7 @@
       type="button"
     >
       {{- 'icon-arrow.svg' | inline_asset_content -}}
-      <span>Category</span>
+      <span>{{ 'kixro.category_filter.label' | t }}</span>
     </button>
 
     <ul class="kixro-category-filter__list kixro-category-filter__list--mobile list-unstyled" role="list">
@@ -88,7 +88,7 @@
           aria-pressed="{% if active_cat == blank %}true{% else %}false{% endif %}"
         >
           <span class="kixro-category-filter__radio"></span>
-          <span class="kixro-category-filter__name">All Categories</span>
+          <span class="kixro-category-filter__name">{{ 'kixro.category_filter.all' | t }}</span>
           <span class="kixro-category-filter__count">({{ all_count }})</span>
         </button>
       </li>
@@ -101,7 +101,7 @@
           aria-pressed="{% if active_cat == 'shoes' %}true{% else %}false{% endif %}"
         >
           <span class="kixro-category-filter__radio"></span>
-          <span class="kixro-category-filter__name">Shoes</span>
+          <span class="kixro-category-filter__name">{{ 'kixro.category_filter.shoes' | t }}</span>
           <span class="kixro-category-filter__count">({{ shoes_count }})</span>
         </button>
       </li>
@@ -114,7 +114,7 @@
           aria-pressed="{% if active_cat == 'boots' %}true{% else %}false{% endif %}"
         >
           <span class="kixro-category-filter__radio"></span>
-          <span class="kixro-category-filter__name">Boots</span>
+          <span class="kixro-category-filter__name">{{ 'kixro.category_filter.boots' | t }}</span>
           <span class="kixro-category-filter__count">({{ boots_count }})</span>
         </button>
       </li>
@@ -127,7 +127,7 @@
           aria-pressed="{% if active_cat == 'loafers' %}true{% else %}false{% endif %}"
         >
           <span class="kixro-category-filter__radio"></span>
-          <span class="kixro-category-filter__name">Loafers</span>
+          <span class="kixro-category-filter__name">{{ 'kixro.category_filter.loafers' | t }}</span>
           <span class="kixro-category-filter__count">({{ loafers_count }})</span>
         </button>
       </li>
@@ -140,7 +140,7 @@
           aria-pressed="{% if active_cat == 'sandals' %}true{% else %}false{% endif %}"
         >
           <span class="kixro-category-filter__radio"></span>
-          <span class="kixro-category-filter__name">Sandals</span>
+          <span class="kixro-category-filter__name">{{ 'kixro.category_filter.sandals' | t }}</span>
           <span class="kixro-category-filter__count">({{ sandals_count }})</span>
         </button>
       </li>
@@ -154,7 +154,7 @@
           aria-pressed="{% if active_cat == 'new-arrivals' %}true{% else %}false{% endif %}"
         >
           <span class="kixro-category-filter__radio"></span>
-          <span class="kixro-category-filter__name">New Arrivals</span>
+          <span class="kixro-category-filter__name">{{ 'kixro.category_filter.new_arrivals' | t }}</span>
           <span class="kixro-category-filter__count">({{ new_arrivals_count }})</span>
         </button>
       </li>
@@ -169,7 +169,7 @@
           aria-pressed="{% if active_cat == 'best-sellers' %}true{% else %}false{% endif %}"
         >
           <span class="kixro-category-filter__radio"></span>
-          <span class="kixro-category-filter__name">Best Sellers</span>
+          <span class="kixro-category-filter__name">{{ 'kixro.category_filter.best_sellers' | t }}</span>
           <span class="kixro-category-filter__count">({{ best_sellers_count }})</span>
         </button>
       </li>
@@ -184,7 +184,7 @@
           aria-pressed="{% if active_cat == 'trending-now' or active_cat == 'trending' %}true{% else %}false{% endif %}"
         >
           <span class="kixro-category-filter__radio"></span>
-          <span class="kixro-category-filter__name">Trending Now</span>
+          <span class="kixro-category-filter__name">{{ 'kixro.category_filter.trending_now' | t }}</span>
           <span class="kixro-category-filter__count">({{ trending_count }})</span>
         </button>
       </li>
@@ -199,7 +199,7 @@
           aria-pressed="{% if active_cat == 'kixro-essentials' or active_cat == 'essentials' %}true{% else %}false{% endif %}"
         >
           <span class="kixro-category-filter__radio"></span>
-          <span class="kixro-category-filter__name">Curated Essentials</span>
+          <span class="kixro-category-filter__name">{{ 'kixro.category_filter.essentials' | t }}</span>
           <span class="kixro-category-filter__count">({{ essentials_count }})</span>
         </button>
       </li>

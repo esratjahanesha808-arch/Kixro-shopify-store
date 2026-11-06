@@ -82,7 +82,7 @@
 
         {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
           <aside class="kixro-shop__sidebar kixro-shop__sidebar--desktop facets-wrapper" id="main-collection-filters" data-id="{{ section.id }}">
-            <p class="kixro-shop__filter-title">Filter by</p>
+            <p class="kixro-shop__filter-title">{{ 'kixro.collection.filter_by' | t }}</p>
             {% render 'facets',
               results: collection,
               enable_filtering: section.settings.enable_filtering,
@@ -134,7 +134,7 @@
             {%- if section.settings.enable_sorting -%}
               <facet-filters-form class="kixro-shop__sort-wrap">
                 <form id="FacetSortForm">
-                  <label for="SortBy" class="kixro-shop__sort-label">Sort</label>
+                  <label for="SortBy" class="kixro-shop__sort-label">{{ 'kixro.collection.sort' | t }}</label>
                   {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
                   <select name="sort_by" id="SortBy" class="kixro-shop__sort-select">
                     {%- for option in collection.sort_options -%}
@@ -168,23 +168,23 @@
 
           {%- if kixro_virtual_category != blank and kixro_virtual_count == 0 -%}
             <div class="collection kixro-shop__empty" id="product-grid" data-id="{{ section.id }}">
-              <h2>No products found</h2>
-              <p>Try adjusting your filters or browse our full collection.</p>
-              <a href="{{ routes.all_products_collection_url }}" class="kixro-btn kixro-btn--primary">Shop All</a>
+              <h2>{{ 'kixro.collection.no_products_heading' | t }}</h2>
+              <p>{{ 'kixro.collection.no_products_text' | t }}</p>
+              <a href="{{ routes.all_products_collection_url }}" class="kixro-btn kixro-btn--primary">{{ 'kixro.collection.shop_all' | t }}</a>
             </div>
           {%- elsif kixro_virtual_category == blank and collection.products.size == 0 -%}
             <div class="collection kixro-shop__empty" id="product-grid" data-id="{{ section.id }}">
-              <h2>No products found</h2>
-              <p>Try adjusting your filters or browse our full collection.</p>
-              <a href="{{ routes.all_products_collection_url }}" class="kixro-btn kixro-btn--primary">Shop All</a>
+              <h2>{{ 'kixro.collection.no_products_heading' | t }}</h2>
+              <p>{{ 'kixro.collection.no_products_text' | t }}</p>
+              <a href="{{ routes.all_products_collection_url }}" class="kixro-btn kixro-btn--primary">{{ 'kixro.collection.shop_all' | t }}</a>
             </div>
           {%- else -%}
             <div class="collection">
               <div class="collection kixro-shop__empty-state hidden" data-kixro-empty-state>
                 <div class="kixro-shop__empty">
-                  <h2>No products found</h2>
-                  <p>There are no products matching this filter option.</p>
-                  <button type="button" class="kixro-btn kixro-btn--primary" data-kixro-color-clear-btn>Clear Filter</button>
+                  <h2>{{ 'kixro.collection.no_match_heading' | t }}</h2>
+                  <p>{{ 'kixro.collection.no_match_text' | t }}</p>
+                  <button type="button" class="kixro-btn kixro-btn--primary" data-kixro-color-clear-btn>{{ 'kixro.collection.clear_filter' | t }}</button>
                 </div>
               </div>
               <ul class="kixro-product-grid kixro-shop__grid" id="product-grid" data-id="{{ section.id }}">

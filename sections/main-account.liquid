@@ -24,7 +24,7 @@
         </span>
       </div>
       <div class="kixro-profile__header-info">
-        <p class="kixro-profile__header-label">MY ACCOUNT</p>
+        <p class="kixro-profile__header-label">{{ 'kixro.account.my_account' | t }}</p>
         <h1 class="kixro-profile__header-name">{{ customer.first_name }} {{ customer.last_name }}</h1>
         <p class="kixro-profile__header-email">{{ customer.email }}</p>
       </div>
@@ -73,9 +73,9 @@
           <div class="kixro-profile__empty-icon" aria-hidden="true">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           </div>
-          <h2 class="kixro-profile__empty-title">No orders yet</h2>
-          <p class="kixro-profile__empty-text">You haven't placed any orders with us yet. When you do, they'll appear here so you can track and manage them.</p>
-          <a href="{{ routes.all_products_collection_url }}" class="kixro-btn kixro-btn--primary">Start Shopping</a>
+          <h2 class="kixro-profile__empty-title">{{ 'kixro.account.no_orders_title' | t }}</h2>
+          <p class="kixro-profile__empty-text">{{ 'kixro.account.no_orders_text' | t }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="kixro-btn kixro-btn--primary">{{ 'kixro.account.start_shopping' | t }}</a>
         </div>
       {%- else -%}
         {% paginate customer.orders by 20 %}
@@ -154,19 +154,19 @@
           </div>
           <div class="kixro-profile__settings-card-body">
             <div class="kixro-profile__info-row">
-              <span class="kixro-profile__info-label">Full Name</span>
+              <span class="kixro-profile__info-label">{{ 'kixro.account.full_name' | t }}</span>
               <span class="kixro-profile__info-value">{{ customer.name }}</span>
             </div>
             <div class="kixro-profile__info-row">
-              <span class="kixro-profile__info-label">Email</span>
+              <span class="kixro-profile__info-label">{{ 'kixro.account.email' | t }}</span>
               <span class="kixro-profile__info-value">{{ customer.email }}</span>
             </div>
             <div class="kixro-profile__info-row">
-              <span class="kixro-profile__info-label">Orders Placed</span>
+              <span class="kixro-profile__info-label">{{ 'kixro.account.orders_placed' | t }}</span>
               <span class="kixro-profile__info-value">{{ customer.orders_count }}</span>
             </div>
             <div class="kixro-profile__info-row">
-              <span class="kixro-profile__info-label">Total Spent</span>
+              <span class="kixro-profile__info-label">{{ 'kixro.account.total_spent' | t }}</span>
               <span class="kixro-profile__info-value">{{ customer.total_spent | money_with_currency }}</span>
             </div>
           </div>
@@ -187,7 +187,7 @@
           <div class="kixro-profile__settings-card-body">
             {%- if customer.default_address -%}
               <div class="kixro-profile__address-block">
-                <span class="kixro-profile__address-badge">Default</span>
+                <span class="kixro-profile__address-badge">{{ 'kixro.account.default_badge' | t }}</span>
                 <address class="kixro-profile__address-formatted">
                   {{- customer.default_address | format_address -}}
                 </address>
@@ -195,13 +195,13 @@
               {%- if customer.addresses_count > 1 -%}
                 <p class="kixro-profile__address-extra">
                   + {{ customer.addresses_count | minus: 1 }} more address{{ customer.addresses_count | minus: 1 | pluralize: '', 'es' }}
-                  — <a href="{{ routes.account_addresses_url }}">Manage all</a>
+                  — <a href="{{ routes.account_addresses_url }}">{{ 'kixro.account.manage_all' | t }}</a>
                 </p>
               {%- endif -%}
             {%- else -%}
               <div class="kixro-profile__empty-mini">
-                <p>No saved addresses yet.</p>
-                <a href="{{ routes.account_addresses_url }}" class="kixro-profile__settings-link">Add address</a>
+                <p>{{ 'kixro.account.no_addresses' | t }}</p>
+                <a href="{{ routes.account_addresses_url }}" class="kixro-profile__settings-link">{{ 'kixro.account.add_address' | t }}</a>
               </div>
             {%- endif -%}
           </div>

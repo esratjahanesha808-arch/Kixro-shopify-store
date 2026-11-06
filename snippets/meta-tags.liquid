@@ -4,7 +4,7 @@
   assign og_type = 'website'
   assign og_description = page_description | default: shop.description
   if og_description == blank
-    assign og_description = 'Premium youthful footwear from Kixro. Shop shoes, boots, loafers, and sandals with modern style and all-day comfort.'
+    assign og_description = shop.name | append: '. ' | append: shop.description
   endif
 
   if request.page_type == 'product'

@@ -32,7 +32,7 @@
       <h1 class="kixro-policy-page__title">{{ active_policy.title }}</h1>
       <div class="kixro-policy-page__body rte">{{ active_policy.body }}</div>
     {%- else -%}
-      <h1 class="kixro-policy-page__title">Policy</h1>
+      <h1 class="kixro-policy-page__title">{{ 'kixro.policy.fallback_title' | t }}</h1>
       <div class="kixro-policy-page__body rte">
         <p>{{ section.settings.empty_message }}</p>
       </div>

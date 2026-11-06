@@ -82,25 +82,25 @@
         <ul class="kixro-contact__details">
           {%- if section.settings.email != blank -%}
             <li>
-              <span class="kixro-contact__detail-label">Email</span>
+              <span class="kixro-contact__detail-label">{{ 'kixro.contact.email_label' | t }}</span>
               <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
             </li>
           {%- endif -%}
           {%- if section.settings.phone != blank -%}
             <li>
-              <span class="kixro-contact__detail-label">Phone</span>
+              <span class="kixro-contact__detail-label">{{ 'kixro.contact.phone_label' | t }}</span>
               <a href="tel:{{ section.settings.phone | replace: ' ', '' | replace: '-', '' }}">{{ section.settings.phone }}</a>
             </li>
           {%- endif -%}
           {%- if section.settings.hours != blank -%}
             <li>
-              <span class="kixro-contact__detail-label">Hours</span>
+              <span class="kixro-contact__detail-label">{{ 'kixro.contact.hours_label' | t }}</span>
               <span>{{ section.settings.hours }}</span>
             </li>
           {%- endif -%}
           {%- if section.settings.address != blank -%}
             <li>
-              <span class="kixro-contact__detail-label">Address</span>
+              <span class="kixro-contact__detail-label">{{ 'kixro.contact.address_label' | t }}</span>
               <span>{{ section.settings.address | newline_to_br }}</span>
             </li>
           {%- endif -%}

@@ -124,7 +124,7 @@
           "settings": {
             "fallback_image": "pick-kixro-essentials.png",
             "label": "Must Haves",
-            "title": "Kixro Essentials",
+            "title": "Store Essentials",
             "btn_label": "Shop Essentials",
             "link": "/collections/kixro-essentials"
           }
@@ -133,7 +133,7 @@
       "block_order": ["pick_new_arrivals", "pick_best_sellers", "pick_trending", "pick_essentials"],
       "settings": {
         "eyebrow": "Curated For You",
-        "heading": "Discover Your Kixro Picks",
+        "heading": "Discover Our Picks",
         "subtitle": "Four curated worlds. One signature style."
       }
     },
@@ -156,7 +156,7 @@
       "settings": {
         "bg_fallback": "banner-cta.png",
         "overlay_opacity": 70,
-        "eyebrow": "The Kixro Promise",
+        "eyebrow": "Our Promise",
         "heading": "Build Your Style With Confident Steps By Wearing Our Sneakers.",
         "subtext": "",
         "btn_label": "Shop Now",
