@@ -196,7 +196,7 @@
                     {%- assign kixro_match_trimmed = kixro_match_capture | strip -%}
                     {%- unless kixro_match_trimmed == 'true' -%}{%- continue -%}{%- endunless -%}
                     {%- capture product_color_tokens -%}
-                      {%- render 'kixro-product-colors', product: product, option_name: section.settings.color_option_name -%}
+                      {%- render 'kixro-product-colors', product: product, option_name: color_option_name -%}
                     {%- endcapture -%}
                     {%- assign product_color_tokens = product_color_tokens | strip -%}
                     {%- capture product_category_token -%}
@@ -215,7 +215,7 @@
                 {%- else -%}
                 {%- for product in collection.products -%}
                   {%- capture product_color_tokens -%}
-                    {%- render 'kixro-product-colors', product: product, option_name: section.settings.color_option_name -%}
+                    {%- render 'kixro-product-colors', product: product, option_name: color_option_name -%}
                   {%- endcapture -%}
                   {%- assign product_color_tokens = product_color_tokens | strip -%}
                   {%- capture product_category_token -%}

@@ -124,3 +124,14 @@
   4. Marketing Collections Filter Integration: Added "New Arrivals" (10), "Best Sellers" (11), "Trending Now" (12), and "Curated Essentials" (10) to `snippets/kixro-category-filter.liquid` and `snippets/kixro-category-filter-mobile.liquid` with dynamic product counts. Clicking them filters products and updates active states. Updated `snippets/kixro-category-url.liquid` and `sections/kixro-discover-picks.liquid` so homepage editorial cards link directly to these filtered catalog views.
 - **Rationale:** Resolves user-reported defects regarding blank footer, empty multi-color filter, misaligned product card heights, and missing marketing categories in the sidebar/mobile filters.
 - **Status:** Complete & Deployed to Preview Theme `#150540124336`.
+
+---
+
+### DEC-021: Client-Side Facet Display Override & Color Match Precision (2026-11-06)
+- **Decision:**
+  1. Hiding Inactive Products: Resolved issue where unselected products were not being hidden because `.kixro-shop__grid-item` had `display: flex !important;` which defeated user-agent `[hidden] { display: none; }`. Added `.kixro-shop__grid-item[hidden], .kixro-shop__grid-item.is-hidden { display: none !important; }` in `assets/kixro.css`, and in `assets/kixro-facets.js` explicitly applied `item.classList.add('is-hidden')` and `item.style.setProperty('display', 'none', 'important')`.
+  2. Precision Color Matching: Replaced loose space-delimited token matching with compound slash-separated parsing (`[\/,]+`) and exact shade matching. Specific filters (e.g. `Navy Blue`) no longer falsely match other blue shades (like `Light Blue` or `Sky Blue`). Generic `Blue` matches all blue variants.
+  3. Combined Color & Category Metadata: In `getItemColors()` and `getItemCategory()`, merged grid item data attributes (`data-kixro-colors`, `data-kixro-category`) with catalog JSON cache (`catalogByHandle`) using Sets for guaranteed completeness.
+  4. Explicit Option Name Fallback: Passed `color_option_name` in `sections/kixro-collection-grid.liquid` so color extraction always uses `'Color'` even when `section.settings.color_option_name` is empty in theme settings data.
+- **Rationale:** Addresses user feedback that clicking color filter swatches did not filter products properly.
+- **Status:** Complete & Deployed to Preview Theme `#150540124336`.

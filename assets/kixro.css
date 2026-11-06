@@ -1922,6 +1922,11 @@ h1, h2, h3, h4, h5, h6,
   height: 100% !important;
 }
 
+.kixro-shop__grid-item[hidden],
+.kixro-shop__grid-item.is-hidden {
+  display: none !important;
+}
+
 /* ── Empty state ── */
 .kixro-shop__empty {
   text-align: center;

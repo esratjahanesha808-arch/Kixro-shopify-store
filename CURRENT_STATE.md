@@ -1,6 +1,38 @@
 # Kixro — Current State
 
-> **Last Updated:** 2026-11-06 (Session 37 — Theme Store Polish: Footer Contrast, Multi-Color Swatch, Equal Card Heights, Discover Picks Filtering)
+> **Last Updated:** 2026-11-06 (Session 38 — Color Filter Show/Hide & Match Precision Fixes)
+
+---
+
+## Latest Update — 2026-11-06 (Session 38 — Color Filter Show/Hide & Match Precision Fixes)
+
+### Completed
+- ✅ **Display None Override for Inactive Items** — Fixed bug where `.kixro-shop__grid-item`'s `display: flex !important;` prevented browser user-agent `[hidden] { display: none; }` from hiding filtered-out products. Added `.kixro-shop__grid-item[hidden], .kixro-shop__grid-item.is-hidden { display: none !important; }` in `assets/kixro.css`. In `assets/kixro-facets.js`, dynamically manages `.is-hidden` class and inline `style.display: none !important` on filtered-out items and restores visible items cleanly.
+- ✅ **Precision Color Matching Engine** — Updated `colorsMatch()` in `assets/kixro-facets.js` to prevent false positive matches between distinct shades (e.g., selecting `Navy Blue` now matches only Navy Blue, not Light Blue or Sky Blue; `Blue` matches general blue products).
+- ✅ **Robust Dual-Source Metadata** — In `assets/kixro-facets.js`, `getItemColors()` and `getItemCategory()` now merge HTML attributes (`data-kixro-colors`, `data-kixro-category`) with catalog JSON data (`catalogByHandle`) via Sets, ensuring zero missing variant colors or categories.
+- ✅ **Option Name Fallback Fixed** — In `sections/kixro-collection-grid.liquid`, passed `color_option_name` (defaulting to `'Color'`) instead of `section.settings.color_option_name`.
+- ✅ **Theme Check Verification** — Executed `shopify theme check`: **213 files inspected, 0 offenses found**.
+- ✅ **Deployed to Remote Theme** — Pushed update to preview theme `#150540124336` on `kixro-dev.myshopify.com`.
+
+### Current Branch
+`theme-store-submission`
+
+### Preview Theme Deployed (Unpublished)
+- **Theme ID**: `#150540124336` ("Kixro Theme Store Preview")
+- **Storefront Preview**: https://kixro-dev.myshopify.com?preview_theme_id=150540124336
+- **Theme Editor**: https://kixro-dev.myshopify.com/admin/themes/150540124336/editor
+- **Live Theme**: Remains untouched at `#150211854512` ("Kixro")
+
+### Files Modified
+- `assets/kixro-facets.js`
+- `assets/kixro.css`
+- `sections/kixro-collection-grid.liquid`
+- `DECISIONS_LOG.md`
+- `CURRENT_STATE.md`
+
+### Next Immediate Action
+- User verifies live color filtering at https://kixro-dev.myshopify.com/collections/all?preview_theme_id=150540124336.
+- User runs `git push origin theme-store-submission` to sync to GitHub.
 
 ---
 

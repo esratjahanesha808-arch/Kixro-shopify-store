@@ -47,15 +47,34 @@
       }
     }
 
-    // Direct containment (e.g. "navy" matches "navy blue", "red" matches "scarlet red")
-    if (product.includes(filter) || filter.includes(product)) {
-      return true;
+    // Split compound colors like "Off-White / Indigo / Ocean Blue"
+    const parts = product.split(/[\/,]+/).map((s) => s.trim()).filter(Boolean);
+    for (const part of parts) {
+      if (part === filter) return true;
+
+      // Navy aliases
+      if ((filter === 'navy' || filter === 'navy blue') && (part === 'navy' || part === 'navy blue')) return true;
+
+      // Beige / Tan / Sand / Taupe aliases
+      if (['beige', 'tan', 'sand', 'taupe'].includes(filter) && ['beige', 'tan', 'sand', 'taupe'].includes(part)) return true;
+
+      // Grey / Gray
+      if (['gray', 'grey'].includes(filter) && ['gray', 'grey'].includes(part)) return true;
+
+      // Specific shades: Scarlet Red -> Red
+      if (filter === 'red' && part.includes('red')) return true;
+      if (part === 'red' && filter.includes('red')) return true;
+
+      // Generic "Blue" filter matches any blue shade (Navy Blue, Light Blue, Slate Blue, etc.)
+      if (filter === 'blue' && (part === 'blue' || part.includes('blue'))) return true;
+
+      // Specific Blue filter (e.g. "Light Blue") matches "UNC Blue" or "Sky Blue" or "Light Blue"
+      if (filter === 'light blue' && (part === 'light blue' || part.includes('unc') || part === 'sky blue')) return true;
+      if (filter === 'sky blue' && (part === 'sky blue' || part === 'light blue')) return true;
+      if (filter === 'slate blue' && part === 'slate blue') return true;
     }
 
-    // Token matching (e.g. "off-white / indigo / ocean blue" matches "blue")
-    const productTokens = product.split(/[\/\,\-\s]+/).filter(Boolean);
-    const filterTokens = filter.split(/[\/\,\-\s]+/).filter(Boolean);
-    return productTokens.some((p) => filterTokens.includes(p));
+    return false;
   }
 
   function colorMatches(productColors, filterColor) {
@@ -115,25 +134,18 @@
       .map((c) => c.trim())
       .filter(Boolean);
 
-    if (fromData.length) return fromData;
-
     const handle = item.dataset.productHandle;
-    if (handle && catalogByHandle[handle]) {
-      return catalogByHandle[handle];
-    }
+    const fromCatalog = (handle && catalogByHandle[handle]) ? catalogByHandle[handle] : [];
 
-    return [];
+    const set = new Set([...fromData, ...fromCatalog]);
+    return [...set];
   }
 
   function getItemCategory(item) {
-    if (item.dataset.kixroCategory) {
-      return item.dataset.kixroCategory.trim().toLowerCase();
-    }
+    const fromData = item.dataset.kixroCategory || '';
     const handle = item.dataset.productHandle;
-    if (handle && categoryByHandle[handle]) {
-      return categoryByHandle[handle];
-    }
-    return '';
+    const fromCatalog = (handle && categoryByHandle[handle]) ? categoryByHandle[handle] : '';
+    return `${fromData} ${fromCatalog}`.trim().toLowerCase();
   }
 
   function parseVariantMap(item) {
@@ -166,9 +178,19 @@
   function applyCardVariant(item, colorLabel) {
     const map = parseVariantMap(item);
     const key = normalizeColorAlias(colorLabel);
-    if (!map || !key || !map[key]) return;
+    if (!map || !key) return;
 
-    const variant = map[key];
+    let variant = map[key];
+    if (!variant) {
+      if (key === 'navy blue' && map['navy']) variant = map['navy'];
+      else if (key === 'navy' && map['navy blue']) variant = map['navy blue'];
+      else if (key === 'multi') {
+        const foundKey = Object.keys(map).find(k => k.includes('multi') || k.includes('earth'));
+        if (foundKey) variant = map[foundKey];
+      }
+    }
+    if (!variant) return;
+
     const img = item.querySelector('.kixro-product-card__image');
     const addBtn = item.querySelector('[data-kixro-add-to-cart]');
 
@@ -187,7 +209,7 @@
 
   function updateCardVariants(colorLabel) {
     document.querySelectorAll('.kixro-shop__grid-item').forEach((item) => {
-      if (item.hidden) return;
+      if (item.hidden || item.classList.contains('is-hidden') || item.style.display === 'none') return;
       if (colorLabel) {
         applyCardVariant(item, colorLabel);
       } else {
@@ -215,8 +237,16 @@
       const colorOk = colorMatches(colors, normalizedColor ? colorLabel : '');
       const catOk = categoryMatches(category, normalizedCategory ? categoryLabel : '');
       const show = colorOk && catOk;
+
       item.hidden = !show;
-      if (show) visibleCount += 1;
+      if (show) {
+        item.classList.remove('is-hidden');
+        item.style.removeProperty('display');
+        visibleCount += 1;
+      } else {
+        item.classList.add('is-hidden');
+        item.style.setProperty('display', 'none', 'important');
+      }
     });
 
     updateCardVariants(normalizedColor ? colorLabel : '');
@@ -249,7 +279,11 @@
     // Color swatch active states
     document.querySelectorAll('[data-kixro-color-btn]').forEach((btn) => {
       const btnColor = normalizeColorAlias(btn.dataset.colorLabel);
-      const isActive = normalizedColor && btnColor === normalizeColorAlias(activeColorLabel || activeColor);
+      const isActive = normalizedColor && (
+        btnColor === normalizeColorAlias(activeColorLabel || activeColor) ||
+        (btnColor === 'navy' && activeColor === 'navy blue') ||
+        (btnColor === 'navy blue' && activeColor === 'navy')
+      );
       btn.classList.toggle('is-active', isActive);
       btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
@@ -321,8 +355,9 @@
           event.preventDefault();
           event.stopPropagation();
           const label = btn.getAttribute('data-kixro-category-btn') || '';
-          // Toggle: clicking active category clears it
-          const newCategory = (normalizeCategory(label) === activeCategory) ? '' : label;
+          const normLabel = normalizeCategory(label);
+          // Toggle: clicking active category clears it back to All
+          const newCategory = (normLabel === activeCategory) ? '' : label;
 
           // Update URL without page reload
           const url = new URL(window.location.href);
