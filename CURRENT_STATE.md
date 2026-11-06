@@ -21,6 +21,12 @@
 ### Current Branch
 `theme-store-submission`
 
+### Preview Theme Deployed (Unpublished)
+- **Theme ID**: `#150540124336` ("Kixro Theme Store Preview")
+- **Storefront Preview**: https://kixro-dev.myshopify.com?preview_theme_id=150540124336
+- **Theme Editor**: https://kixro-dev.myshopify.com/admin/themes/150540124336/editor
+- **Live Theme**: Remains untouched at `#150211854512` ("Kixro")
+
 ### Files Modified
 - `config/settings_schema.json`
 - `layout/theme.liquid`
