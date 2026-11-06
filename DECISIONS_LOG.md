@@ -106,3 +106,10 @@
 - **Decision:** Replace the stem-based arrow (`<line>` + `<polyline>`) in `snippets/kixro-pdp-back-nav.liquid` with a crisp, minimalist SVG chevron (`M8 2L2 8l6 6` on a `10 16` viewBox). Remove classes `link` and `focus-inset` from the anchor tag and enforce `text-decoration: none !important` across all pseudo-states in `assets/kixro.css`.
 - **Rationale:** The previous stem arrow combined with Dawn's `.link` text underline produced 3 stacked horizontal bars that looked like "wires" / `E-` to the user. A pure left chevron `<` with zero underlines provides the clean, standard, minimal back button the user requested.
 - **Status:** Confirmed & Pushed
+
+---
+
+### DEC-019: Theme Store Preparation & Zero Visual Regression Architecture (2026-11-06)
+- **Decision:** (1) Keep Google Fonts (Playfair Display + Inter) and brand color palettes completely unchanged to preserve 100% visual fidelity per user mandate. (2) Implement global `color_scheme` setting and `.color-{{ section.settings.color_scheme }}` root wrapper class on all 21 `kixro-*` sections to satisfy Shopify Theme Store requirements without altering custom `--kixro-*` styling. (3) Fully localize all 225+ section schema strings, settings labels, headers, block settings, and presets with `t:` translation keys registered in `locales/en.default.schema.json`. (4) De-brand all internal demo defaults (e.g., 'Discover Your Kixro Picks' -> 'Discover Our Picks', 'The Kixro Promise' -> 'Our Promise', 'Welcome to Kixro' -> 'Welcome Back', and dynamic meta description). (5) Rename section schema names and presets to clean, generic friendly names (e.g., 'Hero slideshow', 'Category grid', 'Editorial picks'). (6) Replace hardcoded IDs in 404, contact, and search templates with dynamic `{{ section.id }}` tokens. (7) Verified 0 offenses with `shopify theme check` across all 213 files.
+- **Rationale:** Resolves all Theme Store blocking requirements while strictly preserving every font, color, layout, and visual design element requested by the user.
+- **Status:** Complete on `theme-store-submission` branch.

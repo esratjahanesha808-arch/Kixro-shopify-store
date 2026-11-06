@@ -34,7 +34,7 @@
   endif
 -%}
 
-<div class="kixro-collection-hero">
+<div class="kixro-collection-hero color-{{ section.settings.color_scheme }}">
   <div class="kixro-container">
     <div class="kixro-section-header kixro-collection-hero__header">
       {%- if section.settings.eyebrow != blank -%}
@@ -69,36 +69,42 @@
 
 {% schema %}
 {
-  "name": "Kixro Collection Banner",
+  "name": "t:sections.kixro-collection-banner.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow label",
+      "label": "t:sections.kixro-collection-banner.settings.eyebrow.label",
       "default": "Shop Collection"
     },
     {
       "type": "checkbox",
       "id": "show_product_count",
-      "label": "Show product count",
+      "label": "t:sections.kixro-collection-banner.settings.show_product_count.label",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_description",
-      "label": "Show collection description",
+      "label": "t:sections.kixro-collection-banner.settings.show_description.label",
       "default": true
     },
     {
       "type": "textarea",
       "id": "default_description",
-      "label": "Description",
-      "default": "Explore our curated selection of premium footwear — crafted for comfort, built for style."
+      "label": "t:sections.kixro-collection-banner.settings.default_description.label",
+      "default": "Explore our curated selection of premium products — crafted for comfort, built for style."
     },
     {
       "type": "text",
       "id": "subtext",
-      "label": "Supporting line",
+      "label": "t:sections.kixro-collection-banner.settings.subtext.label",
       "default": "Free shipping on orders over $100 · Easy 30-day returns"
     }
   ]

@@ -1,4 +1,4 @@
-<footer class="kixro-footer">
+<footer class="kixro-footer color-{{ section.settings.color_scheme }}">
   <div class="kixro-footer__pattern" aria-hidden="true"></div>
 
   <div class="kixro-container kixro-footer__inner">
@@ -176,138 +176,144 @@
 
 {% schema %}
 {
-  "name": "Kixro Footer",
+  "name": "t:sections.kixro-footer.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "textarea",
       "id": "tagline",
-      "label": "Brand description",
+      "label": "t:sections.kixro-footer.settings.tagline.label",
       "default": "Premium footwear for those who move with purpose. Step into something extraordinary."
     },
     {
       "type": "checkbox",
       "id": "show_social",
-      "label": "Show social icons",
+      "label": "t:sections.kixro-footer.settings.show_social.label",
       "default": true
     },
     {
       "type": "header",
-      "content": "Site Map column"
+      "content": "t:sections.kixro-footer.settings.header_1.content"
     },
     {
       "type": "text",
       "id": "sitemap_heading",
-      "label": "Site Map heading",
+      "label": "t:sections.kixro-footer.settings.sitemap_heading.label",
       "default": "Site Map"
     },
     {
       "type": "link_list",
       "id": "sitemap_menu",
-      "label": "Site Map menu",
+      "label": "t:sections.kixro-footer.settings.sitemap_menu.label",
       "default": "main-menu"
     },
     {
       "type": "header",
-      "content": "Legal column"
+      "content": "t:sections.kixro-footer.settings.header_2.content"
     },
     {
       "type": "text",
       "id": "legal_heading",
-      "label": "Legal heading",
+      "label": "t:sections.kixro-footer.settings.legal_heading.label",
       "default": "Help & Legal"
     },
     {
       "type": "text",
       "id": "about_us_url",
-      "label": "About Us page path",
+      "label": "t:sections.kixro-footer.settings.about_us_url.label",
       "default": "/pages/about-us",
-      "info": "Leave blank to auto-detect your About Us page."
+      "info": "t:sections.kixro-footer.settings.about_us_url.info"
     },
     {
       "type": "text",
       "id": "about_us_label",
-      "label": "About Us link label",
+      "label": "t:sections.kixro-footer.settings.about_us_label.label",
       "default": "About Us"
     },
     {
       "type": "text",
       "id": "refund_policy_label",
-      "label": "Refund policy link label",
+      "label": "t:sections.kixro-footer.settings.refund_policy_label.label",
       "default": "Return & Refund Policy"
     },
     {
       "type": "text",
       "id": "refund_policy_url",
-      "label": "Refund policy path (optional override)",
-      "info": "Auto-detects from Shopify policies. Default: /policies/refund-policy"
+      "label": "t:sections.kixro-footer.settings.refund_policy_url.label",
+      "info": "t:sections.kixro-footer.settings.refund_policy_url.info"
     },
     {
       "type": "text",
       "id": "shipping_policy_label",
-      "label": "Shipping policy link label",
+      "label": "t:sections.kixro-footer.settings.shipping_policy_label.label",
       "default": "Shipping Policy"
     },
     {
       "type": "text",
       "id": "shipping_policy_url",
-      "label": "Shipping policy path (optional override)",
-      "info": "Auto-detects from Shopify policies. Default: /policies/shipping-policy"
+      "label": "t:sections.kixro-footer.settings.shipping_policy_url.label",
+      "info": "t:sections.kixro-footer.settings.shipping_policy_url.info"
     },
     {
       "type": "text",
       "id": "privacy_policy_label",
-      "label": "Privacy policy link label",
+      "label": "t:sections.kixro-footer.settings.privacy_policy_label.label",
       "default": "Privacy Policy"
     },
     {
       "type": "checkbox",
       "id": "show_privacy_policy",
-      "label": "Show Privacy Policy link",
+      "label": "t:sections.kixro-footer.settings.show_privacy_policy.label",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_terms_policy",
-      "label": "Show Terms of Service link",
+      "label": "t:sections.kixro-footer.settings.show_terms_policy.label",
       "default": true
     },
     {
       "type": "text",
       "id": "terms_policy_label",
-      "label": "Terms of Service link label",
+      "label": "t:sections.kixro-footer.settings.terms_policy_label.label",
       "default": "Terms of Service"
     },
     {
       "type": "text",
       "id": "terms_policy_url",
-      "label": "Terms of Service path (optional override)",
-      "info": "Auto-detects from Shopify policies. Default: /policies/terms-of-service"
+      "label": "t:sections.kixro-footer.settings.terms_policy_url.label",
+      "info": "t:sections.kixro-footer.settings.terms_policy_url.info"
     },
     {
       "type": "link_list",
       "id": "legal_menu",
-      "label": "Additional legal links menu (optional)"
+      "label": "t:sections.kixro-footer.settings.legal_menu.label"
     },
     {
       "type": "header",
-      "content": "Back to top"
+      "content": "t:sections.kixro-footer.settings.header_3.content"
     },
     {
       "type": "checkbox",
       "id": "show_back_to_top",
-      "label": "Show back to top button",
+      "label": "t:sections.kixro-footer.settings.show_back_to_top.label",
       "default": true
     },
     {
       "type": "text",
       "id": "back_to_top_label",
-      "label": "Back to top label",
+      "label": "t:sections.kixro-footer.settings.back_to_top_label.label",
       "default": "Back to top"
     }
   ],
   "presets": [
     {
-      "name": "Kixro Footer"
+      "name": "t:sections.kixro-footer.presets.name"
     }
   ]
 }

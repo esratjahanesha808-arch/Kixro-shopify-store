@@ -1,4 +1,4 @@
-<div class="kixro-about-values">
+<div class="kixro-about-values color-{{ section.settings.color_scheme }}">
   <div class="kixro-container">
     <div class="kixro-about-mission">
       <header class="kixro-about-mission__head">
@@ -20,13 +20,13 @@
                 loading: 'lazy',
                 sizes: '(min-width: 1024px) 50vw, 100vw',
                 widths: '600, 900, 1200',
-                alt: 'Kixro premium footwear collection display'
+                alt: 'Curated collection display'
             }}
           {%- else -%}
             <img
               class="kixro-about-mission__img"
               src="{{ 'about-mission-1.png' | asset_url }}"
-              alt="Kixro premium footwear collection display"
+              alt="Curated collection display"
               loading="lazy"
               width="1200"
               height="800"
@@ -43,13 +43,13 @@
                 loading: 'lazy',
                 sizes: '(min-width: 1024px) 50vw, 100vw',
                 widths: '600, 900, 1200',
-                alt: 'Kixro artisan craftsmanship'
+                alt: 'Artisan craftsmanship'
             }}
           {%- else -%}
             <img
               class="kixro-about-mission__img"
               src="{{ 'about-mission-2.png' | asset_url }}"
-              alt="Kixro artisan craftsmanship"
+              alt="Artisan craftsmanship"
               loading="lazy"
               width="1200"
               height="800"
@@ -72,52 +72,58 @@
 
 {% schema %}
 {
-  "name": "Kixro About Values",
+  "name": "t:sections.kixro-about-values.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow",
+      "label": "t:sections.kixro-about-values.settings.eyebrow.label",
       "default": "Mission & Values"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
+      "label": "t:sections.kixro-about-values.settings.heading.label",
       "default": "Our Mission"
     },
     {
       "type": "textarea",
       "id": "mission",
-      "label": "Mission statement",
+      "label": "t:sections.kixro-about-values.settings.mission.label",
       "default": "To inspire confidence through modern, premium footwear that combines effortless style with all-day comfort."
     },
     {
       "type": "image_picker",
       "id": "mission_image_1",
-      "label": "Mission image 1"
+      "label": "t:sections.kixro-about-values.settings.mission_image_1.label"
     },
     {
       "type": "image_picker",
       "id": "mission_image_2",
-      "label": "Mission image 2"
+      "label": "t:sections.kixro-about-values.settings.mission_image_2.label"
     }
   ],
   "blocks": [
     {
       "type": "value",
-      "name": "Value",
+      "name": "t:sections.kixro-about-values.blocks.value.name",
       "settings": [
         {
           "type": "text",
           "id": "title",
-          "label": "Title",
+          "label": "t:sections.kixro-about-values.blocks.value.settings.title.label",
           "default": "Premium Quality"
         },
         {
           "type": "textarea",
           "id": "description",
-          "label": "Description",
+          "label": "t:sections.kixro-about-values.blocks.value.settings.description.label",
           "default": "We use only the best materials and craftsmanship to ensure every pair feels exceptional."
         }
       ]
@@ -125,7 +131,7 @@
   ],
   "presets": [
     {
-      "name": "Kixro About Values",
+      "name": "t:sections.kixro-about-values.presets.name",
       "blocks": [
         {
           "type": "value",

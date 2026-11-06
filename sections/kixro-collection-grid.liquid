@@ -10,7 +10,7 @@
 {%- endstyle -%}
 
 <collection-component data-collection-id="{{ collection.id }}">
-<div class="kixro-shop section-{{ section.id }}-padding">
+<div class="kixro-shop section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="kixro-container">
 
     {%- liquid
@@ -267,8 +267,14 @@
 
 {% schema %}
 {
-  "name": "Kixro Collection Grid",
+  "name": "t:sections.kixro-collection-grid.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "range",
       "id": "products_per_page",
@@ -276,37 +282,37 @@
       "max": 24,
       "step": 3,
       "default": 9,
-      "label": "Products per page"
+      "label": "t:sections.kixro-collection-grid.settings.products_per_page.label"
     },
     {
       "type": "checkbox",
       "id": "enable_filtering",
-      "label": "Enable filtering",
+      "label": "t:sections.kixro-collection-grid.settings.enable_filtering.label",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "enable_sorting",
-      "label": "Enable sorting",
+      "label": "t:sections.kixro-collection-grid.settings.enable_sorting.label",
       "default": true
     },
     {
       "type": "header",
-      "content": "Color filter"
+      "content": "t:sections.kixro-collection-grid.settings.header_1.content"
     },
     {
       "type": "text",
       "id": "color_option_name",
-      "label": "Color option name on products",
+      "label": "t:sections.kixro-collection-grid.settings.color_option_name.label",
       "default": "Color",
-      "info": "Must match the variant option name in Shopify (e.g. Color). Enable Color filter in Search & Discovery for best results."
+      "info": "t:sections.kixro-collection-grid.settings.color_option_name.info"
     },
     {
       "type": "textarea",
       "id": "filter_colors",
-      "label": "Colors to show",
+      "label": "t:sections.kixro-collection-grid.settings.filter_colors.label",
       "default": "Black, White, Navy, Brown, Grey, Beige, Tan, Red, Blue, Green, Pink, Orange, Bronze",
-      "info": "Sort order for swatches. Swatches appear only for Color variant values that exist on products in Shopify."
+      "info": "t:sections.kixro-collection-grid.settings.filter_colors.info"
     },
     {
       "type": "range",
@@ -315,7 +321,7 @@
       "max": 80,
       "step": 4,
       "default": 12,
-      "label": "Padding top"
+      "label": "t:sections.kixro-collection-grid.settings.padding_top.label"
     },
     {
       "type": "range",
@@ -324,7 +330,7 @@
       "max": 80,
       "step": 4,
       "default": 32,
-      "label": "Padding bottom"
+      "label": "t:sections.kixro-collection-grid.settings.padding_bottom.label"
     }
   ]
 }

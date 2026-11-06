@@ -1,4 +1,4 @@
-<div class="kixro-about-philosophy">
+<div class="kixro-about-philosophy color-{{ section.settings.color_scheme }}">
   <div class="kixro-container">
     <div class="kixro-about-split-row kixro-about-split-row--style">
       <div class="kixro-about-split-row__content">
@@ -134,102 +134,112 @@
 
 {% schema %}
 {
-  "name": "Kixro About Philosophy",
+  "name": "t:sections.kixro-about-philosophy.name",
   "settings": [
     {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
       "type": "header",
-      "content": "Product Philosophy"
+      "content": "t:sections.kixro-about-philosophy.settings.header_1.content"
     },
     {
       "type": "text",
       "id": "philosophy_eyebrow",
-      "label": "Eyebrow",
+      "label": "t:sections.kixro-about-philosophy.settings.philosophy_eyebrow.label",
       "default": "Product Philosophy"
     },
     {
       "type": "text",
       "id": "philosophy_heading",
-      "label": "Heading",
+      "label": "t:sections.kixro-about-philosophy.settings.philosophy_heading.label",
       "default": "Style without compromise"
     },
     {
       "type": "richtext",
       "id": "philosophy_text",
-      "label": "Description",
-      "default": "<p>We believe that footwear should be an expression of your personal style, not a compromise. At Kixro, we blend modern trends with timeless design to create shoes that feel intentional, elevated, and unmistakably you.</p>"
+      "label": "t:sections.kixro-about-philosophy.settings.philosophy_text.label",
+      "default": "<p>We believe that style should be an expression of your personality, not a compromise. We blend modern trends with timeless design to create pieces that feel intentional, elevated, and unmistakably you.</p>"
     },
     {
       "type": "textarea",
       "id": "philosophy_points",
-      "label": "Philosophy points (one per line)",
+      "label": "t:sections.kixro-about-philosophy.settings.philosophy_points.label",
       "default": "Everyday confidence — shoes that make you feel polished\nEffortless style — modern designs that complement your aesthetic\nAll-day comfort — premium materials that support your every move\nVersatility — footwear that transitions from work to weekend\nIntentional living — shoes that reflect your confidence"
     },
     {
       "type": "image_picker",
       "id": "philosophy_image",
-      "label": "Style section image"
+      "label": "t:sections.kixro-about-philosophy.settings.philosophy_image.label"
     },
     {
       "type": "header",
-      "content": "Lifestyle & Community"
+      "content": "t:sections.kixro-about-philosophy.settings.header_2.content"
     },
     {
       "type": "text",
       "id": "community_eyebrow",
-      "label": "Eyebrow",
+      "label": "t:sections.kixro-about-philosophy.settings.community_eyebrow.label",
       "default": "Lifestyle & Community"
     },
     {
       "type": "text",
       "id": "community_heading",
-      "label": "Heading",
+      "label": "t:sections.kixro-about-philosophy.settings.community_heading.label",
       "default": "Walk your own path"
     },
     {
       "type": "richtext",
       "id": "community_text",
-      "label": "Description",
-      "default": "<p>Kixro is made for men who walk their own path with confidence and purpose.</p>"
+      "label": "t:sections.kixro-about-philosophy.settings.community_text.label",
+      "default": "<p>Designed for individuals who walk their own path with confidence and purpose.</p>"
     },
     {
       "type": "textarea",
       "id": "community_points",
-      "label": "Community points (one per line)",
+      "label": "t:sections.kixro-about-philosophy.settings.community_points.label",
       "default": "Young men stepping into their confidence\nTrend-conscious individuals who value modern style\nGo-getters who need footwear that keeps pace\nMen who believe great shoes make a statement"
     },
     {
       "type": "image_picker",
       "id": "community_image",
-      "label": "Walk your own path image"
+      "label": "t:sections.kixro-about-philosophy.settings.community_image.label"
     },
     {
       "type": "header",
-      "content": "Our Promise"
+      "content": "t:sections.kixro-about-philosophy.settings.header_3.content"
     },
     {
       "type": "text",
       "id": "promise_heading",
-      "label": "Promise heading",
+      "label": "t:sections.kixro-about-philosophy.settings.promise_heading.label",
       "default": "Our Promise"
     },
     {
       "type": "textarea",
       "id": "promise_points",
-      "label": "Promise points (one per line)",
+      "label": "t:sections.kixro-about-philosophy.settings.promise_points.label",
       "default": "Premium materials that feel luxurious\nModern designs that elevate your style\nAll-day comfort that supports your lifestyle\nConfidence in every step\nFootwear designed for the modern man"
     },
     {
       "type": "text",
       "id": "promise_closing",
-      "label": "Closing line",
-      "default": "Step into confidence with Kixro."
+      "label": "t:sections.kixro-about-philosophy.settings.promise_closing.label",
+      "default": "Step into confidence every day."
     },
     {
       "type": "image_picker",
       "id": "promise_image",
-      "label": "Promise section image"
+      "label": "t:sections.kixro-about-philosophy.settings.promise_image.label"
     }
   ],
-  "presets": [{ "name": "Kixro About Philosophy" }]
+  "presets": [
+    {
+      "name": "t:sections.kixro-about-philosophy.presets.name"
+    }
+  ]
 }
 {% endschema %}

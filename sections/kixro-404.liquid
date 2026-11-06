@@ -5,17 +5,17 @@
   }
 {%- endstyle -%}
 
-<div class="kixro-404 section-{{ section.id }}-padding">
+<div class="kixro-404 color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding">
   <div class="kixro-container kixro-404__inner">
     <p class="kixro-404__code">{{ section.settings.error_code }}</p>
     <h1 class="kixro-404__title">{{ section.settings.heading }}</h1>
     <p class="kixro-404__text">{{ section.settings.text }}</p>
 
     <form action="{{ routes.search_url }}" method="get" role="search" class="kixro-search__form kixro-404__search">
-      <label class="visually-hidden" for="Kixro404Search">Search</label>
+      <label class="visually-hidden" for="Search-{{ section.id }}">{{ 'general.search.search' | t | default: 'Search' }}</label>
       <input
         class="kixro-search__input"
-        id="Kixro404Search"
+        id="Search-{{ section.id }}"
         type="search"
         name="q"
         placeholder="{{ section.settings.search_placeholder }}"
@@ -40,54 +40,60 @@
 
 {% schema %}
 {
-  "name": "Kixro 404 Page",
+  "name": "t:sections.kixro-404.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "text",
       "id": "error_code",
-      "label": "Error code",
+      "label": "t:sections.kixro-404.settings.error_code.label",
       "default": "404"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
+      "label": "t:sections.kixro-404.settings.heading.label",
       "default": "Page not found"
     },
     {
       "type": "textarea",
       "id": "text",
-      "label": "Description",
+      "label": "t:sections.kixro-404.settings.text.label",
       "default": "The page you're looking for doesn't exist or has been moved. Try searching or head back to the shop."
     },
     {
       "type": "text",
       "id": "search_placeholder",
-      "label": "Search placeholder",
-      "default": "Search for shoes..."
+      "label": "t:sections.kixro-404.settings.search_placeholder.label",
+      "default": "Search products..."
     },
     {
       "type": "text",
       "id": "search_button",
-      "label": "Search button",
+      "label": "t:sections.kixro-404.settings.search_button.label",
       "default": "Search"
     },
     {
       "type": "text",
       "id": "home_button",
-      "label": "Home button",
+      "label": "t:sections.kixro-404.settings.home_button.label",
       "default": "Back to Home"
     },
     {
       "type": "text",
       "id": "shop_button",
-      "label": "Shop button",
-      "default": "Shop All Shoes"
+      "label": "t:sections.kixro-404.settings.shop_button.label",
+      "default": "Shop All"
     },
     {
       "type": "checkbox",
       "id": "show_links",
-      "label": "Show quick links",
+      "label": "t:sections.kixro-404.settings.show_links.label",
       "default": true
     },
     {
@@ -97,7 +103,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "label": "Padding top",
+      "label": "t:sections.kixro-404.settings.padding_top.label",
       "default": 80
     },
     {
@@ -107,10 +113,14 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "label": "Padding bottom",
+      "label": "t:sections.kixro-404.settings.padding_bottom.label",
       "default": 80
     }
   ],
-  "presets": [{ "name": "Kixro 404 Page" }]
+  "presets": [
+    {
+      "name": "t:sections.kixro-404.presets.name"
+    }
+  ]
 }
 {% endschema %}

@@ -17,6 +17,27 @@
 | 6 | About Us Page Development | ✅ Complete | Phase 5 complete |
 | 7 | Additional Pages | ✅ Complete* | Phase 6 complete — *Account branding optional |
 | 8 | Final Testing & Optimization | ✅ Complete | Owner sign-off 2026-07-24 |
+| 9 | Theme Store Preparation | ✅ Complete | Phase 8 complete (`theme-store-submission` branch) |
+
+---
+
+## Phase 9 — Theme Store Preparation (2026-11-06)
+
+> **Status:** ✅ Complete — isolated on `theme-store-submission` branch
+
+### Objectives
+Prepare the Kixro theme for official Shopify Theme Store submission while maintaining 100% visual fidelity and zero design changes.
+
+### Deliverables
+- [x] **P0.1 `theme_info` metadata updated** — Kixro v1.0.0, documentation and support tracker configured in `config/settings_schema.json`
+- [x] **P0.2 Google Fonts non-blocking** — Verified async loading with theme-check directives in place; zero font changes
+- [x] **P0.3 Color scheme integration** — Added `type: color_scheme` setting and wrapper class `color-{{ section.settings.color_scheme }}` to all 21 `kixro-*` sections
+- [x] **P0.4 Schema localization (`t:` keys)** — 100% translation key coverage across all settings, headers, blocks, and presets in `locales/en.default.schema.json`
+- [x] **P0.5 Brand copy genericization** — De-branded personal demo defaults and updated dynamic meta description
+- [x] **P0.6 Commercial `README.md`** — Comprehensive documentation with feature overview, setup guide, and Theme Check badge
+- [x] **P1.3 Accessible dynamic IDs** — Replaced static IDs with `{{ section.id }}` in 404, contact, and search templates
+- [x] **P1.6 Clean section & preset names** — Generic friendly names across all section schemas and editor presets
+- [x] **Code Quality Verification** — `shopify theme check` passed with **0 offenses across 213 files**
 
 ---
 

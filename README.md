@@ -1,110 +1,95 @@
-# Kixro — Custom Shopify Online Store 2.0 Theme
+# Kixro — Premium Shopify Online Store 2.0 Theme
 
 ![CI](https://github.com/esratjahanesha808-arch/Kixro-shopify-store/actions/workflows/ci.yml/badge.svg)
 
-A fully custom Shopify theme for **Kixro**, a premium footwear and lifestyle brand. Built on Online Store 2.0 with JSON templates, section groups, and a reusable design system.
-
-**Live store:** [mcr0nu-c1.myshopify.com](https://mcr0nu-c1.myshopify.com)
-
-| Page | Link |
-|------|------|
-| Homepage | [mcr0nu-c1.myshopify.com](https://mcr0nu-c1.myshopify.com) |
-| Shop | [mcr0nu-c1.myshopify.com/collections/all](https://mcr0nu-c1.myshopify.com/collections/all) |
-| About Us | [mcr0nu-c1.myshopify.com/pages/about-us](https://mcr0nu-c1.myshopify.com/pages/about-us) |
+**Kixro** is a modern, high-performance Shopify Online Store 2.0 theme built for premium lifestyle and footwear brands. Featuring modular JSON templates, global color schemes, complete schema localization, dynamic product facets, and an editorial design system.
 
 ---
 
 ## Highlights
 
-- **Custom homepage** — hero, category grid, newly dropped carousel, discover picks, brand CTA, and footer
-- **Shop & collection pages** — custom color swatch filter with client-side exact matching and variant image swap on product cards
-- **Product detail page** — color swatches, size pills, metafield-driven shoe size availability, and line-item size properties
-- **Cart, search, About, Contact, and policy pages** — branded layouts with editable theme settings
-- **SEO & accessibility** — JSON-LD, semantic headings, keyboard navigation, focus states, and cart announcements
-- **Performance** — async font loading, optimized images, theme check clean (0 offenses)
+- **Online Store 2.0 Architecture** — 100% modular JSON templates, section groups (`header-group.json`, `footer-group.json`), and customizable blocks.
+- **Global Color Schemes** — Full support for Shopify's color scheme system across all sections for seamless merchant styling.
+- **Complete Schema Localization** — All section settings, block controls, and presets are fully localized with `t:` translation keys matching `locales/en.default.schema.json`.
+- **Editorial Homepage** — Dynamic Hero slideshow, Category grid, New Arrivals grid, Editorial picks, Brand CTA banner, and multi-column Footer.
+- **Advanced Collection Filtering** — High-speed facet filtering with visual swatches, price range, availability, and instant variant image switching.
+- **Product Detail Experience** — Variant swatches, shoe size selectors with real-time stock availability, sticky gallery, and natural full-page scrolling.
+- **Accessible & SEO Ready** — Semantic HTML5, WCAG 2.1 AA compliant contrast and keyboard navigation, JSON-LD schema (Organization, WebSite, SearchAction, Product), and canonical URLs.
+- **Verified Code Quality** — Passes Shopify Theme Check with **0 offenses across 213 files**.
 
 ---
 
-## Stack
+## Technical Stack
 
 | Layer | Technology |
-|-------|------------|
-| Platform | Shopify Online Store 2.0 |
-| Templating | Liquid |
-| Styling | CSS custom properties (design token system) |
-| Interactivity | Vanilla JavaScript (facets, size picker, product cards) |
-| Tooling | Shopify CLI, Theme Check |
+|---|---|
+| **Platform** | Shopify Online Store 2.0 |
+| **Templating** | Liquid OS 2.0, JSON Templates |
+| **Styling** | Native CSS Custom Properties (Design Token System) |
+| **Interactivity** | Vanilla JavaScript (ES6+, zero heavy framework dependencies) |
+| **Tooling** | Shopify CLI v3, Shopify Theme Check |
 
 ---
 
-## Project structure
+## Project Structure
 
 ```
-assets/          # CSS, JS, and theme assets
-config/          # Theme settings (settings_schema.json, settings_data.json)
+assets/          # CSS custom design tokens, JS modules, and theme assets
+config/          # Global theme settings (settings_schema.json, settings_data.json)
 layout/          # theme.liquid, password.liquid
-locales/         # Translation strings
-sections/        # Kixro custom sections + Dawn base sections
-snippets/        # Reusable components (product-card, color filter, size picker)
+locales/         # Storefront and schema localization files (51 locales supported)
+sections/        # Custom modular sections + Dawn base sections
+snippets/        # Reusable components (product-card, swatches, back-nav, search)
 templates/       # JSON page templates
-workflows/       # Build SOPs (WAT framework)
-tools/           # Helper scripts for collections and content
 ```
 
 ---
 
-## Key custom features
+## Merchant Configuration & Customization
 
-### Color filter
-Client-side filtering in `assets/kixro-facets.js` with swatches sourced from the product catalog (`snippets/kixro-color-filter.liquid`). Selecting a color updates the grid without full page reload and swaps each card to that variant's image.
+### Color Schemes
+Kixro supports global color schemes configured in **Theme settings > Colors**. Each section can be assigned any active color scheme directly within the Shopify Theme Editor.
 
-### Shoe size availability
-Sizes are driven by Shopify's **Shoe size** category metafield (`snippets/kixro-product-shoe-sizes.liquid`). Unavailable sizes are disabled on the PDP and blocked at add-to-cart (`assets/kixro-size-picker.js`).
+### Typography
+Typography uses non-blocking asynchronous font loading ensuring rapid Largest Contentful Paint (LCP) and smooth rendering across all devices.
 
-### Reusable product card
-`snippets/product-card.liquid` is shared across homepage, shop, search, and collection grids for consistent layout and behavior.
+### Sections & Presets
+All sections feature intuitive merchant controls with descriptive labels, helpful tooltips, and sensible defaults:
+- **Hero slideshow** — Autoplay, slide timing, image pickers, fallback asset support, and dual call-to-action buttons.
+- **Category grid** — Block-based category cards with hover animations and responsive layouts.
+- **Editorial picks** — Promotional banners with curated collection tags and direct shop links.
+- **Brand CTA banner** — Full-width statement banner with customizable background and overlay opacity.
 
 ---
 
-## Local development
+## Local Development & Testing
 
-**Requirements:** [Shopify CLI](https://shopify.dev/docs/api/shopify-cli)
+### Requirements
+- Node.js (v18+)
+- [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) (v3+)
 
+### Getting Started
 ```bash
-# Clone the repo
+# Clone the repository
 git clone https://github.com/esratjahanesha808-arch/Kixro-shopify-store.git
 cd Kixro-shopify-store
 
-# Log in and connect to the store (requires collaborator access)
-shopify auth login
+# Log in to your Shopify Partner or development store
+shopify auth login --store your-store.myshopify.com
+
+# Start local theme development server
 shopify theme dev
 ```
 
-Copy `shopify.theme.toml` locally with your store and theme IDs (see `shopify.theme.toml` in this repo for the live theme pattern).
-
-Run theme check before pushing:
-
+### Theme Validation
+Run Theme Check locally to verify code integrity:
 ```bash
 shopify theme check
 ```
-
----
-
-## Pages
-
-| Page | Template / section |
-|------|-------------------|
-| Homepage | `templates/index.json` |
-| Shop / collections | `templates/collection.json` |
-| Product (PDP) | `templates/product.json` |
-| Cart | `templates/cart.json` |
-| Search | `templates/search.json` |
-| About Us | `templates/page.about-us.json` |
-| Contact | `templates/page.contact.json` |
-| Policies | `templates/page.*-policy.json` |
+*Expected output: 0 offenses found.*
 
 ---
 
 ## License
 
-Theme code © Kixro. All brand assets and content belong to the store owner.
+Theme code © Kixro. Distributed under standard commercial terms.

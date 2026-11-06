@@ -1,4 +1,4 @@
-<div class="kixro-brand-cta-outer">
+<div class="kixro-brand-cta-outer color-{{ section.settings.color_scheme }}">
 <div class="kixro-brand-cta">
   <div class="kixro-brand-cta__bg">
     {%- if section.settings.bg_image != blank -%}
@@ -50,23 +50,29 @@
 
 {% schema %}
 {
-  "name": "Kixro Brand CTA Banner",
+  "name": "t:sections.kixro-brand-cta.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background image"
+      "label": "t:sections.kixro-brand-cta.settings.bg_image.label"
     },
     {
       "type": "text",
       "id": "bg_fallback",
-      "label": "Fallback asset filename",
+      "label": "t:sections.kixro-brand-cta.settings.bg_fallback.label",
       "default": "banner-cta.png"
     },
     {
       "type": "range",
       "id": "overlay_opacity",
-      "label": "Dark overlay opacity (%)",
+      "label": "t:sections.kixro-brand-cta.settings.overlay_opacity.label",
       "min": 30,
       "max": 90,
       "step": 5,
@@ -75,35 +81,35 @@
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow label",
-      "default": "The Kixro Promise"
+      "label": "t:sections.kixro-brand-cta.settings.eyebrow.label",
+      "default": "Our Promise"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": "Build Your Style With Confident Steps By Wearing Our Sneakers."
+      "label": "t:sections.kixro-brand-cta.settings.heading.label",
+      "default": "Build Your Style With Confident Steps."
     },
     {
       "type": "textarea",
       "id": "subtext",
-      "label": "Supporting text"
+      "label": "t:sections.kixro-brand-cta.settings.subtext.label"
     },
     {
       "type": "text",
       "id": "btn_label",
-      "label": "Button label",
+      "label": "t:sections.kixro-brand-cta.settings.btn_label.label",
       "default": "Shop Now"
     },
     {
       "type": "url",
       "id": "btn_url",
-      "label": "Button URL"
+      "label": "t:sections.kixro-brand-cta.settings.btn_url.label"
     }
   ],
   "presets": [
     {
-      "name": "Kixro Brand CTA Banner"
+      "name": "t:sections.kixro-brand-cta.presets.name"
     }
   ]
 }

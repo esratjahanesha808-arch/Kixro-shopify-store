@@ -496,13 +496,19 @@
 
 {% schema %}
 {
-  "name": "Kixro Hero",
+  "name": "t:sections.kixro-hero.name",
   "tag": "div",
   "settings": [
     {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
       "type": "range",
       "id": "hero_height",
-      "label": "Hero height (vh)",
+      "label": "t:sections.kixro-hero.settings.hero_height.label",
       "min": 50,
       "max": 100,
       "step": 5,
@@ -511,54 +517,185 @@
     {
       "type": "checkbox",
       "id": "autoplay",
-      "label": "Auto-advance slides",
+      "label": "t:sections.kixro-hero.settings.autoplay.label",
       "default": true
     },
     {
       "type": "range",
       "id": "interval",
-      "label": "Slide interval (ms)",
+      "label": "t:sections.kixro-hero.settings.interval.label",
       "min": 3000,
       "max": 8000,
       "step": 500,
       "default": 5000
     },
-    { "type": "header", "content": "Slide 1" },
-    { "type": "image_picker", "id": "slide_1_image", "label": "Slide 1 image" },
-    { "type": "text", "id": "slide_1_fallback", "label": "Fallback asset filename", "default": "hero-1.png" },
-    { "type": "text", "id": "slide_1_eyebrow", "label": "Eyebrow label", "default": "New Collection" },
-    { "type": "text", "id": "slide_1_heading", "label": "Heading", "default": "Sneakers That Defy Your Everyday Look" },
-    { "type": "textarea", "id": "slide_1_subtext", "label": "Supporting text", "default": "Discover footwear crafted for those who move with purpose — premium styles, built for the streets." },
-    { "type": "text", "id": "slide_1_btn1_label", "label": "Button 1 label", "default": "Shop Now" },
-    { "type": "url", "id": "slide_1_btn1_url", "label": "Button 1 URL" },
-    { "type": "text", "id": "slide_1_btn2_label", "label": "Button 2 label", "default": "New Arrivals" },
-    { "type": "url", "id": "slide_1_btn2_url", "label": "Button 2 URL" },
-
-    { "type": "header", "content": "Slide 2" },
-    { "type": "image_picker", "id": "slide_2_image", "label": "Slide 2 image" },
-    { "type": "text", "id": "slide_2_fallback", "label": "Fallback asset filename", "default": "hero-2.png" },
-    { "type": "text", "id": "slide_2_eyebrow", "label": "Eyebrow label", "default": "Best Sellers" },
-    { "type": "text", "id": "slide_2_heading", "label": "Heading", "default": "Move Boldly, Step Differently" },
-    { "type": "textarea", "id": "slide_2_subtext", "label": "Supporting text", "default": "Our best-loved styles — reimagined. Comfort meets bold design in every pair." },
-    { "type": "text", "id": "slide_2_btn1_label", "label": "Button 1 label", "default": "Shop Best Sellers" },
-    { "type": "url", "id": "slide_2_btn1_url", "label": "Button 1 URL" },
-    { "type": "text", "id": "slide_2_btn2_label", "label": "Button 2 label" },
-    { "type": "url", "id": "slide_2_btn2_url", "label": "Button 2 URL" },
-
-    { "type": "header", "content": "Slide 3" },
-    { "type": "image_picker", "id": "slide_3_image", "label": "Slide 3 image" },
-    { "type": "text", "id": "slide_3_fallback", "label": "Fallback asset filename", "default": "hero-3.png" },
-    { "type": "text", "id": "slide_3_eyebrow", "label": "Eyebrow label", "default": "Trending Now" },
-    { "type": "text", "id": "slide_3_heading", "label": "Heading", "default": "Your Style, Your Statement" },
-    { "type": "textarea", "id": "slide_3_subtext", "label": "Supporting text", "default": "Trending silhouettes for the season. Express who you are with every step." },
-    { "type": "text", "id": "slide_3_btn1_label", "label": "Button 1 label", "default": "Explore Trending" },
-    { "type": "url", "id": "slide_3_btn1_url", "label": "Button 1 URL" },
-    { "type": "text", "id": "slide_3_btn2_label", "label": "Button 2 label" },
-    { "type": "url", "id": "slide_3_btn2_url", "label": "Button 2 URL" }
+    {
+      "type": "header",
+      "content": "t:sections.kixro-hero.settings.header_1.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_1_image",
+      "label": "t:sections.kixro-hero.settings.slide_1_image.label"
+    },
+    {
+      "type": "text",
+      "id": "slide_1_fallback",
+      "label": "t:sections.kixro-hero.settings.slide_1_fallback.label",
+      "default": "hero-1.png"
+    },
+    {
+      "type": "text",
+      "id": "slide_1_eyebrow",
+      "label": "t:sections.kixro-hero.settings.slide_1_eyebrow.label",
+      "default": "New Collection"
+    },
+    {
+      "type": "text",
+      "id": "slide_1_heading",
+      "label": "t:sections.kixro-hero.settings.slide_1_heading.label",
+      "default": "Sneakers That Defy Your Everyday Look"
+    },
+    {
+      "type": "textarea",
+      "id": "slide_1_subtext",
+      "label": "t:sections.kixro-hero.settings.slide_1_subtext.label",
+      "default": "Discover footwear crafted for those who move with purpose — premium styles, built for the streets."
+    },
+    {
+      "type": "text",
+      "id": "slide_1_btn1_label",
+      "label": "t:sections.kixro-hero.settings.slide_1_btn1_label.label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "slide_1_btn1_url",
+      "label": "t:sections.kixro-hero.settings.slide_1_btn1_url.label"
+    },
+    {
+      "type": "text",
+      "id": "slide_1_btn2_label",
+      "label": "t:sections.kixro-hero.settings.slide_1_btn2_label.label",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "url",
+      "id": "slide_1_btn2_url",
+      "label": "t:sections.kixro-hero.settings.slide_1_btn2_url.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.kixro-hero.settings.header_2.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_2_image",
+      "label": "t:sections.kixro-hero.settings.slide_2_image.label"
+    },
+    {
+      "type": "text",
+      "id": "slide_2_fallback",
+      "label": "t:sections.kixro-hero.settings.slide_2_fallback.label",
+      "default": "hero-2.png"
+    },
+    {
+      "type": "text",
+      "id": "slide_2_eyebrow",
+      "label": "t:sections.kixro-hero.settings.slide_2_eyebrow.label",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "slide_2_heading",
+      "label": "t:sections.kixro-hero.settings.slide_2_heading.label",
+      "default": "Move Boldly, Step Differently"
+    },
+    {
+      "type": "textarea",
+      "id": "slide_2_subtext",
+      "label": "t:sections.kixro-hero.settings.slide_2_subtext.label",
+      "default": "Our best-loved styles — reimagined. Comfort meets bold design in every pair."
+    },
+    {
+      "type": "text",
+      "id": "slide_2_btn1_label",
+      "label": "t:sections.kixro-hero.settings.slide_2_btn1_label.label",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "url",
+      "id": "slide_2_btn1_url",
+      "label": "t:sections.kixro-hero.settings.slide_2_btn1_url.label"
+    },
+    {
+      "type": "text",
+      "id": "slide_2_btn2_label",
+      "label": "t:sections.kixro-hero.settings.slide_2_btn2_label.label"
+    },
+    {
+      "type": "url",
+      "id": "slide_2_btn2_url",
+      "label": "t:sections.kixro-hero.settings.slide_2_btn2_url.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.kixro-hero.settings.header_3.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_3_image",
+      "label": "t:sections.kixro-hero.settings.slide_3_image.label"
+    },
+    {
+      "type": "text",
+      "id": "slide_3_fallback",
+      "label": "t:sections.kixro-hero.settings.slide_3_fallback.label",
+      "default": "hero-3.png"
+    },
+    {
+      "type": "text",
+      "id": "slide_3_eyebrow",
+      "label": "t:sections.kixro-hero.settings.slide_3_eyebrow.label",
+      "default": "Trending Now"
+    },
+    {
+      "type": "text",
+      "id": "slide_3_heading",
+      "label": "t:sections.kixro-hero.settings.slide_3_heading.label",
+      "default": "Your Style, Your Statement"
+    },
+    {
+      "type": "textarea",
+      "id": "slide_3_subtext",
+      "label": "t:sections.kixro-hero.settings.slide_3_subtext.label",
+      "default": "Trending silhouettes for the season. Express who you are with every step."
+    },
+    {
+      "type": "text",
+      "id": "slide_3_btn1_label",
+      "label": "t:sections.kixro-hero.settings.slide_3_btn1_label.label",
+      "default": "Explore Trending"
+    },
+    {
+      "type": "url",
+      "id": "slide_3_btn1_url",
+      "label": "t:sections.kixro-hero.settings.slide_3_btn1_url.label"
+    },
+    {
+      "type": "text",
+      "id": "slide_3_btn2_label",
+      "label": "t:sections.kixro-hero.settings.slide_3_btn2_label.label"
+    },
+    {
+      "type": "url",
+      "id": "slide_3_btn2_url",
+      "label": "t:sections.kixro-hero.settings.slide_3_btn2_url.label"
+    }
   ],
   "presets": [
     {
-      "name": "Kixro Hero"
+      "name": "t:sections.kixro-hero.presets.name"
     }
   ]
 }

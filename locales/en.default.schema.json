@@ -449,11 +449,11 @@
           "label": "Change every"
         },
         "heading_utilities": {
-         "content": "Utilities"
+          "content": "Utilities"
         },
         "paragraph": {
           "content": "Appear only on large screens"
-        },                     
+        },
         "show_social": {
           "label": "Social media icons",
           "info": "[Manage social accounts](/editor?context=theme&category=social%20media)"
@@ -465,6 +465,12 @@
         "enable_language_selector": {
           "label": "Language selector",
           "info": "[Manage languages](/admin/settings/languages)"
+        },
+        "show_announcement": {
+          "label": "Show announcement bar"
+        },
+        "show_close_button": {
+          "label": "Show close button"
         }
       },
       "blocks": {
@@ -517,7 +523,7 @@
         },
         "header_layout": {
           "content": "Layout"
-        },            
+        },
         "desktop_layout": {
           "label": "Layout",
           "options__1": {
@@ -608,9 +614,9 @@
           "default": "Collections",
           "label": "Heading"
         },
-         "header_layout": {
-        "content": "Layout"
-        },        
+        "header_layout": {
+          "content": "Layout"
+        },
         "image_ratio": {
           "label": "Image ratio",
           "options__1": {
@@ -692,17 +698,17 @@
           "label": "Heading"
         },
         "layout_header": {
-        "content": "Layout"
+          "content": "Layout"
         },
         "text_header": {
-        "content": "Text"
-        },        
+          "content": "Text"
+        },
         "blog": {
           "label": "Blog"
         },
         "post_limit": {
           "label": "Post count"
-        }, 
+        },
         "columns_desktop": {
           "label": "Columns"
         },
@@ -728,7 +734,7 @@
       "name": "Featured collection",
       "settings": {
         "header_text": {
-        "content": "Text"
+          "content": "Text"
         },
         "title": {
           "label": "Heading",
@@ -756,8 +762,8 @@
           "content": "Collection layout"
         },
         "header_mobile": {
-        "content": "Mobile layout"
-        },                 
+          "content": "Mobile layout"
+        },
         "collection": {
           "label": "Collection"
         },
@@ -1017,6 +1023,29 @@
               "default": "<p>Share contact information, store details, and brand content with your customers.</p>"
             }
           }
+        },
+        "image": {
+          "name": "Image",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "image_width": {
+              "label": "Width"
+            },
+            "alignment": {
+              "label": "Alignment",
+              "options__1": {
+                "label": "Left"
+              },
+              "options__2": {
+                "label": "Center"
+              },
+              "options__3": {
+                "label": "Right"
+              }
+            }
+          }
         }
       },
       "settings": {
@@ -1177,7 +1206,7 @@
           "options__4": {
             "label": "Large"
           }
-          },
+        },
         "content": {
           "content": "Content"
         },
@@ -1282,9 +1311,9 @@
         "buttons": {
           "name": "Buttons",
           "settings": {
-          "header_1":{
-          "content": "Button 1"
-          },
+            "header_1": {
+              "content": "Button 1"
+            },
             "button_label_1": {
               "label": "Label",
               "info": "Leave blank to hide",
@@ -1296,7 +1325,7 @@
             "button_style_secondary_1": {
               "label": "Outline style"
             },
-            "header_2":{
+            "header_2": {
               "content": "Button 2"
             },
             "button_label_2": {
@@ -1320,12 +1349,12 @@
     "image-with-text": {
       "name": "Image with text",
       "settings": {
-      "header": {
-      "content": "Content"
-      },
-      "header_colors": {
-      "content": "Colors" 
-      },
+        "header": {
+          "content": "Content"
+        },
+        "header_colors": {
+          "content": "Colors"
+        },
         "image": {
           "label": "Image"
         },
@@ -1496,15 +1525,15 @@
         "image": {
           "label": "Image"
         },
-        "header":{
-        "content": "Image"
+        "header": {
+          "content": "Image"
         },
-        "header_2":{
-        "content": "Content"
+        "header_2": {
+          "content": "Content"
         },
-        "header_3":{
-        "content": "Colors"
-        },        
+        "header_3": {
+          "content": "Colors"
+        },
         "image_height": {
           "options__1": {
             "label": "Adapt to image"
@@ -2295,7 +2324,7 @@
             },
             "pairing_2": {
               "label": "Pairing 2"
-            },            
+            },
             "icon_2": {
               "label": "Icon"
             },
@@ -2307,8 +2336,8 @@
               "default": "Heading"
             },
             "pairing_3": {
-            "label": "Pairing 3"
-            },             
+              "label": "Pairing 3"
+            },
             "icon_3": {
               "label": "Icon"
             },
@@ -2429,7 +2458,7 @@
           "options__2": {
             "label": "2"
           }
-        },        
+        },
         "image_ratio": {
           "label": "Image ratio",
           "options__1": {
@@ -2481,10 +2510,10 @@
         },
         "header_layout": {
           "content": "Layout"
-        },                            
+        },
         "header_button": {
           "content": "Button"
-        }, 
+        },
         "image_width": {
           "label": "Width",
           "options__1": {
@@ -2691,7 +2720,7 @@
         },
         "content_header": {
           "content": "Content"
-        },        
+        },
         "desktop_content_alignment": {
           "options__1": {
             "label": "Left"
@@ -2923,8 +2952,8 @@
           "name": "Buttons",
           "settings": {
             "header_button1": {
-            "content": "Button 1"
-            }, 
+              "content": "Button 1"
+            },
             "button_label_1": {
               "label": "Label",
               "info": "Leave blank to hide",
@@ -2938,7 +2967,7 @@
             },
             "header_button2": {
               "content": "Button 2"
-            },             
+            },
             "button_label_2": {
               "label": "Label",
               "info": "Leave label blank to hide"
@@ -3078,7 +3107,7 @@
               "default": "Tell your brand's story through images"
             },
             "header_button": {
-            "content": "Button"      
+              "content": "Button"
             },
             "button_label": {
               "label": "Label",
@@ -3092,7 +3121,7 @@
               "label": "Outline style"
             },
             "box_align": {
-              "label": "Content position",              
+              "label": "Content position",
               "options__1": {
                 "label": "Top left"
               },
@@ -3122,7 +3151,7 @@
               }
             },
             "header_layout": {
-            "content": "Layout"                 
+              "content": "Layout"
             },
             "show_text_box": {
               "label": "Container"
@@ -3143,11 +3172,11 @@
               "label": "Overlay opacity"
             },
             "header_text": {
-            "content": "Text"      
+              "content": "Text"
             },
             "header_colors": {
-            "content": "Colors"                 
-            },            
+              "content": "Colors"
+            },
             "text_alignment_mobile": {
               "label": "Mobile content alignment",
               "options__1": {
@@ -3208,8 +3237,8 @@
           "label": "Container color scheme"
         },
         "section_color_scheme": {
-        "label": "Section color scheme"
-        },        
+          "label": "Section color scheme"
+        },
         "open_first_collapsible_row": {
           "label": "Open first row"
         },
@@ -3410,6 +3439,890 @@
           "label": "Open by default"
         }
       }
+    },
+    "kixro-404": {
+      "name": "404 page",
+      "settings": {
+        "error_code": {
+          "label": "Error code"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Description"
+        },
+        "search_placeholder": {
+          "label": "Search placeholder"
+        },
+        "search_button": {
+          "label": "Search button"
+        },
+        "home_button": {
+          "label": "Home button"
+        },
+        "shop_button": {
+          "label": "Shop button"
+        },
+        "show_links": {
+          "label": "Show quick links"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        }
+      },
+      "presets": {
+        "name": "404 page"
+      }
+    },
+    "kixro-about-cta": {
+      "name": "About CTA",
+      "settings": {
+        "banner_image": {
+          "label": "Banner background image"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Supporting text"
+        },
+        "btn_primary_label": {
+          "label": "Primary button label"
+        },
+        "btn_primary_url": {
+          "label": "Primary button URL"
+        },
+        "btn_secondary_label": {
+          "label": "Secondary button label"
+        },
+        "btn_secondary_url": {
+          "label": "Secondary button URL"
+        },
+        "seo_text": {
+          "label": "SEO supporting text"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "About CTA"
+      }
+    },
+    "kixro-about-hero": {
+      "name": "About hero",
+      "settings": {
+        "background_image": {
+          "label": "Background image"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "subheading": {
+          "label": "Subheading"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "About hero"
+      }
+    },
+    "kixro-about-philosophy": {
+      "name": "About philosophy",
+      "settings": {
+        "header_1": {
+          "content": "Product Philosophy"
+        },
+        "philosophy_eyebrow": {
+          "label": "Eyebrow"
+        },
+        "philosophy_heading": {
+          "label": "Heading"
+        },
+        "philosophy_text": {
+          "label": "Description"
+        },
+        "philosophy_points": {
+          "label": "Philosophy points (one per line)"
+        },
+        "philosophy_image": {
+          "label": "Style section image"
+        },
+        "header_2": {
+          "content": "Lifestyle & Community"
+        },
+        "community_eyebrow": {
+          "label": "Eyebrow"
+        },
+        "community_heading": {
+          "label": "Heading"
+        },
+        "community_text": {
+          "label": "Description"
+        },
+        "community_points": {
+          "label": "Community points (one per line)"
+        },
+        "community_image": {
+          "label": "Walk your own path image"
+        },
+        "header_3": {
+          "content": "Our Promise"
+        },
+        "promise_heading": {
+          "label": "Promise heading"
+        },
+        "promise_points": {
+          "label": "Promise points (one per line)"
+        },
+        "promise_closing": {
+          "label": "Closing line"
+        },
+        "promise_image": {
+          "label": "Promise section image"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "About philosophy"
+      }
+    },
+    "kixro-about-story": {
+      "name": "About story",
+      "settings": {
+        "image": {
+          "label": "Story image"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "story": {
+          "label": "Story content"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "About story"
+      }
+    },
+    "kixro-about-values": {
+      "name": "About values",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "mission": {
+          "label": "Mission statement"
+        },
+        "mission_image_1": {
+          "label": "Mission image 1"
+        },
+        "mission_image_2": {
+          "label": "Mission image 2"
+        }
+      },
+      "blocks": {
+        "value": {
+          "settings": {
+            "title": {
+              "label": "Title"
+            },
+            "description": {
+              "label": "Description"
+            }
+          },
+          "name": "Value"
+        }
+      },
+      "presets": {
+        "name": "About values"
+      }
+    },
+    "kixro-account-page": {
+      "name": "Account page",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "sign_in_heading": {
+          "label": "Sign in heading"
+        },
+        "sign_in_text": {
+          "label": "Sign in text"
+        },
+        "sign_in_button": {
+          "label": "Sign in button"
+        },
+        "empty_heading": {
+          "label": "Empty orders heading"
+        },
+        "empty_text": {
+          "label": "Empty orders text"
+        },
+        "empty_button": {
+          "label": "Empty orders button"
+        },
+        "orders_heading": {
+          "label": "Orders heading"
+        },
+        "logout_label": {
+          "label": "Log out label"
+        },
+        "padding_top": {
+          "label": "Top padding"
+        },
+        "padding_bottom": {
+          "label": "Bottom padding"
+        }
+      },
+      "blocks": {},
+      "presets": {}
+    },
+    "kixro-brand-cta": {
+      "name": "Brand CTA banner",
+      "settings": {
+        "bg_image": {
+          "label": "Background image"
+        },
+        "bg_fallback": {
+          "label": "Fallback asset filename"
+        },
+        "overlay_opacity": {
+          "label": "Dark overlay opacity (%)"
+        },
+        "eyebrow": {
+          "label": "Eyebrow label"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "subtext": {
+          "label": "Supporting text"
+        },
+        "btn_label": {
+          "label": "Button label"
+        },
+        "btn_url": {
+          "label": "Button URL"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "Brand CTA banner"
+      }
+    },
+    "kixro-cart-page": {
+      "name": "Cart page",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "continue_label": {
+          "label": "Continue shopping link"
+        },
+        "remove_label": {
+          "label": "Remove label"
+        },
+        "summary_heading": {
+          "label": "Summary heading"
+        },
+        "subtotal_label": {
+          "label": "Subtotal label"
+        },
+        "update_label": {
+          "label": "Update button"
+        },
+        "checkout_label": {
+          "label": "Checkout button"
+        },
+        "summary_text": {
+          "label": "Summary note"
+        },
+        "show_note": {
+          "label": "Show order note"
+        },
+        "note_label": {
+          "label": "Note label"
+        },
+        "empty_heading": {
+          "label": "Empty heading"
+        },
+        "empty_text": {
+          "label": "Empty text"
+        },
+        "empty_button": {
+          "label": "Empty button"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "Cart page"
+      }
+    },
+    "kixro-category-grid": {
+      "name": "Category grid",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow label"
+        },
+        "heading": {
+          "label": "Section heading"
+        }
+      },
+      "blocks": {
+        "category": {
+          "settings": {
+            "image": {
+              "label": "Category image"
+            },
+            "fallback_image": {
+              "label": "Fallback asset filename"
+            },
+            "label": {
+              "label": "Category name"
+            },
+            "link": {
+              "label": "Category link"
+            }
+          },
+          "name": "Category"
+        }
+      },
+      "presets": {
+        "name": "Category grid"
+      }
+    },
+    "kixro-collection-banner": {
+      "name": "Collection banner",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow label"
+        },
+        "show_product_count": {
+          "label": "Show product count"
+        },
+        "show_description": {
+          "label": "Show collection description"
+        },
+        "default_description": {
+          "label": "Description"
+        },
+        "subtext": {
+          "label": "Supporting line"
+        }
+      },
+      "blocks": {},
+      "presets": {}
+    },
+    "kixro-collection-grid": {
+      "name": "Collection grid",
+      "settings": {
+        "products_per_page": {
+          "label": "Products per page"
+        },
+        "enable_filtering": {
+          "label": "Enable filtering"
+        },
+        "enable_sorting": {
+          "label": "Enable sorting"
+        },
+        "header_1": {
+          "content": "Color filter"
+        },
+        "color_option_name": {
+          "label": "Color option name on products",
+          "info": "Must match the variant option name in Shopify (e.g. Color). Enable Color filter in Search & Discovery for best results."
+        },
+        "filter_colors": {
+          "label": "Colors to show",
+          "info": "Sort order for swatches. Swatches appear only for Color variant values that exist on products in Shopify."
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        }
+      },
+      "blocks": {},
+      "presets": {}
+    },
+    "kixro-contact-page": {
+      "name": "Contact page",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "intro": {
+          "label": "Intro text"
+        },
+        "header_1": {
+          "content": "Form labels"
+        },
+        "name_label": {
+          "label": "Name label"
+        },
+        "email_label": {
+          "label": "Email label"
+        },
+        "message_label": {
+          "label": "Message label"
+        },
+        "submit_label": {
+          "label": "Submit button"
+        },
+        "success_message": {
+          "label": "Success message"
+        },
+        "error_message": {
+          "label": "Error message"
+        },
+        "header_2": {
+          "content": "Store information"
+        },
+        "info_heading": {
+          "label": "Info heading"
+        },
+        "info_text": {
+          "label": "Info text"
+        },
+        "email": {
+          "label": "Support email"
+        },
+        "phone": {
+          "label": "Phone"
+        },
+        "hours": {
+          "label": "Business hours"
+        },
+        "address": {
+          "label": "Address"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "Contact page"
+      }
+    },
+    "kixro-discover-picks": {
+      "name": "Editorial picks",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow label"
+        },
+        "heading": {
+          "label": "Section heading"
+        },
+        "subtitle": {
+          "label": "Subtitle"
+        }
+      },
+      "blocks": {
+        "pick": {
+          "settings": {
+            "image": {
+              "label": "Card image"
+            },
+            "fallback_image": {
+              "label": "Fallback asset filename"
+            },
+            "label": {
+              "label": "Eyebrow label"
+            },
+            "title": {
+              "label": "Card title"
+            },
+            "btn_label": {
+              "label": "Button label"
+            },
+            "link": {
+              "label": "Link URL"
+            }
+          },
+          "name": "Pick Card"
+        }
+      },
+      "presets": {
+        "name": "Editorial picks"
+      }
+    },
+    "kixro-featured-collection": {
+      "name": "Featured collection",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow label"
+        },
+        "heading": {
+          "label": "Section heading"
+        },
+        "subtitle": {
+          "label": "Subtitle"
+        },
+        "collection": {
+          "label": "Collection to display"
+        },
+        "tag_filter": {
+          "label": "Filter by product tag",
+          "info": "Only show products with this tag. Leave blank to show all."
+        },
+        "products_to_show": {
+          "label": "Products to show"
+        },
+        "show_cta": {
+          "label": "Show CTA button"
+        },
+        "cta_label": {
+          "label": "CTA button label"
+        },
+        "cta_url": {
+          "label": "CTA button URL"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "Featured collection"
+      }
+    },
+    "kixro-footer": {
+      "name": "Footer",
+      "settings": {
+        "tagline": {
+          "label": "Brand description"
+        },
+        "show_social": {
+          "label": "Show social icons"
+        },
+        "header_1": {
+          "content": "Site Map column"
+        },
+        "sitemap_heading": {
+          "label": "Site Map heading"
+        },
+        "sitemap_menu": {
+          "label": "Site Map menu"
+        },
+        "header_2": {
+          "content": "Legal column"
+        },
+        "legal_heading": {
+          "label": "Legal heading"
+        },
+        "about_us_url": {
+          "label": "About Us page path",
+          "info": "Leave blank to auto-detect your About Us page."
+        },
+        "about_us_label": {
+          "label": "About Us link label"
+        },
+        "refund_policy_label": {
+          "label": "Refund policy link label"
+        },
+        "refund_policy_url": {
+          "label": "Refund policy path (optional override)",
+          "info": "Auto-detects from Shopify policies. Default: /policies/refund-policy"
+        },
+        "shipping_policy_label": {
+          "label": "Shipping policy link label"
+        },
+        "shipping_policy_url": {
+          "label": "Shipping policy path (optional override)",
+          "info": "Auto-detects from Shopify policies. Default: /policies/shipping-policy"
+        },
+        "privacy_policy_label": {
+          "label": "Privacy policy link label"
+        },
+        "show_privacy_policy": {
+          "label": "Show Privacy Policy link"
+        },
+        "show_terms_policy": {
+          "label": "Show Terms of Service link"
+        },
+        "terms_policy_label": {
+          "label": "Terms of Service link label"
+        },
+        "terms_policy_url": {
+          "label": "Terms of Service path (optional override)",
+          "info": "Auto-detects from Shopify policies. Default: /policies/terms-of-service"
+        },
+        "legal_menu": {
+          "label": "Additional legal links menu (optional)"
+        },
+        "header_3": {
+          "content": "Back to top"
+        },
+        "show_back_to_top": {
+          "label": "Show back to top button"
+        },
+        "back_to_top_label": {
+          "label": "Back to top label"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "Footer"
+      }
+    },
+    "kixro-hero": {
+      "name": "Hero slideshow",
+      "settings": {
+        "hero_height": {
+          "label": "Hero height (vh)"
+        },
+        "autoplay": {
+          "label": "Auto-advance slides"
+        },
+        "interval": {
+          "label": "Slide interval (ms)"
+        },
+        "header_1": {
+          "content": "Slide 1"
+        },
+        "slide_1_image": {
+          "label": "Slide 1 image"
+        },
+        "slide_1_fallback": {
+          "label": "Fallback asset filename"
+        },
+        "slide_1_eyebrow": {
+          "label": "Eyebrow label"
+        },
+        "slide_1_heading": {
+          "label": "Heading"
+        },
+        "slide_1_subtext": {
+          "label": "Supporting text"
+        },
+        "slide_1_btn1_label": {
+          "label": "Button 1 label"
+        },
+        "slide_1_btn1_url": {
+          "label": "Button 1 URL"
+        },
+        "slide_1_btn2_label": {
+          "label": "Button 2 label"
+        },
+        "slide_1_btn2_url": {
+          "label": "Button 2 URL"
+        },
+        "header_2": {
+          "content": "Slide 2"
+        },
+        "slide_2_image": {
+          "label": "Slide 2 image"
+        },
+        "slide_2_fallback": {
+          "label": "Fallback asset filename"
+        },
+        "slide_2_eyebrow": {
+          "label": "Eyebrow label"
+        },
+        "slide_2_heading": {
+          "label": "Heading"
+        },
+        "slide_2_subtext": {
+          "label": "Supporting text"
+        },
+        "slide_2_btn1_label": {
+          "label": "Button 1 label"
+        },
+        "slide_2_btn1_url": {
+          "label": "Button 1 URL"
+        },
+        "slide_2_btn2_label": {
+          "label": "Button 2 label"
+        },
+        "slide_2_btn2_url": {
+          "label": "Button 2 URL"
+        },
+        "header_3": {
+          "content": "Slide 3"
+        },
+        "slide_3_image": {
+          "label": "Slide 3 image"
+        },
+        "slide_3_fallback": {
+          "label": "Fallback asset filename"
+        },
+        "slide_3_eyebrow": {
+          "label": "Eyebrow label"
+        },
+        "slide_3_heading": {
+          "label": "Heading"
+        },
+        "slide_3_subtext": {
+          "label": "Supporting text"
+        },
+        "slide_3_btn1_label": {
+          "label": "Button 1 label"
+        },
+        "slide_3_btn1_url": {
+          "label": "Button 1 URL"
+        },
+        "slide_3_btn2_label": {
+          "label": "Button 2 label"
+        },
+        "slide_3_btn2_url": {
+          "label": "Button 2 URL"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "Hero slideshow"
+      }
+    },
+    "kixro-newly-dropped": {
+      "name": "New arrivals grid",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow label"
+        },
+        "heading": {
+          "label": "Section heading"
+        },
+        "subtitle": {
+          "label": "Subtitle"
+        },
+        "collection": {
+          "label": "Collection to display"
+        },
+        "tag_filter": {
+          "label": "Filter by product tag",
+          "info": "Only show products with this tag. Leave blank to show all."
+        },
+        "products_to_show": {
+          "label": "Products to show"
+        },
+        "show_cta": {
+          "label": "Show CTA button"
+        },
+        "cta_label": {
+          "label": "CTA button label"
+        },
+        "cta_url": {
+          "label": "CTA button URL"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "New arrivals grid"
+      }
+    },
+    "kixro-policy-page": {
+      "name": "Policy page",
+      "settings": {
+        "policy_type": {
+          "label": "Shopify policy to display"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "empty_message": {
+          "label": "Empty state message"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "Policy page"
+      }
+    },
+    "kixro-search-results": {
+      "name": "Search results",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "results_heading": {
+          "label": "Results heading"
+        },
+        "placeholder": {
+          "label": "Search placeholder"
+        },
+        "button_label": {
+          "label": "Search button"
+        },
+        "hint_text": {
+          "label": "Hint text"
+        },
+        "empty_heading": {
+          "label": "Empty heading"
+        },
+        "empty_text": {
+          "label": "Empty text"
+        },
+        "empty_button": {
+          "label": "Empty button"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        }
+      },
+      "blocks": {},
+      "presets": {
+        "name": "Search results"
+      }
+    },
+    "kixro-shopify-policy": {
+      "name": "Shopify policy",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "empty_message": {
+          "label": "Empty state message"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        }
+      },
+      "blocks": {},
+      "presets": {}
     }
   }
 }

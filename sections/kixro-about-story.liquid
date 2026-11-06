@@ -1,4 +1,4 @@
-<div class="kixro-about-story">
+<div class="kixro-about-story color-{{ section.settings.color_scheme }}">
   <div class="kixro-container">
     <div class="kixro-about-story__grid">
       <div class="kixro-about-story__media">
@@ -38,32 +38,42 @@
 
 {% schema %}
 {
-  "name": "Kixro About Story",
+  "name": "t:sections.kixro-about-story.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Story image"
+      "label": "t:sections.kixro-about-story.settings.image.label"
     },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow",
+      "label": "t:sections.kixro-about-story.settings.eyebrow.label",
       "default": "Brand Story"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
+      "label": "t:sections.kixro-about-story.settings.heading.label",
       "default": "Modern style meets everyday comfort"
     },
     {
       "type": "richtext",
       "id": "story",
-      "label": "Story content",
-      "default": "<p>Welcome to Kixro, where modern style meets everyday comfort. Born from a passion for premium footwear, Kixro was created for the young man who demands more from his shoes — more style, more confidence, and more comfort, from the first step of the day to the last.</p><p>We believe that great footwear can transform your confidence, elevate your style, and carry you through every moment with ease. That's why we craft every pair of Kixro shoes with precision, premium materials, and modern designs that feel as good as they look.</p><p>Kixro is more than just a shoe brand — it's a statement of confidence, style, and intentional living. For the trendsetters, the go-getters, and the style-conscious men who walk their own path, Kixro is your perfect companion for every step of the journey.</p>"
+      "label": "t:sections.kixro-about-story.settings.story.label",
+      "default": "<p>Welcome to our brand, where modern style meets everyday comfort. Born from a passion for premium craftsmanship, we design products for those who demand more — more style, more confidence, and more comfort, from morning to night.</p><p>We believe that great design transforms confidence, elevates personal style, and carries you through every moment with ease. That's why we craft every piece with precision, premium materials, and modern silhouettes that feel as good as they look.</p><p>Our collection is more than just fashion — it's a statement of intentional living. For the trendsetters, the go-getters, and the style-conscious who walk their own path, we are your perfect companion for every step of the journey.</p>"
     }
   ],
-  "presets": [{ "name": "Kixro About Story" }]
+  "presets": [
+    {
+      "name": "t:sections.kixro-about-story.presets.name"
+    }
+  ]
 }
 {% endschema %}

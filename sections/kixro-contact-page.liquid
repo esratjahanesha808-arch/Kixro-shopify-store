@@ -5,7 +5,7 @@
   }
 {%- endstyle -%}
 
-<div class="kixro-contact section-{{ section.id }}-padding">
+<div class="kixro-contact section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="kixro-container">
     <div class="kixro-page-header kixro-page-header--compact">
       <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
@@ -31,11 +31,11 @@
           {%- endif -%}
 
           <div class="kixro-contact__field">
-            <label class="kixro-contact__label" for="KixroContactName">{{ section.settings.name_label }}</label>
+            <label class="kixro-contact__label" for="ContactForm-name-{{ section.id }}">{{ section.settings.name_label }}</label>
             <input
               class="kixro-contact__input"
               type="text"
-              id="KixroContactName"
+              id="ContactForm-name-{{ section.id }}"
               name="contact[name]"
               autocomplete="name"
               value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
@@ -44,11 +44,11 @@
           </div>
 
           <div class="kixro-contact__field">
-            <label class="kixro-contact__label" for="KixroContactEmail">{{ section.settings.email_label }}</label>
+            <label class="kixro-contact__label" for="ContactForm-email-{{ section.id }}">{{ section.settings.email_label }}</label>
             <input
               class="kixro-contact__input"
               type="email"
-              id="KixroContactEmail"
+              id="ContactForm-email-{{ section.id }}"
               name="contact[email]"
               autocomplete="email"
               value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
@@ -57,10 +57,10 @@
           </div>
 
           <div class="kixro-contact__field">
-            <label class="kixro-contact__label" for="KixroContactMessage">{{ section.settings.message_label }}</label>
+            <label class="kixro-contact__label" for="ContactForm-body-{{ section.id }}">{{ section.settings.message_label }}</label>
             <textarea
               class="kixro-contact__input kixro-contact__textarea"
-              id="KixroContactMessage"
+              id="ContactForm-body-{{ section.id }}"
               name="contact[body]"
               rows="6"
               required
@@ -112,104 +112,110 @@
 
 {% schema %}
 {
-  "name": "Kixro Contact Page",
+  "name": "t:sections.kixro-contact-page.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow",
+      "label": "t:sections.kixro-contact-page.settings.eyebrow.label",
       "default": "Get in Touch"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
+      "label": "t:sections.kixro-contact-page.settings.heading.label",
       "default": "Contact Us"
     },
     {
       "type": "textarea",
       "id": "intro",
-      "label": "Intro text",
+      "label": "t:sections.kixro-contact-page.settings.intro.label",
       "default": "Have a question about your order, sizing, or our collection? We're here to help."
     },
     {
       "type": "header",
-      "content": "Form labels"
+      "content": "t:sections.kixro-contact-page.settings.header_1.content"
     },
     {
       "type": "text",
       "id": "name_label",
-      "label": "Name label",
+      "label": "t:sections.kixro-contact-page.settings.name_label.label",
       "default": "Name"
     },
     {
       "type": "text",
       "id": "email_label",
-      "label": "Email label",
+      "label": "t:sections.kixro-contact-page.settings.email_label.label",
       "default": "Email"
     },
     {
       "type": "text",
       "id": "message_label",
-      "label": "Message label",
+      "label": "t:sections.kixro-contact-page.settings.message_label.label",
       "default": "Message"
     },
     {
       "type": "text",
       "id": "submit_label",
-      "label": "Submit button",
+      "label": "t:sections.kixro-contact-page.settings.submit_label.label",
       "default": "Send Message"
     },
     {
       "type": "text",
       "id": "success_message",
-      "label": "Success message",
+      "label": "t:sections.kixro-contact-page.settings.success_message.label",
       "default": "Thanks for reaching out. We'll get back to you shortly."
     },
     {
       "type": "text",
       "id": "error_message",
-      "label": "Error message",
+      "label": "t:sections.kixro-contact-page.settings.error_message.label",
       "default": "Please check your details and try again."
     },
     {
       "type": "header",
-      "content": "Store information"
+      "content": "t:sections.kixro-contact-page.settings.header_2.content"
     },
     {
       "type": "text",
       "id": "info_heading",
-      "label": "Info heading",
+      "label": "t:sections.kixro-contact-page.settings.info_heading.label",
       "default": "Customer Support"
     },
     {
       "type": "textarea",
       "id": "info_text",
-      "label": "Info text",
+      "label": "t:sections.kixro-contact-page.settings.info_text.label",
       "default": "Our team typically responds within 1–2 business days."
     },
     {
       "type": "text",
       "id": "email",
-      "label": "Support email",
-      "default": "support@kixro.com"
+      "label": "t:sections.kixro-contact-page.settings.email.label",
+      "default": "support@example.com"
     },
     {
       "type": "text",
       "id": "phone",
-      "label": "Phone",
+      "label": "t:sections.kixro-contact-page.settings.phone.label",
       "default": "+1 (555) 123-4567"
     },
     {
       "type": "text",
       "id": "hours",
-      "label": "Business hours",
+      "label": "t:sections.kixro-contact-page.settings.hours.label",
       "default": "Mon–Fri, 9am–6pm EST"
     },
     {
       "type": "textarea",
       "id": "address",
-      "label": "Address"
+      "label": "t:sections.kixro-contact-page.settings.address.label"
     },
     {
       "type": "range",
@@ -218,7 +224,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding top",
+      "label": "t:sections.kixro-contact-page.settings.padding_top.label",
       "default": 48
     },
     {
@@ -228,10 +234,14 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding bottom",
+      "label": "t:sections.kixro-contact-page.settings.padding_bottom.label",
       "default": 64
     }
   ],
-  "presets": [{ "name": "Kixro Contact Page" }]
+  "presets": [
+    {
+      "name": "t:sections.kixro-contact-page.presets.name"
+    }
+  ]
 }
 {% endschema %}

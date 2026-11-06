@@ -42,7 +42,7 @@
     {% liquid
       assign kixro_meta_description = page_description | default: shop.description
       if kixro_meta_description == blank
-        assign kixro_meta_description = 'Premium youthful footwear from Kixro. Shop shoes, boots, loafers, and sandals with modern style and all-day comfort.'
+        assign kixro_meta_description = shop.name | append: ' - Discover our premium collection with modern style and all-day comfort.'
       endif
     %}
     <meta name="description" content="{{ kixro_meta_description | escape }}">

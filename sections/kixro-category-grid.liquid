@@ -1,4 +1,4 @@
-<div class="kixro-section" style="background:var(--kixro-surface);">
+<div class="kixro-section color-{{ section.settings.color_scheme }}" style="background:var(--kixro-surface);">
   <div class="kixro-container">
 
     <div class="kixro-section-header">
@@ -60,55 +60,61 @@
 
 {% schema %}
 {
-  "name": "Kixro Category Grid",
+  "name": "t:sections.kixro-category-grid.name",
   "max_blocks": 4,
   "settings": [
     {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow label",
+      "label": "t:sections.kixro-category-grid.settings.eyebrow.label",
       "default": "Shop by Style"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Section heading",
+      "label": "t:sections.kixro-category-grid.settings.heading.label",
       "default": "Find Your Perfect Pair"
     }
   ],
   "blocks": [
     {
       "type": "category",
-      "name": "Category",
+      "name": "t:sections.kixro-category-grid.blocks.category.name",
       "settings": [
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Category image"
+          "label": "t:sections.kixro-category-grid.blocks.category.settings.image.label"
         },
         {
           "type": "text",
           "id": "fallback_image",
-          "label": "Fallback asset filename",
+          "label": "t:sections.kixro-category-grid.blocks.category.settings.fallback_image.label",
           "default": "category-shoes.png"
         },
         {
           "type": "text",
           "id": "label",
-          "label": "Category name",
+          "label": "t:sections.kixro-category-grid.blocks.category.settings.label.label",
           "default": "Shoes"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Category link"
+          "label": "t:sections.kixro-category-grid.blocks.category.settings.link.label"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Kixro Category Grid",
+      "name": "t:sections.kixro-category-grid.presets.name",
       "blocks": [
         {
           "type": "category",

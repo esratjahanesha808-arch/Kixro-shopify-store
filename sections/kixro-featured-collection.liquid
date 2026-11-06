@@ -1,4 +1,4 @@
-<div class="kixro-section" style="background:var(--kixro-surface);">
+<div class="kixro-section color-{{ section.settings.color_scheme }}" style="background:var(--kixro-surface);">
   <div class="kixro-container">
 
     <div class="kixro-section-header">
@@ -47,41 +47,47 @@
 
 {% schema %}
 {
-  "name": "Kixro Featured Collection",
+  "name": "t:sections.kixro-featured-collection.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow label",
+      "label": "t:sections.kixro-featured-collection.settings.eyebrow.label",
       "default": "Editor's Choice"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Section heading",
+      "label": "t:sections.kixro-featured-collection.settings.heading.label",
       "default": "Featured Collection"
     },
     {
       "type": "text",
       "id": "subtitle",
-      "label": "Subtitle",
+      "label": "t:sections.kixro-featured-collection.settings.subtitle.label",
       "default": "Hand-picked styles our team can't stop wearing."
     },
     {
       "type": "collection",
       "id": "collection",
-      "label": "Collection to display"
+      "label": "t:sections.kixro-featured-collection.settings.collection.label"
     },
     {
       "type": "text",
       "id": "tag_filter",
-      "label": "Filter by product tag",
-      "info": "Only show products with this tag. Leave blank to show all."
+      "label": "t:sections.kixro-featured-collection.settings.tag_filter.label",
+      "info": "t:sections.kixro-featured-collection.settings.tag_filter.info"
     },
     {
       "type": "range",
       "id": "products_to_show",
-      "label": "Products to show",
+      "label": "t:sections.kixro-featured-collection.settings.products_to_show.label",
       "min": 3,
       "max": 12,
       "step": 3,
@@ -90,24 +96,24 @@
     {
       "type": "checkbox",
       "id": "show_cta",
-      "label": "Show CTA button",
+      "label": "t:sections.kixro-featured-collection.settings.show_cta.label",
       "default": true
     },
     {
       "type": "text",
       "id": "cta_label",
-      "label": "CTA button label",
+      "label": "t:sections.kixro-featured-collection.settings.cta_label.label",
       "default": "See More Collections"
     },
     {
       "type": "url",
       "id": "cta_url",
-      "label": "CTA button URL"
+      "label": "t:sections.kixro-featured-collection.settings.cta_url.label"
     }
   ],
   "presets": [
     {
-      "name": "Kixro Featured Collection"
+      "name": "t:sections.kixro-featured-collection.presets.name"
     }
   ]
 }

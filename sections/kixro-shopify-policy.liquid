@@ -25,7 +25,7 @@
   endif
 -%}
 
-<div class="kixro-policy-page section-{{ section.id }}-padding">
+<div class="kixro-policy-page section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="kixro-container kixro-policy-page__inner">
     <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
     {%- if active_policy != blank -%}
@@ -49,18 +49,24 @@
 
 {% schema %}
 {
-  "name": "Kixro Shopify Policy",
+  "name": "t:sections.kixro-shopify-policy.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow",
+      "label": "t:sections.kixro-shopify-policy.settings.eyebrow.label",
       "default": "Help & Legal"
     },
     {
       "type": "text",
       "id": "empty_message",
-      "label": "Empty state message",
+      "label": "t:sections.kixro-shopify-policy.settings.empty_message.label",
       "default": "Policy content has not been added yet. Please add it in Shopify Admin → Settings → Policies."
     },
     {
@@ -70,7 +76,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding top",
+      "label": "t:sections.kixro-shopify-policy.settings.padding_top.label",
       "default": 48
     },
     {
@@ -80,7 +86,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding bottom",
+      "label": "t:sections.kixro-shopify-policy.settings.padding_bottom.label",
       "default": 64
     }
   ]

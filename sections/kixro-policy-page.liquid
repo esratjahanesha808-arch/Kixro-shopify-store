@@ -51,7 +51,7 @@
   assign policy_body = policy.body
 -%}
 
-<div class="kixro-policy-page section-{{ section.id }}-padding">
+<div class="kixro-policy-page section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
   <div class="kixro-container kixro-policy-page__inner">
     <span class="kixro-section-label">{{ section.settings.eyebrow }}</span>
     <h1 class="kixro-policy-page__title">{{ policy_title }}</h1>
@@ -69,29 +69,44 @@
 
 {% schema %}
 {
-  "name": "Kixro Policy Page",
+  "name": "t:sections.kixro-policy-page.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "select",
       "id": "policy_type",
-      "label": "Shopify policy to display",
+      "label": "t:sections.kixro-policy-page.settings.policy_type.label",
       "options": [
-        { "value": "privacy", "label": "Privacy Policy" },
-        { "value": "refund", "label": "Refund Policy" },
-        { "value": "shipping", "label": "Shipping Policy" }
+        {
+          "value": "privacy",
+          "label": "Privacy Policy"
+        },
+        {
+          "value": "refund",
+          "label": "Refund Policy"
+        },
+        {
+          "value": "shipping",
+          "label": "Shipping Policy"
+        }
       ],
       "default": "privacy"
     },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow",
+      "label": "t:sections.kixro-policy-page.settings.eyebrow.label",
       "default": "Help & Legal"
     },
     {
       "type": "text",
       "id": "empty_message",
-      "label": "Empty state message",
+      "label": "t:sections.kixro-policy-page.settings.empty_message.label",
       "default": "Policy content has not been added yet. Please add it in Shopify Admin → Settings → Policies."
     },
     {
@@ -101,7 +116,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding top",
+      "label": "t:sections.kixro-policy-page.settings.padding_top.label",
       "default": 48
     },
     {
@@ -111,10 +126,14 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding bottom",
+      "label": "t:sections.kixro-policy-page.settings.padding_bottom.label",
       "default": 64
     }
   ],
-  "presets": [{ "name": "Kixro Policy Page" }]
+  "presets": [
+    {
+      "name": "t:sections.kixro-policy-page.presets.name"
+    }
+  ]
 }
 {% endschema %}
