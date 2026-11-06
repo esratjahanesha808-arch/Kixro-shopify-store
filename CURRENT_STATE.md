@@ -1,10 +1,48 @@
 # Kixro — Current State
 
-> **Last Updated:** 2026-11-06 (Session 39 — Theme Store Code Audit & Theme Check Verification)
+> **Last Updated:** 2026-11-06 (Session 40 — Asset Compression & 413 Payload Fix)
 
 ---
 
-## Latest Update — 2026-11-06 (Session 39 — Theme Packaged for Submission)
+## Latest Update — 2026-11-06 (Session 40 — Asset Compression & Package Size Reduced to 5.85 MB)
+
+### Issue Resolved
+- 🛑 **Shopify Partners HTTP 413 ("Payload Too Large") Error**: During theme submission upload at `partners.shopify.com`, the server returned `Failed to load resource: status of 413 () /services/v2/themes:1`.
+- 🔍 **Root Cause**: The theme zip was **25.74 MB**. Eleven raw PNG images in `assets/` were uncompressed 24-bit rasters taking ~22.8 MB alone, which exceeded Shopify's web submission API body size limit.
+- ⚡ **Fix**: Compressed all 11 non-alpha photo assets to 88% web-optimized JPEG encoding while preserving transparency on icons/logos (`category-boots.png`, `logo-brand.png`, `logo.png`).
+- 📉 **Result**: Total package size dropped from **25.74 MB down to 5.85 MB** (77% reduction).
+- ✅ **Theme Check**: `213 files inspected, 0 offenses found`.
+- ✅ **Repackaged**: `Kixro-1.0.0.zip` regenerated cleanly at 5.85 MB.
+- ✅ **Git Committed**: Commit `aa85c5c` on `theme-store-submission` branch.
+
+### Submission Package Details
+- **File:** `Kixro-1.0.0.zip`
+- **Location:** `C:\Users\user\Documents\Kixro\Kixro-1.0.0.zip`
+- **Size:** 5.85 MB (6,143,513 bytes) — safely under Shopify submission threshold
+- **Theme Check:** 0 offenses across 213 files
+
+### Files Modified (this session)
+- `assets/banner-cta.png`
+- `assets/category-loafers.png`
+- `assets/category-sandals.png`
+- `assets/category-shoes.png`
+- `assets/hero-1.png`
+- `assets/hero-2.png`
+- `assets/hero-3.png`
+- `assets/pick-best-sellers.png`
+- `assets/pick-kixro-essentials.png`
+- `assets/pick-new-arrivals.png`
+- `assets/pick-trending-now.png`
+- `Kixro-1.0.0.zip`
+
+### Next Immediate Action
+- In the browser on `partners.shopify.com`, click **"Remove file"** or refresh the page, then select the new `Kixro-1.0.0.zip`.
+- Click **"Submit"** to proceed with the submission.
+- Run `git push origin theme-store-submission` to sync changes to GitHub.
+
+---
+
+## Previous Update — 2026-11-06 (Session 39 — Theme Packaged for Submission)
 
 ### Completed
 - ✅ **`Kixro-1.0.0.zip` Generated** — `shopify theme package` ran successfully on `theme-store-submission` branch.

@@ -135,3 +135,10 @@
   4. Explicit Option Name Fallback: Passed `color_option_name` in `sections/kixro-collection-grid.liquid` so color extraction always uses `'Color'` even when `section.settings.color_option_name` is empty in theme settings data.
 - **Rationale:** Addresses user feedback that clicking color filter swatches did not filter products properly.
 - **Status:** Complete & Deployed to Preview Theme `#150540124336`.
+
+---
+
+### DEC-022: Asset Compression for Shopify Partners Submission (2026-11-06)
+- **Decision:** Compress 11 high-resolution non-alpha image assets in `assets/` (`banner-cta.png`, `category-loafers.png`, `category-sandals.png`, `category-shoes.png`, `hero-1.png`, `hero-2.png`, `hero-3.png`, `pick-best-sellers.png`, `pick-kixro-essentials.png`, `pick-new-arrivals.png`, `pick-trending-now.png`) to web-optimized 88% JPEG encoding while keeping file names and transparency on icons/logos (`category-boots.png`, `logo-brand.png`, `logo.png`).
+- **Rationale:** Shopify Partners Theme Store submission web endpoint (`/services/v2/themes`) rejected the initial 25.74 MB zip file with HTTP 413 Payload Too Large. Compressing these 11 assets reduced the package size from 25.74 MB down to 5.85 MB (a 77% reduction), ensuring smooth submission without exceeding ingress body limits while preserving 0 offenses on `shopify theme check`.
+- **Status:** Complete & Committed (`aa85c5c`) on `theme-store-submission`.

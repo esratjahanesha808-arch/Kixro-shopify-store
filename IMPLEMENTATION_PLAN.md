@@ -37,6 +37,7 @@ Prepare the Kixro theme for official Shopify Theme Store submission while mainta
 - [x] **P0.6 Commercial `README.md`** — Comprehensive documentation with feature overview, setup guide, and Theme Check badge
 - [x] **P1.3 Accessible dynamic IDs** — Replaced static IDs with `{{ section.id }}` in 404, contact, and search templates
 - [x] **P1.6 Clean section & preset names** — Generic friendly names across all section schemas and editor presets
+- [x] **P1.7 Asset Optimization & Package Size Reduction** — Compressed 11 non-alpha assets in `assets/`, reducing `Kixro-1.0.0.zip` from 25.74 MB to 5.85 MB to resolve Shopify Partners 413 Payload Too Large error
 - [x] **Code Quality Verification** — `shopify theme check` passed with **0 offenses across 213 files**
 
 ---
