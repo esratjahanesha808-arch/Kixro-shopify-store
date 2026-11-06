@@ -29,6 +29,22 @@
       if title_down contains 'loafer' or title_down contains 'mule'
         assign is_match = true
       endif
+    when 'new-arrivals', 'new arrivals'
+      if tags_joined contains 'new-arrivals' or tags_joined contains 'new arrivals' or tags_joined contains 'new-arrival'
+        assign is_match = true
+      endif
+    when 'best-sellers', 'best sellers'
+      if tags_joined contains 'best-sellers' or tags_joined contains 'best sellers' or tags_joined contains 'bestseller'
+        assign is_match = true
+      endif
+    when 'trending-now', 'trending now', 'trending'
+      if tags_joined contains 'trending-now' or tags_joined contains 'trending now' or tags_joined contains 'trending'
+        assign is_match = true
+      endif
+    when 'kixro-essentials', 'essentials'
+      if tags_joined contains 'kixro-essentials' or tags_joined contains 'essentials'
+        assign is_match = true
+      endif
   endcase
 -%}
 

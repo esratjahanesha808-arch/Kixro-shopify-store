@@ -1,5 +1,5 @@
 {%- comment -%}
-  Mobile drawer category filter: Shoes, Boots, Loafers, Sandals.
+  Mobile drawer category filter: Shoes, Boots, Loafers, Sandals, New Arrivals, Best Sellers, Trending Now, Essentials.
 {%- endcomment -%}
 
 {%- liquid
@@ -12,6 +12,10 @@
   assign boots_count = 0
   assign loafers_count = 0
   assign sandals_count = 0
+  assign new_arrivals_count = 0
+  assign best_sellers_count = 0
+  assign trending_count = 0
+  assign essentials_count = 0
   assign all_count = 0
 
   for prod in collections.all.products limit: 250
@@ -20,16 +24,30 @@
       render 'kixro-product-category', product: prod
     endcapture
     assign p_cat_clean = p_cat | strip
-    case p_cat_clean
-      when 'shoes'
-        assign shoes_count = shoes_count | plus: 1
-      when 'boots'
-        assign boots_count = boots_count | plus: 1
-      when 'loafers'
-        assign loafers_count = loafers_count | plus: 1
-      when 'sandals'
-        assign sandals_count = sandals_count | plus: 1
-    endcase
+    if p_cat_clean contains 'shoes'
+      assign shoes_count = shoes_count | plus: 1
+    endif
+    if p_cat_clean contains 'boots'
+      assign boots_count = boots_count | plus: 1
+    endif
+    if p_cat_clean contains 'loafers'
+      assign loafers_count = loafers_count | plus: 1
+    endif
+    if p_cat_clean contains 'sandals'
+      assign sandals_count = sandals_count | plus: 1
+    endif
+    if p_cat_clean contains 'new-arrivals'
+      assign new_arrivals_count = new_arrivals_count | plus: 1
+    endif
+    if p_cat_clean contains 'best-sellers'
+      assign best_sellers_count = best_sellers_count | plus: 1
+    endif
+    if p_cat_clean contains 'trending-now'
+      assign trending_count = trending_count | plus: 1
+    endif
+    if p_cat_clean contains 'kixro-essentials' or p_cat_clean contains 'essentials'
+      assign essentials_count = essentials_count | plus: 1
+    endif
   endfor
 -%}
 
@@ -126,6 +144,66 @@
           <span class="kixro-category-filter__count">({{ sandals_count }})</span>
         </button>
       </li>
+      {%- if new_arrivals_count > 0 -%}
+      <li class="kixro-category-filter__item">
+        <button
+          type="button"
+          class="kixro-category-filter__btn{% if active_cat == 'new-arrivals' %} is-active{% endif %}"
+          data-kixro-category-btn="new-arrivals"
+          data-category-label="New Arrivals"
+          aria-pressed="{% if active_cat == 'new-arrivals' %}true{% else %}false{% endif %}"
+        >
+          <span class="kixro-category-filter__radio"></span>
+          <span class="kixro-category-filter__name">New Arrivals</span>
+          <span class="kixro-category-filter__count">({{ new_arrivals_count }})</span>
+        </button>
+      </li>
+      {%- endif -%}
+      {%- if best_sellers_count > 0 -%}
+      <li class="kixro-category-filter__item">
+        <button
+          type="button"
+          class="kixro-category-filter__btn{% if active_cat == 'best-sellers' %} is-active{% endif %}"
+          data-kixro-category-btn="best-sellers"
+          data-category-label="Best Sellers"
+          aria-pressed="{% if active_cat == 'best-sellers' %}true{% else %}false{% endif %}"
+        >
+          <span class="kixro-category-filter__radio"></span>
+          <span class="kixro-category-filter__name">Best Sellers</span>
+          <span class="kixro-category-filter__count">({{ best_sellers_count }})</span>
+        </button>
+      </li>
+      {%- endif -%}
+      {%- if trending_count > 0 -%}
+      <li class="kixro-category-filter__item">
+        <button
+          type="button"
+          class="kixro-category-filter__btn{% if active_cat == 'trending-now' or active_cat == 'trending' %} is-active{% endif %}"
+          data-kixro-category-btn="trending-now"
+          data-category-label="Trending Now"
+          aria-pressed="{% if active_cat == 'trending-now' or active_cat == 'trending' %}true{% else %}false{% endif %}"
+        >
+          <span class="kixro-category-filter__radio"></span>
+          <span class="kixro-category-filter__name">Trending Now</span>
+          <span class="kixro-category-filter__count">({{ trending_count }})</span>
+        </button>
+      </li>
+      {%- endif -%}
+      {%- if essentials_count > 0 -%}
+      <li class="kixro-category-filter__item">
+        <button
+          type="button"
+          class="kixro-category-filter__btn{% if active_cat == 'kixro-essentials' or active_cat == 'essentials' %} is-active{% endif %}"
+          data-kixro-category-btn="kixro-essentials"
+          data-category-label="Curated Essentials"
+          aria-pressed="{% if active_cat == 'kixro-essentials' or active_cat == 'essentials' %}true{% else %}false{% endif %}"
+        >
+          <span class="kixro-category-filter__radio"></span>
+          <span class="kixro-category-filter__name">Curated Essentials</span>
+          <span class="kixro-category-filter__count">({{ essentials_count }})</span>
+        </button>
+      </li>
+      {%- endif -%}
     </ul>
 
     <div class="mobile-facets__footer gradient">
@@ -139,4 +217,3 @@
     </div>
   </div>
 </details>
-

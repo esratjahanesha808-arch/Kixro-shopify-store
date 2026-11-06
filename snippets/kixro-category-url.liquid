@@ -21,6 +21,14 @@
     assign resolved_url = routes.all_products_collection_url | append: '?category=loafers'
   elsif label_down == 'sandals' or collection_handle == 'sandals'
     assign resolved_url = routes.all_products_collection_url | append: '?category=sandals'
+  elsif label_down contains 'new arrival' or collection_handle == 'new-arrivals'
+    assign resolved_url = routes.all_products_collection_url | append: '?category=new-arrivals'
+  elsif label_down contains 'best seller' or collection_handle == 'best-sellers'
+    assign resolved_url = routes.all_products_collection_url | append: '?category=best-sellers'
+  elsif label_down contains 'trending' or collection_handle == 'trending-now'
+    assign resolved_url = routes.all_products_collection_url | append: '?category=trending-now'
+  elsif label_down contains 'essential' or collection_handle == 'kixro-essentials' or collection_handle == 'essentials'
+    assign resolved_url = routes.all_products_collection_url | append: '?category=kixro-essentials'
   elsif collection_handle != blank
     assign target_collection = collections[collection_handle]
     if target_collection != blank

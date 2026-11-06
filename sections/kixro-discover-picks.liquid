@@ -16,9 +16,11 @@
           assign pick_fallback = block.settings.fallback_image
           assign pick_label    = block.settings.label
           assign pick_title    = block.settings.title
-          assign pick_url      = block.settings.link | default: routes.all_products_collection_url
+          assign pick_raw_url  = block.settings.link | default: routes.all_products_collection_url
           assign pick_btn      = block.settings.btn_label | default: 'Shop Now'
         -%}
+        {%- capture pick_url_capture -%}{% render 'kixro-category-url', link: pick_raw_url, label: pick_title %}{%- endcapture -%}
+        {%- assign pick_url = pick_url_capture | strip -%}
 
         <a
           href="{{ pick_url }}"

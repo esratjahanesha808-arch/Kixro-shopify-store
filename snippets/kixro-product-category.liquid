@@ -51,6 +51,36 @@
       assign cat = 'shoes'
     endif
   endif
+
+  assign cat_tokens = cat
+
+  capture is_new
+    render 'kixro-category-match', product: product, category: 'new-arrivals'
+  endcapture
+  if is_new contains 'true'
+    assign cat_tokens = cat_tokens | append: ' new-arrivals'
+  endif
+
+  capture is_best
+    render 'kixro-category-match', product: product, category: 'best-sellers'
+  endcapture
+  if is_best contains 'true'
+    assign cat_tokens = cat_tokens | append: ' best-sellers'
+  endif
+
+  capture is_trend
+    render 'kixro-category-match', product: product, category: 'trending-now'
+  endcapture
+  if is_trend contains 'true'
+    assign cat_tokens = cat_tokens | append: ' trending-now'
+  endif
+
+  capture is_ess
+    render 'kixro-category-match', product: product, category: 'kixro-essentials'
+  endcapture
+  if is_ess contains 'true'
+    assign cat_tokens = cat_tokens | append: ' kixro-essentials essentials'
+  endif
 -%}
-{{- cat -}}
+{{- cat_tokens | strip -}}
 

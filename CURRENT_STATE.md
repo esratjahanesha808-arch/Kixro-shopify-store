@@ -1,6 +1,47 @@
 # Kixro — Current State
 
-> **Last Updated:** 2026-11-06 (Session 36 — Theme Store Preparation Completed)
+> **Last Updated:** 2026-11-06 (Session 37 — Theme Store Polish: Footer Contrast, Multi-Color Swatch, Equal Card Heights, Discover Picks Filtering)
+
+---
+
+## Latest Update — 2026-11-06 (Session 37 — Theme Store Polish: Footer Contrast, Multi-Color Swatch, Equal Card Heights, Discover Picks Filtering)
+
+### Completed
+- ✅ **Footer Visibility & Contrast Restored** — Overrode Dawn's `.color-scheme-1` on `<footer class="kixro-footer">` with `background: var(--kixro-primary) !important; color: #FBF5EF !important;` in `sections/kixro-footer.liquid` and `assets/kixro.css`. Footer displays rich Brand Navy with clean cream text and links.
+- ✅ **Multi-Color Filter Matching Fixed** — Updated `colorsMatch()` in `assets/kixro-facets.js` with special handling for `'multi'`, `'multicolor'`, `'multi-color'`, `'patchwork'`, and `'earth tones'` alongside bi-directional containment and delimiter token splitting (`[\/\,\-\s]+`). Products like `Urban Retro Platform Sneakers – Multi-Color Earth Tones` now correctly match the Multi rainbow swatch.
+- ✅ **Category Filter Parsing & Selection Restored** — Updated `categoryMatches()` in `assets/kixro-facets.js` to split category tokens and match any token (Shoes, Boots, Loafers, Sandals, New Arrivals, Best Sellers, Trending Now, Essentials) against client-side and URL filter selections.
+- ✅ **Equal Product Card Heights Across Grids** — Enforced `height: 100% !important; display: flex !important; flex-direction: column !important;` on `.kixro-product-card` and `.kixro-shop__grid-item`. Standardized `.kixro-product-card__title` with `min-height: 2.8em !important; line-height: 1.4 !important; flex: 0 0 auto !important;` and `.kixro-product-card__actions` with `margin-top: auto !important;`. Cards in the same row are perfectly uniform and purchase buttons align at the bottom baseline regardless of title length (1 vs 2 lines).
+- ✅ **Discover Picks Categories Added to Shop Filter** — Added "New Arrivals" (10), "Best Sellers" (11), "Trending Now" (12), and "Curated Essentials" (10) buttons with dynamic product counts to `snippets/kixro-category-filter.liquid` and `snippets/kixro-category-filter-mobile.liquid`.
+- ✅ **Homepage Discover Picks Link Routing** — Updated `sections/kixro-discover-picks.liquid` and `snippets/kixro-category-url.liquid` so clicking any homepage Discover Picks editorial card links directly to `/collections/all?category=<slug>` and selects that category on arrival.
+- ✅ **Empty State Reset Enhanced** — "Clear Filter" in the empty state now clears both color and category parameters from URL and grid.
+- ✅ **Theme Check Verification** — Executed `shopify theme check`: **213 files inspected, 0 offenses found**.
+- ✅ **Pushed to Remote Preview Theme** — Deployed all updates to unpublished theme `#150540124336` on `kixro-dev.myshopify.com`.
+
+### Current Branch
+`theme-store-submission`
+
+### Preview Theme Deployed (Unpublished)
+- **Theme ID**: `#150540124336` ("Kixro Theme Store Preview")
+- **Storefront Preview**: https://kixro-dev.myshopify.com?preview_theme_id=150540124336
+- **Theme Editor**: https://kixro-dev.myshopify.com/admin/themes/150540124336/editor
+- **Live Theme**: Remains untouched at `#150211854512` ("Kixro")
+
+### Files Modified
+- `assets/kixro-facets.js`
+- `assets/kixro.css`
+- `sections/kixro-discover-picks.liquid`
+- `sections/kixro-footer.liquid`
+- `snippets/kixro-category-filter.liquid`
+- `snippets/kixro-category-filter-mobile.liquid`
+- `snippets/kixro-category-match.liquid`
+- `snippets/kixro-category-url.liquid`
+- `snippets/kixro-product-category.liquid`
+- `DECISIONS_LOG.md`
+- `CURRENT_STATE.md`
+
+### Next Immediate Action
+- User verifies preview theme `#150540124336` live on `https://kixro-dev.myshopify.com?preview_theme_id=150540124336`.
+- User runs `git push origin theme-store-submission` to sync to GitHub.
 
 ---
 

@@ -506,8 +506,9 @@ h1, h2, h3, h4, h5, h6,
   box-shadow: var(--kixro-shadow-sm);
   overflow: hidden;
   transition: all var(--kixro-t-base);
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
 }
 
 .kixro-product-card:hover {
@@ -538,9 +539,9 @@ h1, h2, h3, h4, h5, h6,
 
 .kixro-product-card__body {
   padding: var(--kixro-sm) var(--kixro-sm) var(--kixro-md);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .kixro-product-card__badge {
@@ -592,9 +593,10 @@ h1, h2, h3, h4, h5, h6,
   font-size: var(--kixro-text-body-sm);
   font-weight: var(--kixro-w-medium);
   color: var(--kixro-text-muted);
-  line-height: var(--kixro-lh-normal);
-  margin: 0;
-  flex: 1;
+  line-height: 1.4 !important;
+  min-height: 2.8em !important;
+  margin: 0 0 var(--kixro-xs) 0 !important;
+  flex: 0 0 auto !important;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -603,9 +605,9 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .kixro-product-card__actions {
-  display: flex;
+  display: flex !important;
   gap: 6px;
-  margin-top: var(--kixro-sm);
+  margin-top: auto !important;
 }
 
 .kixro-product-card__actions .kixro-btn {
@@ -1006,7 +1008,8 @@ h1, h2, h3, h4, h5, h6,
    ============================================================ */
 .kixro-footer {
   position: relative;
-  background: var(--kixro-primary);
+  background: var(--kixro-primary) !important;
+  color: #FBF5EF !important;
   overflow: hidden;
   padding: var(--kixro-3xl) 0 0;
 }
@@ -1914,6 +1917,9 @@ h1, h2, h3, h4, h5, h6,
 .kixro-shop__grid-item {
   list-style: none;
   min-width: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
 }
 
 /* ── Empty state ── */

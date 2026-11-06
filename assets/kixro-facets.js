@@ -33,7 +33,29 @@
     const filter = normalizeColorAlias(filterColor);
     if (!filter) return true;
     if (!product) return false;
-    return product === filter;
+    if (product === filter) return true;
+
+    // Multi-color matching: multi, multicolor, multi-color, earth tones, patchwork
+    if (filter === 'multi' || filter.includes('multi')) {
+      if (product.includes('multi') || product.includes('earth') || product.includes('patchwork')) {
+        return true;
+      }
+    }
+    if (product === 'multi' || product.includes('multi')) {
+      if (filter.includes('multi')) {
+        return true;
+      }
+    }
+
+    // Direct containment (e.g. "navy" matches "navy blue", "red" matches "scarlet red")
+    if (product.includes(filter) || filter.includes(product)) {
+      return true;
+    }
+
+    // Token matching (e.g. "off-white / indigo / ocean blue" matches "blue")
+    const productTokens = product.split(/[\/\,\-\s]+/).filter(Boolean);
+    const filterTokens = filter.split(/[\/\,\-\s]+/).filter(Boolean);
+    return productTokens.some((p) => filterTokens.includes(p));
   }
 
   function colorMatches(productColors, filterColor) {
@@ -42,9 +64,22 @@
   }
 
   function categoryMatches(productCategory, filterCategory) {
-    if (!filterCategory) return true;
+    if (!filterCategory || filterCategory === 'all' || filterCategory === 'all-categories') return true;
     if (!productCategory) return false;
-    return normalizeCategory(productCategory) === normalizeCategory(filterCategory);
+    const normFilter = normalizeCategory(filterCategory);
+    if (!normFilter || normFilter === 'all' || normFilter === 'all-categories') return true;
+
+    const cats = productCategory.split(/[\s\|,]+/).map(normalizeCategory).filter(Boolean);
+    if (cats.includes(normFilter)) return true;
+
+    // Handle aliases and variations
+    if ((normFilter === 'essentials' || normFilter === 'curated-essentials') && cats.includes('kixro-essentials')) return true;
+    if (normFilter === 'kixro-essentials' && (cats.includes('essentials') || cats.includes('curated-essentials'))) return true;
+    if (normFilter === 'new-arrivals' && (cats.includes('new-arrivals') || cats.includes('new-arrival') || cats.includes('new arrivals'))) return true;
+    if (normFilter === 'best-sellers' && (cats.includes('best-sellers') || cats.includes('bestseller') || cats.includes('best sellers'))) return true;
+    if (normFilter === 'trending-now' && (cats.includes('trending-now') || cats.includes('trending') || cats.includes('trending now'))) return true;
+
+    return cats.some((c) => c.includes(normFilter) || normFilter.includes(c));
   }
 
   // ─── Read catalog JSON ─────────────────────────────────────────────────────
@@ -222,7 +257,12 @@
     // Category button active states
     document.querySelectorAll('[data-kixro-category-btn]').forEach((btn) => {
       const btnCat = normalizeCategory(btn.dataset.kixroCategoryBtn || btn.getAttribute('data-kixro-category-btn'));
-      const isActive = normalizedCategory === btnCat;
+      const isActive = (!normalizedCategory && !btnCat) ||
+        (normalizedCategory && (
+          btnCat === normalizedCategory ||
+          (btnCat === 'kixro-essentials' && normalizedCategory === 'essentials') ||
+          (btnCat === 'essentials' && normalizedCategory === 'kixro-essentials')
+        ));
       btn.classList.toggle('is-active', isActive);
       btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
@@ -251,7 +291,10 @@
       document.querySelectorAll('[data-kixro-color-clear-btn]').forEach((btn) => {
         btn.addEventListener('click', (event) => {
           event.preventDefault();
-          filterGrid('', activeCategory);
+          const url = new URL(window.location.href);
+          url.searchParams.delete('category');
+          window.history.replaceState({}, '', url.toString());
+          filterGrid('', '');
         });
       });
 
