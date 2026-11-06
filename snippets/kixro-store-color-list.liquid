@@ -97,6 +97,10 @@
     endfor
   endif
 
-  assign kixro_store_colors_out = ordered_output | append: unordered_output
+  if ordered_output != blank and unordered_output != blank
+    assign kixro_store_colors_out = ordered_output | append: '|||' | append: unordered_output
+  else
+    assign kixro_store_colors_out = ordered_output | append: unordered_output
+  endif
 -%}
 {{- kixro_store_colors_out -}}

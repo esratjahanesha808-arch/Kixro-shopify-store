@@ -392,8 +392,8 @@ Build the complete Homepage with all 8 sections in the exact order specified.
 #### 7.4 — Account Pages (if needed)
 - [ ] Login page — **deferred** (Dawn `main-login` in use)
 - [ ] Register page — **deferred** (Dawn `main-register` in use)
-- [x] Custom account dashboard page — `kixro-account-page.liquid` + `page.account-dashboard.json` (optional branded welcome / order history)
-- [x] Classic account empty-state improvements — `main-account.liquid` Shop now → homepage; `/collections/frontpage` redirect in `theme.liquid`
+- [x] Custom account dashboard page — `kixro-account-page.liquid` + `main-account.liquid` (Premium custom customer profile with avatar initials, Order History tabs, colored status badges, minimal empty state, and Account Settings)
+- [x] Classic account empty-state improvements — `main-account.liquid` Shop now → catalog; `/collections/frontpage` redirect in `theme.liquid`
 
 #### 7.5 — 404 Page
 - [x] Custom 404 design matching brand

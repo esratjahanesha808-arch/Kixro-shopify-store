@@ -1,5 +1,5 @@
 {%- comment -%}
-  Pipe-separated Color option values from Shopify variants (preserves store casing).
+  Pipe-separated Color option values from Shopify variants OR metafields/title (preserves store casing).
   Usage: {% render 'kixro-product-colors', product: product, option_name: 'Color' %}
 {%- endcomment -%}
 
@@ -14,6 +14,14 @@
       for value in option.values
         if value != blank
           assign val_display = value | strip
+
+          comment
+            Fix rugged-moc-toe-leather-work-boots: navy blue boots were mislabeled as brown
+          endcomment
+          if product.handle == 'rugged-moc-toe-leather-work-boots' and val_display == 'Brown'
+            assign val_display = 'Navy Blue'
+          endif
+
           assign val_down = val_display | downcase
           if val_down == 'grey'
             assign val_down = 'gray'
@@ -30,4 +38,70 @@
       endfor
     endif
   endfor
+
+  comment
+    Fallback 1: Category metafields / custom color metafields (e.g. Adidas Campus Scarlet Red)
+  endcomment
+  if color_tokens == blank
+    assign mf_color = product.metafields.shopify['color-pattern'].value
+    if mf_color == blank
+      assign mf_color = product.metafields.custom.color.value | default: product.metafields.custom.color
+    endif
+    if mf_color != blank
+      assign val_display = mf_color | strip
+      assign val_down = val_display | downcase
+      if val_down == 'grey'
+        assign val_down = 'gray'
+      endif
+      assign seen_key = val_down | append: ','
+      unless color_seen contains seen_key
+        assign color_seen = color_seen | append: seen_key
+        assign color_tokens = val_display
+      endunless
+    endif
+  endif
+
+  comment
+    Fallback 2: Title & tag color extraction for products with only default variant
+  endcomment
+  if color_tokens == blank
+    assign title_down = product.title | downcase
+    assign matched_color = ''
+
+    if title_down contains 'scarlet red' or title_down contains ' red' or title_down contains 'red '
+      assign matched_color = 'Red'
+    elsif title_down contains 'unc-blue' or title_down contains 'unc blue' or title_down contains 'university blue'
+      assign matched_color = 'Light Blue'
+    elsif title_down contains 'navy'
+      assign matched_color = 'Navy Blue'
+    elsif title_down contains 'slate blue'
+      assign matched_color = 'Slate Blue'
+    elsif title_down contains 'sky blue'
+      assign matched_color = 'Sky Blue'
+    elsif title_down contains 'blue'
+      assign matched_color = 'Blue'
+    elsif title_down contains 'black'
+      assign matched_color = 'Black'
+    elsif title_down contains 'white'
+      assign matched_color = 'White'
+    elsif title_down contains 'beige' or title_down contains 'sand' or title_down contains 'tan'
+      assign matched_color = 'Beige'
+    elsif title_down contains 'brown'
+      assign matched_color = 'Brown'
+    elsif title_down contains 'olive'
+      assign matched_color = 'Olive'
+    elsif title_down contains 'green'
+      assign matched_color = 'Green'
+    elsif title_down contains 'grey' or title_down contains 'gray'
+      assign matched_color = 'Grey'
+    elsif title_down contains 'orange'
+      assign matched_color = 'Orange'
+    elsif title_down contains 'multi'
+      assign matched_color = 'Multi'
+    endif
+
+    if matched_color != blank
+      assign color_tokens = matched_color
+    endif
+  endif
 -%}{{- color_tokens -}}

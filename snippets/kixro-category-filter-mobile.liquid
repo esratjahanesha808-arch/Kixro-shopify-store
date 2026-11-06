@@ -1,0 +1,142 @@
+{%- comment -%}
+  Mobile drawer category filter: Shoes, Boots, Loafers, Sandals.
+{%- endcomment -%}
+
+{%- liquid
+  capture kixro_category_param_capture
+    render 'kixro-query-param', key: 'category'
+  endcapture
+  assign active_cat = kixro_virtual_category | default: kixro_category_param_capture | strip | downcase
+
+  assign shoes_count = 0
+  assign boots_count = 0
+  assign loafers_count = 0
+  assign sandals_count = 0
+  assign all_count = 0
+
+  for prod in collections.all.products limit: 250
+    assign all_count = all_count | plus: 1
+    capture p_cat
+      render 'kixro-product-category', product: prod
+    endcapture
+    assign p_cat_clean = p_cat | strip
+    case p_cat_clean
+      when 'shoes'
+        assign shoes_count = shoes_count | plus: 1
+      when 'boots'
+        assign boots_count = boots_count | plus: 1
+      when 'loafers'
+        assign loafers_count = loafers_count | plus: 1
+      when 'sandals'
+        assign sandals_count = sandals_count | plus: 1
+    endcase
+  endfor
+-%}
+
+<details
+  id="Details-Mobile-kixro-category-{{ section.id }}"
+  class="mobile-facets__details js-filter kixro-category-filter-mobile"
+  data-index="mobile-kixro-category"
+  data-kixro-filter-mode="client"
+>
+  <summary class="mobile-facets__summary focus-inset">
+    <div>
+      <span>Category</span>
+      <span class="mobile-facets__arrow">
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </span>
+    </div>
+  </summary>
+  <div
+    id="FacetMobile-kixro-category-{{ section.id }}"
+    class="mobile-facets__submenu gradient"
+  >
+    <button
+      class="mobile-facets__close-button link link--text focus-inset"
+      aria-expanded="true"
+      type="button"
+    >
+      {{- 'icon-arrow.svg' | inline_asset_content -}}
+      <span>Category</span>
+    </button>
+
+    <ul class="kixro-category-filter__list kixro-category-filter__list--mobile list-unstyled" role="list">
+      <li class="kixro-category-filter__item">
+        <button
+          type="button"
+          class="kixro-category-filter__btn{% if active_cat == blank %} is-active{% endif %}"
+          data-kixro-category-btn=""
+          data-category-label=""
+          aria-pressed="{% if active_cat == blank %}true{% else %}false{% endif %}"
+        >
+          <span class="kixro-category-filter__radio"></span>
+          <span class="kixro-category-filter__name">All Categories</span>
+          <span class="kixro-category-filter__count">({{ all_count }})</span>
+        </button>
+      </li>
+      <li class="kixro-category-filter__item">
+        <button
+          type="button"
+          class="kixro-category-filter__btn{% if active_cat == 'shoes' %} is-active{% endif %}"
+          data-kixro-category-btn="shoes"
+          data-category-label="Shoes"
+          aria-pressed="{% if active_cat == 'shoes' %}true{% else %}false{% endif %}"
+        >
+          <span class="kixro-category-filter__radio"></span>
+          <span class="kixro-category-filter__name">Shoes</span>
+          <span class="kixro-category-filter__count">({{ shoes_count }})</span>
+        </button>
+      </li>
+      <li class="kixro-category-filter__item">
+        <button
+          type="button"
+          class="kixro-category-filter__btn{% if active_cat == 'boots' %} is-active{% endif %}"
+          data-kixro-category-btn="boots"
+          data-category-label="Boots"
+          aria-pressed="{% if active_cat == 'boots' %}true{% else %}false{% endif %}"
+        >
+          <span class="kixro-category-filter__radio"></span>
+          <span class="kixro-category-filter__name">Boots</span>
+          <span class="kixro-category-filter__count">({{ boots_count }})</span>
+        </button>
+      </li>
+      <li class="kixro-category-filter__item">
+        <button
+          type="button"
+          class="kixro-category-filter__btn{% if active_cat == 'loafers' %} is-active{% endif %}"
+          data-kixro-category-btn="loafers"
+          data-category-label="Loafers"
+          aria-pressed="{% if active_cat == 'loafers' %}true{% else %}false{% endif %}"
+        >
+          <span class="kixro-category-filter__radio"></span>
+          <span class="kixro-category-filter__name">Loafers</span>
+          <span class="kixro-category-filter__count">({{ loafers_count }})</span>
+        </button>
+      </li>
+      <li class="kixro-category-filter__item">
+        <button
+          type="button"
+          class="kixro-category-filter__btn{% if active_cat == 'sandals' %} is-active{% endif %}"
+          data-kixro-category-btn="sandals"
+          data-category-label="Sandals"
+          aria-pressed="{% if active_cat == 'sandals' %}true{% else %}false{% endif %}"
+        >
+          <span class="kixro-category-filter__radio"></span>
+          <span class="kixro-category-filter__name">Sandals</span>
+          <span class="kixro-category-filter__count">({{ sandals_count }})</span>
+        </button>
+      </li>
+    </ul>
+
+    <div class="mobile-facets__footer gradient">
+      <button
+        type="button"
+        class="button button--primary"
+        onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+      >
+        {{ 'products.facets.apply' | t }}
+      </button>
+    </div>
+  </div>
+</details>
+

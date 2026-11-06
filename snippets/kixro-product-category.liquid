@@ -1,0 +1,56 @@
+{%- comment -%}
+  Outputs normalized category slug for product: shoes | boots | loafers | sandals
+  Accepts: product
+{%- endcomment -%}
+{%- liquid
+  assign cat = ''
+
+  capture is_boots
+    render 'kixro-category-match', product: product, category: 'boots'
+  endcapture
+  if is_boots contains 'true'
+    assign cat = 'boots'
+  endif
+
+  if cat == blank
+    capture is_loafers
+      render 'kixro-category-match', product: product, category: 'loafers'
+    endcapture
+    if is_loafers contains 'true'
+      assign cat = 'loafers'
+    endif
+  endif
+
+  if cat == blank
+    capture is_sandals
+      render 'kixro-category-match', product: product, category: 'sandals'
+    endcapture
+    if is_sandals contains 'true'
+      assign cat = 'sandals'
+    endif
+  endif
+
+  if cat == blank
+    capture is_shoes
+      render 'kixro-category-match', product: product, category: 'shoes'
+    endcapture
+    if is_shoes contains 'true'
+      assign cat = 'shoes'
+    endif
+  endif
+
+  if cat == blank
+    assign type_down = product.type | downcase
+    if type_down contains 'boot'
+      assign cat = 'boots'
+    elsif type_down contains 'loafer'
+      assign cat = 'loafers'
+    elsif type_down contains 'sandal' or type_down contains 'clog' or type_down contains 'slide'
+      assign cat = 'sandals'
+    elsif type_down contains 'shoe'
+      assign cat = 'shoes'
+    endif
+  endif
+-%}
+{{- cat -}}
+

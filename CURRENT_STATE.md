@@ -1,6 +1,90 @@
 # Kixro — Current State
 
-> **Last Updated:** 2026-07-24 (Session 31 — checklist audit sync)
+> **Last Updated:** 2026-11-06 (Session 34 — Migration Audit)
+
+---
+
+## Latest Update — 2026-11-06 (Session 34 — Migration Audit)
+
+### Completed
+- ✅ **Full repository audit** — Read-only audit of entire Kixro theme repository.
+- ✅ **`MIGRATION_AUDIT.md` created** — Written to repo root; covers architecture classification, CLI/build config, complete file inventory (74 sections, 56 snippets, 26 templates, 217 assets), admin-side data requirements, deployment assessment, Theme Store commercialization gaps, 10-phase migration checklist (A–K), and risk register.
+- ✅ **No files modified, deleted, or deployed** — Audit-only session.
+
+### Key Findings
+- Theme is a **native OS 2.0 theme based on Dawn 15.5.0** — no Hydrogen, no headless, no build step required.
+- `shopify theme push --unpublished` deploys directly to any new dev store after updating `shopify.theme.toml`.
+- Critical admin-side dependencies: `main-menu` navigation, 8 automated/smart collections, 7 pages with correct template assignments, Shopify Policies, product data with `Color` variant options.
+- `shopify.theme.toml` currently targets `kixro-dev.myshopify.com` (theme `150211854512`) — must update before pushing to new Partner dev store.
+- Theme Store gaps: `theme_info` block still declares Dawn, all Kixro section strings lack `t:` locale keys.
+
+### Files Created
+- `MIGRATION_AUDIT.md` (new — repo root)
+
+### Files Modified
+- `CURRENT_STATE.md` (this update)
+
+### Next Immediate Action
+- Review `MIGRATION_AUDIT.md` and confirm target store/strategy (dev store reproduction vs Theme Store submission).
+- When ready to migrate: update `shopify.theme.toml`, create new Partner dev store, follow Phase A–J checklist.
+
+---
+
+## Latest Update — 2026-11-03 (Session 33 — PDP Flow, Sub-Images, Banner Suppression, Filter Empty State)
+
+### Completed per user feedback
+- ✅ **Back button overlap permanently resolved** — Moved desktop PDP back button into `header-dropdown-menu.liquid` and `header-mega-menu.liquid` as the first `<li>` item within `ul.list-menu--inline`. As direct flex row siblings, `< BACK` and the menu links (`HOME`, `CATALOG`, `CONTACT`) are positioned naturally with dedicated separator spacing and can never overlap.
+- ✅ **PDP sub-images enlarged & polished** — Replaced the 72px thumbnails with prominent 104x104px cards with 12px rounded corners, crisp 2px borders, brand primary (#1B4965) active ring, and subtle hover elevation.
+- ✅ **PDP sticky image & natural scroll (no inner scrollbar)** — Set left media gallery to sticky position (`top: 7.5rem`) and removed `max-height` and internal container scrollbars from the right info column. The shoe image stays pinned while the product description and details scroll smoothly with the full page.
+- ✅ **Collection banner removed** — Disabled `kixro_collection_banner` in `templates/collection.json` to remove the title ("Products"), subtitle ("SHOP COLLECTION"), and description copy, presenting a clean catalog grid immediately below the header.
+- ✅ **Color filter empty state** — Implemented an interactive empty state notice ("No products found matching this filter option") with a "Clear Filter" button in `kixro-collection-grid.liquid` and `kixro-facets.js` when any filter selection returns zero items.
+- ✅ **Navy filter swatch accuracy** — Enforced brand navy hex `#1B4965` for all navy variants in `kixro-color-swatch.liquid` and resolved a delimiter bug in `kixro-store-color-list.liquid` to ensure navy swatches render accurately with their true navy tone.
+- ✅ **Theme check verified** — 210 files inspected, **0 offenses**.
+- ✅ **Pushed to live** — Pushed cleanly to theme #150211854512 on `kixro-dev.myshopify.com`.
+
+### Files Modified
+- `snippets/header-dropdown-menu.liquid`
+- `snippets/header-mega-menu.liquid`
+- `sections/header.liquid`
+- `sections/main-product.liquid`
+- `templates/collection.json`
+- `snippets/kixro-color-swatch.liquid`
+- `snippets/kixro-store-color-list.liquid`
+- `sections/kixro-collection-grid.liquid`
+- `assets/kixro-facets.js`
+- `assets/kixro.css`
+- `DECISIONS_LOG.md`
+- `CURRENT_STATE.md`
+
+---
+
+## Latest Update — 2026-11-03 (Session 32 — Announcement, Color Filter, PDP Scroll & Variants Fixes)
+
+### Fixed per user feedback
+- ✅ **Announcement bar On/Off toggle** — Added `show_announcement` checkbox setting in `sections/announcement-bar.liquid` and `header-group.json` to toggle the announcement bar on/off from the theme editor. Added interactive dismiss button [×] on the storefront.
+- ✅ **Color filter Red & vibrant swatches** — Enhanced `snippets/kixro-product-colors.liquid` to read Shopify Category metafields (`shopify.color-pattern`) and title color fallbacks so products like Adidas Originals Campus Low Scarlet Red are recognized and show Red in the filter. Expanded `snippets/kixro-color-swatch.liquid` with comprehensive hex codes and wildcard matching so no compound colors default to light grey (#cccccc).
+- ✅ **PDP scrolling text overlap fixed** — Consolidated sticky scrolling to the full product info container (`.product__info-container.product__column-sticky`) and removed the inner split sticky purchase panel that caused description text to slide under the buttons during scroll.
+- ✅ **PDP header back button overlap fixed** — Added a 6.5rem offset margin to `.header--has-pdp-back .header__inline-menu` on desktop, cleanly separating `< BACK` from the `HOME CATALOG CONTACT` navigation links.
+- ✅ **Navy blue boots color alignment** — Fixed `rugged-moc-toe-leather-work-boots` brown option mislabeling. Mapped to Navy Blue (`#1B4965`) across `product-variant-picker.liquid`, `kixro-product-colors.liquid`, and catalog data.
+- ✅ **Color variant sub-images on PDP** — Switched gallery layout to `thumbnail_slider`, set `hide_variants: false`, enabled `mobile_thumbnails: show`, and updated `product-media-gallery.liquid` so variant images display as clickable sub-images on desktop and mobile.
+- ✅ **Theme check verified** — 210 files inspected, **0 offenses**.
+- ✅ **Pushed to live** — Theme pushed successfully to live store (`kixro-dev.myshopify.com`, theme #150211854512).
+
+### Files Modified
+- `sections/announcement-bar.liquid`
+- `sections/header-group.json`
+- `sections/main-product.liquid`
+- `templates/product.json`
+- `snippets/product-media-gallery.liquid`
+- `snippets/kixro-color-swatch.liquid`
+- `snippets/kixro-product-colors.liquid`
+- `snippets/product-variant-picker.liquid`
+- `snippets/kixro-product-color-variants.liquid`
+- `snippets/facets.liquid`
+- `assets/kixro.css`
+- `tools/generate_products_csv.mjs`
+- `DECISIONS_LOG.md`
+- `CURRENT_STATE.md`
 
 ---
 
@@ -912,3 +996,181 @@ Products in the store use a **single default variant** (no Size option in Shopif
 - `IMPLEMENTATION_PLAN.md`
 - `CURRENT_STATE.md`
 - `DESIGN_SYSTEM.md`
+
+---
+
+## Session 32 — 2026-10-15 — Shopify CLI Migration & Live Push Execution (kixro-dev)
+
+### Completed
+- ✅ Ran `shopify theme check`: **210 files inspected with 0 offenses found** (100% compliant)
+- ✅ Created `.shopifyignore` excluding non-theme files (`*.md`, `asset/`, `workflows/`, `tools/`, `.tmp/`, `.cursor/`, `.github/`)
+- ✅ Cleared old sessions with `shopify auth logout`
+- ✅ Upgraded Shopify CLI to version **4.9.3**
+- ✅ Authenticated to Shopify Partner account via browser device verification
+- ✅ Successfully pushed all local theme files and published **"Kixro"** as the active **[live]** theme on `kixro-dev.myshopify.com`
+- ✅ Live Theme ID assigned: `#150211854512` (Horizon moved to unpublished)
+- ✅ Updated `shopify.theme.toml` with default store `kixro-dev.myshopify.com` and theme ID `150211854512`
+
+### Files Modified
+- `.shopifyignore` — NEW
+- `shopify.theme.toml` — updated target store to `kixro-dev.myshopify.com` and theme `150211854512`
+- `CURRENT_STATE.md`
+
+### Next Immediate Action
+1. Open Theme Editor: `https://admin.shopify.com/store/kixro-dev/themes/150211854512/editor`
+2. Configure storefront navigation menus and product catalog in Shopify Admin
+3. Run `shopify theme dev` anytime for real-time local development against the live store
+
+---
+
+## Session 33 — 2026-10-15 — Product Catalog & Import File Generation
+
+### Completed
+- ✅ Processed user product transcript across Shoes, Sandals, Boots, and Loafers
+- ✅ Built Node generator script `tools/generate_products_csv.mjs`
+- ✅ Corrected shoe mapping: excluded hero image `01_27_28 AM.png`, mapped 6 shoes starting from `01_30_23 AM.png` (`air-jordan-1-mid-unc-blue`)
+- ✅ Consolidated color variants into parent products per user instructions:
+  - `Classic Suede Slip-On Loafers` (Variants: Taupe, Black)
+  - `Rugged Moc-Toe Leather Work Boots` (Variants: Brown, Black)
+  - `Classic Comfort Lightweight Clogs` (Variants: Sky Blue, Brown)
+  - `Contoured Comfort Recovery Slides` (Variants: Black, Beige, Olive)
+- ✅ Removed color names from product titles for all multi-variant products
+- ✅ Generated `kixro_products_import.csv` with **14 products** and **76 variant rows**
+  - Includes HTML formatted descriptions and feature bullet points
+  - Options: Size (8, 9, 10, 11) & Color swatches with dedicated variant image mapping
+  - Categories: Shoes (6), Sandals (2), Boots (3), Loafers (3)
+  - Marketing tags: `new-arrivals`, `best-sellers`, `trending-now`, `kixro-essentials`
+- ✅ Documented bulk deletion in Shopify Admin and step-by-step re-import workflow
+
+### Files Modified
+- `tools/generate_products_csv.mjs` — updated
+- `kixro_products_import.csv` — regenerated
+- `CURRENT_STATE.md`
+
+### Next Immediate Action
+1. User bulk deletes existing products in Shopify Admin (`kixro-dev` → Products)
+2. User re-imports updated `kixro_products_import.csv`
+3. Create automated collections (`shoes`, `sandals`, `boots`, `loafers`, `new-arrivals`, `best-sellers`, `trending-now`, `kixro-essentials`)
+
+
+
+
+
+
+
+---
+
+## Latest Update — 2026-11-06 (Session 34 — Category Filter + Premium Profile Page)
+
+### Completed per user request
+
+#### ✅ Catalog Category Filter
+- **New snippet `snippets/kixro-category-filter.liquid`** — Desktop sidebar category filter: All Categories / Shoes / Boots / Loafers / Sandals with live product counts and radio-style active state.
+- **New snippet `snippets/kixro-category-filter-mobile.liquid`** — Same filter wired inside the mobile drawer (matches color filter pattern).
+- **New snippet `snippets/kixro-product-category.liquid`** — Utility snippet to resolve a product's category slug by calling `kixro-category-match` for each type.
+- **Updated `snippets/kixro-category-url.liquid`** — Now resolves by `label` param (not just link handle) so "Boots" label correctly routes to `?category=boots`.
+- **Updated `snippets/kixro-category-grid.liquid`** — Passes `label: cat_name` into `kixro-category-url` so homepage category cards auto-route with correct category param.
+- **Updated `snippets/facets.liquid`** — Injected category filter above color filter in desktop sidebar and mobile drawer. Accepts `kixro_virtual_category` param to pre-select active category.
+- **Updated `sections/kixro-collection-grid.liquid`** — Fully rewritten: added `data-kixro-category` attribute on each grid item, passes `kixro_virtual_category` into facets calls, embeds category into KixroCatalogColors JSON.
+- **Updated `assets/kixro-facets.js`** — Full rewrite: added category filter engine alongside color filter. Homepage category card click → `?category=shoes` → auto-selects category filter and shows only matching products on page load. Categories and colors filter independently and compose together (AND logic).
+
+#### ✅ Premium Customer Profile Page
+- **Rewritten `sections/main-account.liquid`** — Complete Kixro-branded premium profile page:
+  - **Profile header** — Dark navy gradient card with avatar initials circle, customer name, email, sign-out button.
+  - **Tab navigation** — Order History / Account Settings tabs (JS tab switching, no page reload).
+  - **Order History tab** — Premium order cards with order number, date, payment/fulfillment status badges (color-coded: green paid, amber pending, red cancelled), item preview, total, "View Details" CTA with arrow animation. Fully paginated.
+  - **Empty orders state** — Illustrated empty state with icon, friendly copy ("No orders yet…"), and "Start Shopping" CTA button — no Shopify default table.
+  - **Account Settings tab** — Two cards: Personal Information (name, email, order count, total spent info rows) and Saved Addresses (default address with badge + manage link). Both cards have dark-surface headers.
+- **Added CSS sections 18 & 19 to `assets/kixro.css`** — All category filter styles and profile page styles fully responsive at 375px/750px/1024px.
+
+### Files Modified
+- `snippets/kixro-category-filter.liquid` (new)
+- `snippets/kixro-category-filter-mobile.liquid` (new)
+- `snippets/kixro-product-category.liquid` (new)
+- `snippets/kixro-category-url.liquid`
+- `snippets/kixro-category-grid.liquid`
+- `snippets/facets.liquid`
+- `sections/kixro-collection-grid.liquid`
+- `assets/kixro-facets.js`
+- `sections/main-account.liquid`
+- `assets/kixro.css`
+- `CURRENT_STATE.md`
+- `DECISIONS_LOG.md`
+
+### Theme Check
+- **213 files inspected, 0 offenses**
+
+### Push Status
+- ✅ Pushed to live: `kixro-dev.myshopify.com` theme #150211854512
+
+### Next Immediate Action
+- None required — verify on live store: (1) Click Shoes/Boots/Loafers/Sandals on homepage → catalog auto-filters, (2) Account page shows new premium profile design.
+
+
+---
+
+## Latest Update — 2026-11-06 (Session 35 — Header Back Duplicate, Sidebar Filter Stacking, Card Buttons Sizing, Footer Cleanup)
+
+### Completed per user feedback & screenshots
+- ✅ **Removed duplicate "upper" desktop Back button** (`sections/header.liquid`, `assets/kixro.css`) — Hidden `header__leading` back button on screens ≥750px (`medium-hide large-up-hide`). Desktop PDP now exclusively shows the clean inline `BACK | HOME CATALOG CONTACT` in the navigation bar without any upper duplicate or unnecessary 6.5rem margin offset.
+- ✅ **Mobile header back arrow & hamburger alignment** (`assets/kixro.css`) — Vertically and horizontally centered both the back arrow button and the drawer toggle with matching 40x40px touch targets, consistent 4px gap, and baseline alignment.
+- ✅ **Stacked sidebar filters vertically (Category → Color → Availability → Price)** (`assets/kixro.css`) — Overrode `.facets-container` to `display: flex !important; flex-direction: column !important; width: 100% !important;`. Category and Color are no longer parallel side-by-side columns; they stack cleanly in sequential order: Category first, then Color, then Availability, then Price.
+- ✅ **Product card button sizing & responsiveness** (`assets/kixro.css`) — Fixed "BUY NOW" text clipping/overflow caused by legacy `padding: 12px 24px` on `.kixro-btn--accent`. Set `.kixro-product-card__actions .kixro-btn` to compact padding (`8px 4px`, `7px 2px` on mobile), `font-size: 10px` / `9.5px`, `letter-spacing: 0.02em`, `flex: 1 1 0`, and `white-space: nowrap` so both "ADD TO CART" and "BUY NOW" are 100% visible and proportional across all device sizes.
+- ✅ **Footer "About Us" duplication removed from Help & Legal** (`sections/kixro-footer.liquid`) — Removed the duplicate About Us link from Column 3 ("Help & Legal"). "About Us" remains cleanly positioned under Column 2 ("Site Map").
+- ✅ **About Us page resolution & guidance** (`layout/theme.liquid`, `sections/kixro-footer.liquid`) — Enhanced footer link fallback to check both `pages['about-us']` and `pages['about']`, and added automated redirect script in `layout/theme.liquid` to prevent 404 if the handle differs between `about` and `about-us`.
+- ✅ **Shopify Theme Store policy links guidance provided** — Documented the setup of native Shopify policies (Privacy, Terms, Refund, Shipping) via Shopify Admin → Settings → Policies.
+- ✅ **Theme Check**: 213 files inspected, **0 offenses**.
+- ✅ **Pushed to live**: Theme #150211854512 on `kixro-dev.myshopify.com`.
+
+### Files Modified
+- `sections/header.liquid`
+- `sections/kixro-footer.liquid`
+- `layout/theme.liquid`
+- `assets/kixro.css`
+- `CURRENT_STATE.md`
+- `DECISIONS_LOG.md`
+
+
+---
+
+## Latest Update — 2026-11-06 (Session 36 — Clean Simple PDP Back Arrow & About Page Setup)
+
+### Completed per user request
+- ✅ **Replaced distorted chevron/caret with simple clean arrow** (`snippets/kixro-pdp-back-nav.liquid`, `assets/kixro.css`):
+  - Removed `icon-caret.svg` with `transform: rotate(90deg)` which previously rendered distorted/overlapping lines in the navigation bar.
+  - Implemented a clean, pixel-perfect SVG simple left arrow (`M19 12H5M12 19l-7-7 7-7`) with `stroke-width: 2.2` and rounded joins.
+  - Styled with `text-decoration: none !important`, consistent 7px spacing before "BACK", and a subtle hover slide micro-interaction (`translateX(-3px)`).
+- ✅ **Diagnosed missing About Us page in Shopify Admin** (`media_1793956777592_542b37f1.png`):
+  - Confirmed via screenshot that the store currently only has two pages ("Your Privacy Choices" and "Contact").
+  - Provided direct, exact step-by-step instructions on how to click "Add page" in Shopify Admin, title it "About Us", leave the body blank (our theme template provides all rich content), assign the `about-us` theme template, and hit Save.
+- ✅ **Theme Check**: 213 files inspected, **0 offenses**.
+- ✅ **Pushed to live**: Theme #150211854512 on `kixro-dev.myshopify.com`.
+
+### Files Modified
+- `snippets/kixro-pdp-back-nav.liquid`
+- `assets/kixro.css`
+- `CURRENT_STATE.md`
+- `DECISIONS_LOG.md`
+
+
+---
+
+## Latest Update — 2026-11-06 (Session 37 — Pure Simple Chevron Back Arrow & Underline Elimination)
+
+### Completed per user request
+- ✅ **Replaced multi-line/stem arrow with pure simple chevron** (`snippets/kixro-pdp-back-nav.liquid`):
+  - Removed `<line>` and `<polyline>` stem construction that produced a "wired" look with multiple parallel horizontal lines.
+  - Implemented a clean, crisp, minimalist SVG chevron (`M8 2L2 8l6 6` on a `10 16` viewBox) that renders as an unmistakable `<` pointing back.
+  - Stripped Dawn's `link` and `focus-inset` utility classes from the `<a>` tag so Dawn's global `.link` text underline is completely eliminated.
+- ✅ **Eliminated all text underlines across all states** (`assets/kixro.css`):
+  - Added strict `text-decoration: none !important`, `text-decoration-line: none !important`, `text-decoration-thickness: 0 !important`, and `border-bottom: none !important` across `.kixro-pdp__back-btn--header` and all child elements under default, hover, focus, and active states.
+  - Tuned chevron stroke to `2.2` and sizing to `10x12px` (desktop) and `12x14px` (mobile) for optical alignment with header text.
+  - Preserved the clean `|` divider between `BACK` and the primary navigation links (`HOME`, `CATALOG`, `CONTACT`).
+- ✅ **Theme Check Verified**: 213 files inspected, **0 offenses**.
+- ✅ **Pushed to Live**: Theme #150211854512 on `kixro-dev.myshopify.com`.
+
+### Files Modified
+- `snippets/kixro-pdp-back-nav.liquid`
+- `assets/kixro.css`
+- `CURRENT_STATE.md`
+- `DECISIONS_LOG.md`

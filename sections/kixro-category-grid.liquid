@@ -14,7 +14,7 @@
           assign cat_name    = block.settings.label
           assign cat_link_setting = block.settings.link | default: '/collections/all'
         -%}
-        {%- capture cat_url -%}{% render 'kixro-category-url', link: cat_link_setting %}{%- endcapture -%}
+        {%- capture cat_url -%}{% render 'kixro-category-url', link: cat_link_setting, label: cat_name %}{%- endcapture -%}
 
         <a
           href="{{ cat_url | strip }}"

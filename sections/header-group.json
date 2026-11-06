@@ -11,7 +11,9 @@
         "auto_rotate": false,
         "change_slides_speed": 5,
         "enable_country_selector": false,
-        "enable_language_selector": false
+        "enable_language_selector": false,
+        "show_announcement": true,
+        "show_close_button": true
       },
       "blocks": {
         "announcement-bar-0": {

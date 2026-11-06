@@ -1,12 +1,18 @@
 /**
- * Kixro color filter — exact match on Shopify Color variant values.
+ * Kixro filter JS — color filter + category filter.
+ * Color: exact match on Shopify Color variant values.
+ * Category: client-side by data-kixro-category on grid items.
  * Swaps product card images to the matching color variant when filtered.
  */
 (function () {
   let activeColor = '';
   let activeColorLabel = '';
+  let activeCategory = '';
   let catalogByHandle = {};
   let variantsByHandle = {};
+  let categoryByHandle = {};
+
+  // ─── Normalize helpers ────────────────────────────────────────────────────
 
   function normalizeColor(value) {
     return (value || '').toString().trim().toLowerCase().replace(/\s+/g, ' ');
@@ -16,6 +22,10 @@
     const normalized = normalizeColor(value);
     if (normalized === 'grey') return 'gray';
     return normalized;
+  }
+
+  function normalizeCategory(value) {
+    return (value || '').toString().trim().toLowerCase();
   }
 
   function colorsMatch(productColor, filterColor) {
@@ -31,6 +41,14 @@
     return productColors.some((color) => colorsMatch(color, filterColor));
   }
 
+  function categoryMatches(productCategory, filterCategory) {
+    if (!filterCategory) return true;
+    if (!productCategory) return false;
+    return normalizeCategory(productCategory) === normalizeCategory(filterCategory);
+  }
+
+  // ─── Read catalog JSON ─────────────────────────────────────────────────────
+
   function readCatalogJson() {
     const node = document.getElementById('KixroCatalogColors');
     if (!node) return;
@@ -39,17 +57,22 @@
       const rows = JSON.parse(node.textContent || '[]');
       catalogByHandle = {};
       variantsByHandle = {};
+      categoryByHandle = {};
       rows.forEach((row) => {
         if (row && row.handle) {
           catalogByHandle[row.handle] = (row.colors || []).map((c) => c.toString().trim()).filter(Boolean);
           variantsByHandle[row.handle] = row.variants || {};
+          categoryByHandle[row.handle] = (row.category || '').toString().trim().toLowerCase();
         }
       });
     } catch (error) {
       catalogByHandle = {};
       variantsByHandle = {};
+      categoryByHandle = {};
     }
   }
+
+  // ─── Item data helpers ─────────────────────────────────────────────────────
 
   function getItemColors(item) {
     const fromData = (item.dataset.kixroColors || '')
@@ -67,6 +90,17 @@
     return [];
   }
 
+  function getItemCategory(item) {
+    if (item.dataset.kixroCategory) {
+      return item.dataset.kixroCategory.trim().toLowerCase();
+    }
+    const handle = item.dataset.productHandle;
+    if (handle && categoryByHandle[handle]) {
+      return categoryByHandle[handle];
+    }
+    return '';
+  }
+
   function parseVariantMap(item) {
     const handle = item.dataset.productHandle;
     if (handle && variantsByHandle[handle]) {
@@ -74,6 +108,8 @@
     }
     return null;
   }
+
+  // ─── Card variant swap ────────────────────────────────────────────────────
 
   function resetCardVariant(item) {
     const img = item.querySelector('.kixro-product-card__image');
@@ -117,7 +153,6 @@
   function updateCardVariants(colorLabel) {
     document.querySelectorAll('.kixro-shop__grid-item').forEach((item) => {
       if (item.hidden) return;
-
       if (colorLabel) {
         applyCardVariant(item, colorLabel);
       } else {
@@ -126,46 +161,74 @@
     });
   }
 
-  function filterGrid(colorLabel) {
-    const normalized = normalizeColor(colorLabel);
-    activeColor = normalized;
-    activeColorLabel = normalized ? (colorLabel || '').trim() : '';
+  // ─── Core filter grid ─────────────────────────────────────────────────────
+
+  function filterGrid(colorLabel, categoryLabel) {
+    const normalizedColor = normalizeColor(colorLabel);
+    const normalizedCategory = normalizeCategory(categoryLabel);
+
+    activeColor = normalizedColor;
+    activeColorLabel = normalizedColor ? (colorLabel || '').trim() : '';
+    activeCategory = normalizedCategory;
 
     const items = document.querySelectorAll('.kixro-shop__grid-item');
     let visibleCount = 0;
 
     items.forEach((item) => {
       const colors = getItemColors(item);
-      const show = colorMatches(colors, colorLabel);
+      const category = getItemCategory(item);
+      const colorOk = colorMatches(colors, normalizedColor ? colorLabel : '');
+      const catOk = categoryMatches(category, normalizedCategory ? categoryLabel : '');
+      const show = colorOk && catOk;
       item.hidden = !show;
       if (show) visibleCount += 1;
     });
 
-    updateCardVariants(normalized ? colorLabel : '');
+    updateCardVariants(normalizedColor ? colorLabel : '');
 
+    // Empty state notice
+    const emptyNotice = document.querySelector('[data-kixro-empty-state]');
+    if (emptyNotice) {
+      emptyNotice.classList.toggle('hidden', visibleCount > 0);
+    }
+
+    // Product count range
     const range = document.querySelector('.kixro-shop__range');
     if (range) {
       const defaultRange = (range.dataset.kixroDefaultRange || '').trim();
-      range.textContent = normalized
+      range.textContent = (normalizedColor || normalizedCategory)
         ? `${visibleCount} product${visibleCount === 1 ? '' : 's'}`
         : defaultRange || range.textContent;
     }
 
+    // Color clear btn visibility
     document.querySelectorAll('[data-kixro-color-clear]').forEach((btn) => {
-      btn.classList.toggle('hidden', !normalized);
+      btn.classList.toggle('hidden', !normalizedColor);
     });
 
+    // Color selected label
     document.querySelectorAll('[data-kixro-color-selected]').forEach((el) => {
       el.textContent = activeColorLabel ? `Selected: ${activeColorLabel}` : '';
     });
 
+    // Color swatch active states
     document.querySelectorAll('[data-kixro-color-btn]').forEach((btn) => {
       const btnColor = normalizeColorAlias(btn.dataset.colorLabel);
-      const isActive = normalized && btnColor === normalizeColorAlias(activeColorLabel || activeColor);
+      const isActive = normalizedColor && btnColor === normalizeColorAlias(activeColorLabel || activeColor);
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+
+    // Category button active states
+    document.querySelectorAll('[data-kixro-category-btn]').forEach((btn) => {
+      const btnCat = normalizeCategory(btn.dataset.kixroCategoryBtn || btn.getAttribute('data-kixro-category-btn'));
+      const isActive = normalizedCategory === btnCat;
       btn.classList.toggle('is-active', isActive);
       btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
   }
+
+  // ─── Bind color filter ─────────────────────────────────────────────────────
 
   function initColorFilter(root = document) {
     const selectors = '.kixro-color-filter[data-kixro-filter-mode="client"], .kixro-color-filter-mobile[data-kixro-filter-mode="client"]';
@@ -180,7 +243,15 @@
           const label = btn.dataset.colorLabel || '';
           const btnColor = normalizeColorAlias(label);
           const active = normalizeColorAlias(activeColorLabel || activeColor);
-          filterGrid(active && active === btnColor ? '' : label);
+          const newColor = active && active === btnColor ? '' : label;
+          filterGrid(newColor, activeCategory);
+        });
+      });
+
+      document.querySelectorAll('[data-kixro-color-clear-btn]').forEach((btn) => {
+        btn.addEventListener('click', (event) => {
+          event.preventDefault();
+          filterGrid('', activeCategory);
         });
       });
 
@@ -188,11 +259,44 @@
         btn.addEventListener('click', (event) => {
           event.preventDefault();
           event.stopPropagation();
-          filterGrid('');
+          filterGrid('', activeCategory);
         });
       });
     });
   }
+
+  // ─── Bind category filter ──────────────────────────────────────────────────
+
+  function initCategoryFilter(root = document) {
+    const selectors = '.kixro-category-filter[data-kixro-filter-mode="client"], .kixro-category-filter-mobile[data-kixro-filter-mode="client"]';
+    root.querySelectorAll(selectors).forEach((container) => {
+      if (container.dataset.kixroCatBound === 'true') return;
+      container.dataset.kixroCatBound = 'true';
+
+      container.querySelectorAll('[data-kixro-category-btn]').forEach((btn) => {
+        btn.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const label = btn.getAttribute('data-kixro-category-btn') || '';
+          // Toggle: clicking active category clears it
+          const newCategory = (normalizeCategory(label) === activeCategory) ? '' : label;
+
+          // Update URL without page reload
+          const url = new URL(window.location.href);
+          if (newCategory) {
+            url.searchParams.set('category', newCategory.toLowerCase());
+          } else {
+            url.searchParams.delete('category');
+          }
+          window.history.replaceState({}, '', url.toString());
+
+          filterGrid(activeColorLabel || activeColor, newCategory);
+        });
+      });
+    });
+  }
+
+  // ─── Strip native color filter from URL ───────────────────────────────────
 
   function stripNativeColorFilterFromUrl() {
     const url = new URL(window.location.href);
@@ -219,10 +323,17 @@
     return false;
   }
 
+  // ─── After grid DOM update (AJAX pagination / Shopify facets) ─────────────
+
   function refreshAfterGridUpdate() {
     initColorFilter();
-    if (activeColor) filterGrid(activeColorLabel || activeColor);
+    initCategoryFilter();
+    if (activeColor || activeCategory) {
+      filterGrid(activeColorLabel || activeColor, activeCategory);
+    }
   }
+
+  // ─── Bootstrap ─────────────────────────────────────────────────────────────
 
   if (stripNativeColorFilterFromUrl()) {
     return;
@@ -231,24 +342,34 @@
   document.addEventListener('DOMContentLoaded', () => {
     readCatalogJson();
     initColorFilter();
+    initCategoryFilter();
 
-    const pending = sessionStorage.getItem('kixro_pending_color');
-    if (pending) {
+    // Apply pending color (redirected from native URL filter)
+    const pendingColor = sessionStorage.getItem('kixro_pending_color');
+    if (pendingColor) {
       sessionStorage.removeItem('kixro_pending_color');
-      filterGrid(pending);
+      filterGrid(pendingColor, activeCategory);
+    }
+
+    // Auto-apply category from ?category= URL param (for homepage category cards)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCategory = urlParams.get('category');
+    if (urlCategory) {
+      filterGrid(activeColorLabel || activeColor, urlCategory);
     }
   });
 
   document.addEventListener('shopify:section:load', (event) => {
     readCatalogJson();
     initColorFilter(event.target);
+    initCategoryFilter(event.target);
   });
 
   const productGrid = document.getElementById('product-grid');
   if (productGrid && typeof MutationObserver !== 'undefined') {
     let refreshTimer;
     const observer = new MutationObserver(() => {
-      if (!document.querySelector('.kixro-color-filter[data-kixro-filter-mode="client"], .kixro-color-filter-mobile[data-kixro-filter-mode="client"]')) return;
+      if (!document.querySelector('.kixro-color-filter[data-kixro-filter-mode="client"], .kixro-color-filter-mobile[data-kixro-filter-mode="client"], .kixro-category-filter[data-kixro-filter-mode="client"]')) return;
       clearTimeout(refreshTimer);
       refreshTimer = setTimeout(refreshAfterGridUpdate, 50);
     });

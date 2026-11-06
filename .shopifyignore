@@ -1,0 +1,18 @@
+# Shopify theme ignore file
+# Prevents non-theme files and documentation from being pushed to Shopify
+
+# Documentation and notes
+*.md
+
+# Raw design assets / working folders
+asset/*
+workflows/*
+tools/*
+.tmp/*
+.cursor/*
+.github/*
+
+# Environment / local configs
+.env
+.env.*
+shopify.theme.toml.bak

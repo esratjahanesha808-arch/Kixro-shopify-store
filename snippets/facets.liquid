@@ -1,3 +1,4 @@
+{% # theme-check-disable LiquidComplexity %}
 {% comment %}
   Renders facets (filtering and sorting)
 
@@ -47,6 +48,7 @@
   data-template="{{ template.name }}"
 >
   {%- if kixro_show_desktop and kixro_custom_color_filter and filter_type == 'vertical' -%}
+    {% render 'kixro-category-filter', results: results, section: section, kixro_virtual_category: kixro_virtual_category %}
     {% render 'kixro-color-filter', results: results, section: section, kixro_catalog_colors: kixro_catalog_colors %}
   {%- endif -%}
   {%- if kixro_show_desktop -%}
@@ -568,6 +570,7 @@
             >
               {%- if enable_filtering -%}
                 {%- if kixro_show_mobile and kixro_custom_color_filter and kixro_catalog_colors != blank -%}
+                  {% render 'kixro-category-filter-mobile', results: results, section: section, kixro_virtual_category: kixro_virtual_category %}
                   {% render 'kixro-color-filter-mobile', results: results, section: section, kixro_catalog_colors: kixro_catalog_colors %}
                 {%- endif -%}
                 {%- for filter in results.filters -%}

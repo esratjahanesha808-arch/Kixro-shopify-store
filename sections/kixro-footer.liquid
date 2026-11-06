@@ -42,9 +42,12 @@
       {%- liquid
         assign sitemap_menu = section.settings.sitemap_menu
         assign about_page = pages['about-us']
-        if about_page == blank
+        if about_page == blank or about_page.url == blank
+          assign about_page = pages['about']
+        endif
+        if about_page == blank or about_page.url == blank
           for page in pages
-            if page.template_suffix == 'about-us' or page.template_suffix == 'about'
+            if page.template_suffix == 'about-us' or page.template_suffix == 'about' or page.handle contains 'about'
               assign about_page = page
               break
             endif
@@ -52,7 +55,7 @@
         endif
         if section.settings.about_us_url != blank
           assign about_us_href = section.settings.about_us_url
-        elsif about_page != blank
+        elsif about_page != blank and about_page.url != blank
           assign about_us_href = about_page.url
         else
           assign about_us_href = '/pages/about-us'
@@ -119,9 +122,6 @@
       <div class="kixro-footer__col">
         <h3 class="kixro-footer__heading">{{ section.settings.legal_heading }}</h3>
         <ul class="kixro-footer__links">
-          <li>
-            <a href="{{ about_us_href }}">{{ section.settings.about_us_label | default: 'About Us' }}</a>
-          </li>
           <li>
             <a href="{{ refund_href }}">{{ section.settings.refund_policy_label | default: 'Return & Refund Policy' }}</a>
           </li>

@@ -7,6 +7,11 @@
 
 <nav class="header__inline-menu">
   <ul class="list-menu list-menu--inline" role="list">
+    {%- if template.name == 'product' -%}
+      <li class="header__back-nav-item">
+        {%- render 'kixro-pdp-back-nav', product: product, variant: 'header' -%}
+      </li>
+    {%- endif -%}
     {%- for link in section.settings.menu.links -%}
       <li>
         {%- if link.links != blank -%}

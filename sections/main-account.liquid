@@ -5,7 +5,6 @@
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
-
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
@@ -14,155 +13,238 @@
   }
 {%- endstyle -%}
 
-<div class="customer account section-{{ section.id }}-padding">
-  <div>
-    <h1 class="customer__title">{{ 'customer.account.title' | t }}</h1>
-    <a href="{{ routes.account_logout_url }}">
-      <span class="svg-wrapper">
-        {{- 'icon-account.svg' | inline_asset_content -}}
-      </span>
-      {{ 'customer.log_out' | t }}
-    </a>
-  </div>
+<div class="kixro-profile section-{{ section.id }}-padding">
+  <div class="kixro-container">
 
-  <div>
-    <div>
-      <h2>{{ 'customer.orders.title' | t }}</h2>
-
-      {% paginate customer.orders by 20 %}
-        {%- if customer.orders.size > 0 -%}
-          <table role="table" class="order-history">
-            <caption class="visually-hidden">
-              {{ 'customer.orders.title' | t }}
-            </caption>
-            <thead role="rowgroup">
-              <tr role="row">
-                <th id="ColumnOrder" scope="col" role="columnheader">{{ 'customer.orders.order_number' | t }}</th>
-                <th id="ColumnDate" scope="col" role="columnheader">{{ 'customer.orders.date' | t }}</th>
-                <th id="ColumnPayment" scope="col" role="columnheader">{{ 'customer.orders.payment_status' | t }}</th>
-                <th id="ColumnFulfillment" scope="col" role="columnheader">
-                  {{ 'customer.orders.fulfillment_status' | t }}
-                </th>
-                <th id="ColumnTotal" scope="col" role="columnheader">{{ 'customer.orders.total' | t }}</th>
-              </tr>
-            </thead>
-            <tbody role="rowgroup">
-              {%- for order in customer.orders -%}
-                <tr role="row">
-                  <td
-                    id="RowOrder"
-                    role="cell"
-                    headers="ColumnOrder"
-                    data-label="{{ 'customer.orders.order_number' | t }}"
-                  >
-                    <a
-                      href="{{ order.customer_url }}"
-                      aria-label="{{ 'customer.orders.order_number_link' | t: number: order.name }}"
-                    >
-                      {{ order.name }}
-                    </a>
-                  </td>
-                  <td headers="RowOrder ColumnDate" role="cell" data-label="{{ 'customer.orders.date' | t }}">
-                    {{ order.created_at | time_tag: format: 'date' }}
-                  </td>
-                  <td
-                    headers="RowOrder ColumnPayment"
-                    role="cell"
-                    data-label="{{ 'customer.orders.payment_status' | t }}"
-                  >
-                    {{ order.financial_status_label }}
-                  </td>
-                  <td
-                    headers="RowOrder ColumnFulfillment"
-                    role="cell"
-                    data-label="{{ 'customer.orders.fulfillment_status' | t }}"
-                  >
-                    {{ order.fulfillment_status_label }}
-                  </td>
-                  <td headers="RowOrder ColumnTotal" role="cell" data-label="{{ 'customer.orders.total' | t }}">
-                    {{ order.total_net_amount | money_with_currency }}
-                  </td>
-                </tr>
-              {%- endfor -%}
-            </tbody>
-          </table>
-        {%- else -%}
-          <div class="account-empty">
-            <p>{{ 'customer.orders.none' | t }}</p>
-            <a href="{{ routes.root_url }}" class="kixro-btn kixro-btn--primary">
-              Shop now
-            </a>
-          </div>
-        {%- endif -%}
-
-        {%- if paginate.pages > 1 -%}
-          {%- if paginate.parts.size > 0 -%}
-            <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
-              <ul role="list">
-                {%- if paginate.previous -%}
-                  <li>
-                    <a href="{{ paginate.previous.url }}" aria-label="{{ 'general.pagination.previous' | t }}">
-                      <span class="svg-wrapper">
-                        {{- 'icon-caret.svg' | inline_asset_content -}}
-                      </span>
-                    </a>
-                  </li>
-                {%- endif -%}
-
-                {%- for part in paginate.parts -%}
-                  <li>
-                    {%- if part.is_link -%}
-                      <a href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
-                        {{- part.title -}}
-                      </a>
-                    {%- else -%}
-                      {%- if part.title == paginate.current_page -%}
-                        <span aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
-                          {{- part.title -}}
-                        </span>
-                      {%- else -%}
-                        <span>{{ part.title }}</span>
-                      {%- endif -%}
-                    {%- endif -%}
-                  </li>
-                {%- endfor -%}
-
-                {%- if paginate.next -%}
-                  <li>
-                    <a href="{{ paginate.next.url }}" aria-label="{{ 'general.pagination.next' | t }}">
-                      <span class="svg-wrapper">
-                        {{- 'icon-caret.svg' | inline_asset_content -}}
-                      </span>
-                    </a>
-                  </li>
-                {%- endif -%}
-              </ul>
-            </nav>
-          {%- endif -%}
-        {%- endif -%}
-      {% endpaginate %}
-    </div>
-
-    <div>
-      <h2>{{ 'customer.account.details' | t }}</h2>
-
-      {{ customer.default_address | format_address }}
-
-      <a href="{{ routes.account_addresses_url }}">
-        {{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})
+    {%- comment -%} ─── Profile Header ─── {%- endcomment -%}
+    <div class="kixro-profile__header">
+      <div class="kixro-profile__avatar" aria-hidden="true">
+        <span class="kixro-profile__avatar-initials">
+          {{- customer.first_name | slice: 0, 1 | upcase -}}{{- customer.last_name | slice: 0, 1 | upcase -}}
+        </span>
+      </div>
+      <div class="kixro-profile__header-info">
+        <p class="kixro-profile__header-label">MY ACCOUNT</p>
+        <h1 class="kixro-profile__header-name">{{ customer.first_name }} {{ customer.last_name }}</h1>
+        <p class="kixro-profile__header-email">{{ customer.email }}</p>
+      </div>
+      <a href="{{ routes.account_logout_url }}" class="kixro-profile__logout" rel="nofollow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
       </a>
     </div>
+
+    {%- comment -%} ─── Tab Navigation ─── {%- endcomment -%}
+    <nav class="kixro-profile__tabs" role="tablist" aria-label="Account sections">
+      <button
+        class="kixro-profile__tab is-active"
+        role="tab"
+        aria-selected="true"
+        aria-controls="kixro-tab-orders"
+        data-kixro-tab="orders"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Order History
+        {%- if customer.orders.size > 0 -%}
+          <span class="kixro-profile__tab-badge">{{ customer.orders.size }}</span>
+        {%- endif -%}
+      </button>
+      <button
+        class="kixro-profile__tab"
+        role="tab"
+        aria-selected="false"
+        aria-controls="kixro-tab-settings"
+        data-kixro-tab="settings"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+        Account Settings
+      </button>
+    </nav>
+
+    {%- comment -%} ─── Orders Tab ─── {%- endcomment -%}
+    <div
+      id="kixro-tab-orders"
+      class="kixro-profile__panel is-active"
+      role="tabpanel"
+      aria-labelledby="orders-tab"
+    >
+      {%- if customer.orders.size == 0 -%}
+        <div class="kixro-profile__empty-state">
+          <div class="kixro-profile__empty-icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </div>
+          <h2 class="kixro-profile__empty-title">No orders yet</h2>
+          <p class="kixro-profile__empty-text">You haven't placed any orders with us yet. When you do, they'll appear here so you can track and manage them.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="kixro-btn kixro-btn--primary">Start Shopping</a>
+        </div>
+      {%- else -%}
+        {% paginate customer.orders by 20 %}
+          <div class="kixro-profile__orders">
+            {%- for order in customer.orders -%}
+              <div class="kixro-profile__order-card">
+                <div class="kixro-profile__order-card-header">
+                  <div>
+                    <a href="{{ order.customer_url }}" class="kixro-profile__order-number" aria-label="View order {{ order.name }}">{{ order.name }}</a>
+                    <p class="kixro-profile__order-date">{{ order.created_at | time_tag: format: 'date' }}</p>
+                  </div>
+                  <div class="kixro-profile__order-statuses">
+                    <span class="kixro-profile__status-badge kixro-profile__status-badge--{{ order.financial_status }}">
+                      {{ order.financial_status_label }}
+                    </span>
+                    <span class="kixro-profile__status-badge kixro-profile__status-badge--{{ order.fulfillment_status }}">
+                      {{ order.fulfillment_status_label }}
+                    </span>
+                  </div>
+                </div>
+                <div class="kixro-profile__order-card-footer">
+                  <div class="kixro-profile__order-items-preview">
+                    {%- for line_item in order.line_items limit: 3 -%}
+                      <span class="kixro-profile__order-item-name">{{ line_item.title | truncate: 30 }}</span>
+                      {%- unless forloop.last -%}<span class="kixro-profile__order-sep">·</span>{%- endunless -%}
+                    {%- endfor -%}
+                    {%- if order.line_items.size > 3 -%}
+                      <span class="kixro-profile__order-sep">·</span>
+                      <span class="kixro-profile__order-more">+{{ order.line_items.size | minus: 3 }} more</span>
+                    {%- endif -%}
+                  </div>
+                  <div class="kixro-profile__order-total">
+                    {{ order.total_net_amount | money_with_currency }}
+                  </div>
+                </div>
+                <a href="{{ order.customer_url }}" class="kixro-profile__order-view-link" aria-label="View details for {{ order.name }}">
+                  View Details
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="kixro-profile__pagination" aria-label="{{ 'general.pagination.label' | t }}">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="kixro-profile__page-btn" aria-label="{{ 'general.pagination.previous' | t }}">&larr; Previous</a>
+              {%- endif -%}
+              <span class="kixro-profile__page-info">{{ paginate.current_page }} of {{ paginate.pages }}</span>
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="kixro-profile__page-btn" aria-label="{{ 'general.pagination.next' | t }}">Next &rarr;</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {% endpaginate %}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ─── Account Settings Tab ─── {%- endcomment -%}
+    <div
+      id="kixro-tab-settings"
+      class="kixro-profile__panel"
+      role="tabpanel"
+      aria-labelledby="settings-tab"
+      hidden
+    >
+      <div class="kixro-profile__settings">
+
+        {%- comment -%} Personal Info Card {%- endcomment -%}
+        <div class="kixro-profile__settings-card">
+          <div class="kixro-profile__settings-card-header">
+            <h2 class="kixro-profile__settings-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Personal Information
+            </h2>
+          </div>
+          <div class="kixro-profile__settings-card-body">
+            <div class="kixro-profile__info-row">
+              <span class="kixro-profile__info-label">Full Name</span>
+              <span class="kixro-profile__info-value">{{ customer.name }}</span>
+            </div>
+            <div class="kixro-profile__info-row">
+              <span class="kixro-profile__info-label">Email</span>
+              <span class="kixro-profile__info-value">{{ customer.email }}</span>
+            </div>
+            <div class="kixro-profile__info-row">
+              <span class="kixro-profile__info-label">Orders Placed</span>
+              <span class="kixro-profile__info-value">{{ customer.orders_count }}</span>
+            </div>
+            <div class="kixro-profile__info-row">
+              <span class="kixro-profile__info-label">Total Spent</span>
+              <span class="kixro-profile__info-value">{{ customer.total_spent | money_with_currency }}</span>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Addresses Card {%- endcomment -%}
+        <div class="kixro-profile__settings-card">
+          <div class="kixro-profile__settings-card-header">
+            <h2 class="kixro-profile__settings-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Saved Addresses
+            </h2>
+            <a href="{{ routes.account_addresses_url }}" class="kixro-profile__settings-link">
+              Manage
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <div class="kixro-profile__settings-card-body">
+            {%- if customer.default_address -%}
+              <div class="kixro-profile__address-block">
+                <span class="kixro-profile__address-badge">Default</span>
+                <address class="kixro-profile__address-formatted">
+                  {{- customer.default_address | format_address -}}
+                </address>
+              </div>
+              {%- if customer.addresses_count > 1 -%}
+                <p class="kixro-profile__address-extra">
+                  + {{ customer.addresses_count | minus: 1 }} more address{{ customer.addresses_count | minus: 1 | pluralize: '', 'es' }}
+                  — <a href="{{ routes.account_addresses_url }}">Manage all</a>
+                </p>
+              {%- endif -%}
+            {%- else -%}
+              <div class="kixro-profile__empty-mini">
+                <p>No saved addresses yet.</p>
+                <a href="{{ routes.account_addresses_url }}" class="kixro-profile__settings-link">Add address</a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>
 
+<script>
+  (function () {
+    var tabs = document.querySelectorAll('[data-kixro-tab]');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.getAttribute('data-kixro-tab');
+        // Update tab active states
+        tabs.forEach(function (t) {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+        // Update panel visibility
+        document.querySelectorAll('.kixro-profile__panel').forEach(function (panel) {
+          if (panel.id === 'kixro-tab-' + target) {
+            panel.classList.add('is-active');
+            panel.removeAttribute('hidden');
+          } else {
+            panel.classList.remove('is-active');
+            panel.setAttribute('hidden', '');
+          }
+        });
+      });
+    });
+  })();
+</script>
+
 {% schema %}
 {
-  "name": "t:sections.main-account.name",
+  "name": "Kixro Account",
   "settings": [
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
     {
       "type": "range",
       "id": "padding_top",
@@ -171,7 +253,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_top",
-      "default": 36
+      "default": 48
     },
     {
       "type": "range",
@@ -181,7 +263,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
+      "default": 64
     }
   ]
 }

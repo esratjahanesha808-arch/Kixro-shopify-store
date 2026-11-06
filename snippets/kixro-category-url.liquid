@@ -1,31 +1,32 @@
 {%- comment -%}
-  Resolves category URLs — virtual category pages for shoes/sandals/loafers,
-  native Shopify collection when available for other handles (e.g. boots).
-  Accepts: link (string), handle (optional override)
+  Resolves category URLs — routes to catalog with ?category= for shoes, boots, loafers, sandals.
+  Accepts: link (string), handle (optional override), label (optional string)
 {%- endcomment -%}
 
 {%- liquid
   assign resolved_url = link | default: routes.all_products_collection_url
-  assign collection_handle = handle
+  assign collection_handle = handle | default: ''
 
   if collection_handle == blank and link contains '/collections/'
     assign collection_handle = link | split: '/collections/' | last | split: '?' | first | split: '/' | first
   endif
 
-  if collection_handle != blank
-    if collection_handle == 'shoes'
-      assign resolved_url = routes.all_products_collection_url | append: '?category=shoes'
-    elsif collection_handle == 'sandals'
-      assign resolved_url = routes.all_products_collection_url | append: '?category=sandals'
-    elsif collection_handle == 'loafers'
-      assign resolved_url = routes.all_products_collection_url | append: '?category=loafers'
+  assign label_down = label | default: '' | downcase | strip
+
+  if label_down == 'shoes' or collection_handle == 'shoes'
+    assign resolved_url = routes.all_products_collection_url | append: '?category=shoes'
+  elsif label_down == 'boots' or collection_handle == 'boots'
+    assign resolved_url = routes.all_products_collection_url | append: '?category=boots'
+  elsif label_down == 'loafers' or collection_handle == 'loafers'
+    assign resolved_url = routes.all_products_collection_url | append: '?category=loafers'
+  elsif label_down == 'sandals' or collection_handle == 'sandals'
+    assign resolved_url = routes.all_products_collection_url | append: '?category=sandals'
+  elsif collection_handle != blank
+    assign target_collection = collections[collection_handle]
+    if target_collection != blank
+      assign resolved_url = target_collection.url
     else
-      assign target_collection = collections[collection_handle]
-      if target_collection != blank
-        assign resolved_url = target_collection.url
-      else
-        assign resolved_url = routes.all_products_collection_url
-      endif
+      assign resolved_url = routes.all_products_collection_url
     endif
   endif
 -%}

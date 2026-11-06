@@ -40,6 +40,7 @@
       assign kixro_catalog_colors = kixro_catalog_colors_capture | strip
     -%}
 
+    {%- comment -%} Catalog JSON for JS: handles, colors, variants {%- endcomment -%}
     <script type="application/json" id="KixroCatalogColors">[
       {%- assign catalog_first = true -%}
       {%- for product in collections.all.products limit: 250 -%}
@@ -56,13 +57,15 @@
         {%- capture catalog_variants_capture -%}
           {%- render 'kixro-product-color-variants', product: product, option_name: color_option_name -%}
         {%- endcapture -%}
+        {%- capture catalog_category_capture -%}
+          {%- render 'kixro-product-category', product: product -%}
+        {%- endcapture -%}
         {%- assign catalog_colors_line = catalog_colors_capture | strip -%}
         {%- assign catalog_variants_json = catalog_variants_capture | strip -%}
-        {%- if catalog_colors_line != blank -%}
-          {%- unless catalog_first -%},{%- endunless -%}
-          {"handle":{{ product.handle | json }},"colors":{{ catalog_colors_line | split: '|' | json }},"variants":{% if catalog_variants_json != blank %}{{ catalog_variants_json }}{% else %}{}{% endif %}}
-          {%- assign catalog_first = false -%}
-        {%- endif -%}
+        {%- assign catalog_category_val = catalog_category_capture | strip -%}
+        {%- unless catalog_first -%},{%- endunless -%}
+        {"handle":{{ product.handle | json }},"colors":{% if catalog_colors_line != blank %}{{ catalog_colors_line | split: '|' | json }}{% else %}[]{% endif %},"variants":{% if catalog_variants_json != blank %}{{ catalog_variants_json }}{% else %}{}{% endif %},"category":{{ catalog_category_val | json }}}
+        {%- assign catalog_first = false -%}
       {%- endfor -%}
     ]</script>
 
@@ -89,6 +92,7 @@
               kixro_custom_color_filter: true,
               kixro_catalog_colors: kixro_catalog_colors,
               kixro_facets_mode: 'desktop',
+              kixro_virtual_category: kixro_virtual_category,
               section: section
             %}
           </aside>
@@ -154,6 +158,7 @@
                   kixro_custom_color_filter: true,
                   kixro_catalog_colors: kixro_catalog_colors,
                   kixro_facets_mode: 'mobile',
+                  kixro_virtual_category: kixro_virtual_category,
                   section: section
                 %}
               </div>
@@ -175,6 +180,13 @@
             </div>
           {%- else -%}
             <div class="collection">
+              <div class="collection kixro-shop__empty-state hidden" data-kixro-empty-state>
+                <div class="kixro-shop__empty">
+                  <h2>No products found</h2>
+                  <p>There are no products matching this filter option.</p>
+                  <button type="button" class="kixro-btn kixro-btn--primary" data-kixro-color-clear-btn>Clear Filter</button>
+                </div>
+              </div>
               <ul class="kixro-product-grid kixro-shop__grid" id="product-grid" data-id="{{ section.id }}">
                 {%- if kixro_virtual_category != blank -%}
                   {%- for product in collections.all.products limit: 250 -%}
@@ -187,10 +199,15 @@
                       {%- render 'kixro-product-colors', product: product, option_name: section.settings.color_option_name -%}
                     {%- endcapture -%}
                     {%- assign product_color_tokens = product_color_tokens | strip -%}
+                    {%- capture product_category_token -%}
+                      {%- render 'kixro-product-category', product: product -%}
+                    {%- endcapture -%}
+                    {%- assign product_category_token = product_category_token | strip -%}
                     <li
                       class="kixro-shop__grid-item"
                       data-product-handle="{{ product.handle | escape }}"
                       {% if product_color_tokens != blank %} data-kixro-colors="{{ product_color_tokens | escape }}"{% endif %}
+                      {% if product_category_token != blank %} data-kixro-category="{{ product_category_token | escape }}"{% endif %}
                     >
                       {% render 'product-card', product: product %}
                     </li>
@@ -201,10 +218,15 @@
                     {%- render 'kixro-product-colors', product: product, option_name: section.settings.color_option_name -%}
                   {%- endcapture -%}
                   {%- assign product_color_tokens = product_color_tokens | strip -%}
+                  {%- capture product_category_token -%}
+                    {%- render 'kixro-product-category', product: product -%}
+                  {%- endcapture -%}
+                  {%- assign product_category_token = product_category_token | strip -%}
                   <li
                     class="kixro-shop__grid-item"
                     data-product-handle="{{ product.handle | escape }}"
                     {% if product_color_tokens != blank %} data-kixro-colors="{{ product_color_tokens | escape }}"{% endif %}
+                    {% if product_category_token != blank %} data-kixro-category="{{ product_category_token | escape }}"{% endif %}
                   >
                     {% render 'product-card', product: product %}
                   </li>

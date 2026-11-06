@@ -64,6 +64,10 @@
             {%- for value in option.values -%}
               {%- capture input_id -%}{{ section.id }}-color-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
               {%- capture input_name -%}{{ option.name }}-{{ option.position }}{%- endcapture -%}
+              {%- assign swatch_color_label = value -%}
+              {%- if product.handle == 'rugged-moc-toe-leather-work-boots' and value == 'Brown' -%}
+                {%- assign swatch_color_label = 'Navy Blue' -%}
+              {%- endif -%}
               <div class="kixro-color-variant-picker__option">
                 <input
                   type="radio"
@@ -77,9 +81,9 @@
                   {% if value.selected %}checked{% endif %}
                   {% unless value.available %}disabled{% endunless %}
                 >
-                <label for="{{ input_id }}" class="kixro-color-variant-picker__label{% unless value.available %} is-unavailable{% endunless %}">
-                  {% render 'kixro-color-swatch', color_name: value %}
-                  <span class="visually-hidden">{{ value | escape }}</span>
+                <label for="{{ input_id }}" class="kixro-color-variant-picker__label{% unless value.available %} is-unavailable{% endunless %}" title="{{ swatch_color_label | escape }}">
+                  {% render 'kixro-color-swatch', color_name: swatch_color_label %}
+                  <span class="visually-hidden">{{ swatch_color_label | escape }}</span>
                 </label>
               </div>
             {%- endfor -%}

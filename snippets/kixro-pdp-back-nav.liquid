@@ -31,11 +31,13 @@
 >
   <a
     href="{{ kixro_pdp_back_url }}"
-    class="kixro-pdp__back-btn{% if variant == 'header' %} kixro-pdp__back-btn--header link focus-inset{% endif %}"
+    class="kixro-pdp__back-btn{% if variant == 'header' %} kixro-pdp__back-btn--header{% endif %}"
     onclick="if (window.history.length > 1 && document.referrer && new URL(document.referrer).origin === window.location.origin) { event.preventDefault(); window.history.back(); }"
   >
-    <span class="kixro-pdp__back-btn-icon svg-wrapper" aria-hidden="true">
-      {{- 'icon-caret.svg' | inline_asset_content -}}
+    <span class="kixro-pdp__back-btn-icon" aria-hidden="true">
+      <svg class="kixro-pdp__back-arrow" width="10" height="12" viewBox="0 0 10 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 2L2 8l6 6" />
+      </svg>
     </span>
     <span class="kixro-pdp__back-btn-label">Back</span>
   </a>

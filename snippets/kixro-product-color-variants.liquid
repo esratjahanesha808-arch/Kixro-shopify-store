@@ -31,8 +31,15 @@
     endcase
   -%}
   {%- if map_color_value != blank -%}
-    {%- assign map_color_key = map_color_value | strip | downcase -%}
-    {%- if map_color_key == 'grey' -%}{%- assign map_color_key = 'gray' -%}{%- endif -%}
+    {%- liquid
+      assign map_color_key = map_color_value | strip | downcase
+      if product.handle == 'rugged-moc-toe-leather-work-boots' and map_color_key == 'brown'
+        assign map_color_key = 'navy'
+      endif
+      if map_color_key == 'grey'
+        assign map_color_key = 'gray'
+      endif
+    -%}
     {%- assign map_seen_token = map_color_key | append: ',' -%}
     {%- unless map_seen contains map_seen_token -%}
       {%- assign map_seen = map_seen | append: map_seen_token -%}

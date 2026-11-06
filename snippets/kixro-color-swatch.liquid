@@ -1,57 +1,121 @@
 {%- comment -%}
-  Renders a color circle — uses Shopify swatch when available, else hex fallback.
+  Renders a color circle — uses exact brand hex colors, else Shopify swatch, else fallback.
+  Accepts:
+  - color_name: {String|Object} Color name or swatch object
 {%- endcomment -%}
 
 {%- liquid
-  assign color_key = color_name | downcase | strip
-  assign swatch_hex = '#cccccc'
+  assign color_raw = color_name.value | default: color_name
+  assign color_str = color_raw | strip
+  assign color_key = color_str | downcase | strip
+  assign swatch_hex = ''
   assign swatch_style = ''
 
-  if swatch.image
-    assign swatch_image = swatch.image | image_url: width: 80
-    assign swatch_style = '--swatch--background: url(' | append: swatch_image | append: '); background-image: url(' | append: swatch_image | append: '); background-size: cover; background-position: center;'
-  elsif swatch.color
-    assign swatch_rgb = 'rgb(' | append: swatch.color.rgb | append: ')'
-    assign swatch_style = '--swatch--background: ' | append: swatch_rgb | append: '; background-color: ' | append: swatch_rgb | append: ';'
-  else
-    case color_key
-      when 'black'
-        assign swatch_hex = '#000000'
-      when 'white'
-        assign swatch_hex = '#ffffff'
-      when 'navy', 'navy blue'
+  comment
+    1. Exact brand color mapping (prioritized over external/taxonomy colors)
+  endcomment
+  case color_key
+    when 'black', 'noir', 'triple black'
+      assign swatch_hex = '#000000'
+    when 'white', 'triple white'
+      assign swatch_hex = '#ffffff'
+    when 'navy', 'navy blue', 'dark navy', 'dark blue', 'nevy', 'nevy blue'
+      assign swatch_hex = '#1B4965'
+    when 'brown', 'vintage brown', 'chocolate', 'espresso', 'dark brown'
+      assign swatch_hex = '#6B4226'
+    when 'bronze', 'copper'
+      assign swatch_hex = '#8C6239'
+    when 'grey', 'gray', 'charcoal', 'heather grey', 'heather gray', 'slate'
+      assign swatch_hex = '#808080'
+    when 'beige', 'tan', 'sand', 'camel', 'khaki', 'wheat', 'taupe'
+      assign swatch_hex = '#D2B48C'
+    when 'red', 'scarlet', 'scarlet red', 'crimson', 'ruby', 'cherry'
+      assign swatch_hex = '#C0392B'
+    when 'light blue', 'sky blue'
+      assign swatch_hex = '#7BA4D5'
+    when 'slate blue'
+      assign swatch_hex = '#4B6B94'
+    when 'blue', 'royal blue', 'unc blue', 'unc-blue', 'indigo', 'ocean blue', 'cobalt'
+      assign swatch_hex = '#2980B9'
+    when 'olive', 'army green'
+      assign swatch_hex = '#556B2F'
+    when 'green', 'forest green', 'sage', 'mint'
+      assign swatch_hex = '#27AE60'
+    when 'pink', 'rose', 'blush', 'coral'
+      assign swatch_hex = '#F8BBD0'
+    when 'orange', 'rust', 'amber', 'peach', 'terracotta'
+      assign swatch_hex = '#E67E22'
+    when 'gold', 'yellow', 'mustard'
+      assign swatch_hex = '#F1C40F'
+    when 'cream', 'ivory', 'off-white', 'off white', 'bone', 'sail'
+      assign swatch_hex = '#FBF5EF'
+    when 'burgundy', 'maroon', 'wine'
+      assign swatch_hex = '#800020'
+    when 'multi', 'multi-color', 'multicolor'
+      assign swatch_style = '--swatch--background: linear-gradient(135deg, #E67E22 0%, #27AE60 50%, #2980B9 100%); background: linear-gradient(135deg, #E67E22 0%, #27AE60 50%, #2980B9 100%);'
+    else
+      if color_key contains 'navy' or color_key contains 'nevy'
         assign swatch_hex = '#1B4965'
-      when 'brown'
-        assign swatch_hex = '#6B4226'
-      when 'bronze'
-        assign swatch_hex = '#8C6239'
-      when 'grey', 'gray'
-        assign swatch_hex = '#808080'
-      when 'beige', 'tan'
-        assign swatch_hex = '#D2B48C'
-      when 'red'
+      elsif color_key contains 'black'
+        assign swatch_hex = '#000000'
+      elsif color_key contains 'white'
+        assign swatch_hex = '#ffffff'
+      elsif color_key contains 'red' or color_key contains 'scarlet' or color_key contains 'crimson'
         assign swatch_hex = '#C0392B'
-      when 'blue'
+      elsif color_key contains 'sky blue' or color_key contains 'light blue'
+        assign swatch_hex = '#7BA4D5'
+      elsif color_key contains 'slate blue'
+        assign swatch_hex = '#4B6B94'
+      elsif color_key contains 'blue' or color_key contains 'indigo'
         assign swatch_hex = '#2980B9'
-      when 'green'
+      elsif color_key contains 'olive'
+        assign swatch_hex = '#556B2F'
+      elsif color_key contains 'green' or color_key contains 'sage'
         assign swatch_hex = '#27AE60'
-      when 'pink'
-        assign swatch_hex = '#F8BBD0'
-      when 'orange'
+      elsif color_key contains 'brown' or color_key contains 'chocolate'
+        assign swatch_hex = '#6B4226'
+      elsif color_key contains 'sand' or color_key contains 'beige' or color_key contains 'tan' or color_key contains 'khaki'
+        assign swatch_hex = '#D2B48C'
+      elsif color_key contains 'grey' or color_key contains 'gray' or color_key contains 'charcoal'
+        assign swatch_hex = '#808080'
+      elsif color_key contains 'orange' or color_key contains 'rust'
         assign swatch_hex = '#E67E22'
-      when 'gold', 'yellow'
+      elsif color_key contains 'pink' or color_key contains 'rose'
+        assign swatch_hex = '#F8BBD0'
+      elsif color_key contains 'yellow' or color_key contains 'gold'
         assign swatch_hex = '#F1C40F'
-      when 'cream', 'ivory'
+      elsif color_key contains 'cream' or color_key contains 'ivory'
         assign swatch_hex = '#FBF5EF'
-      when 'burgundy', 'maroon'
-        assign swatch_hex = '#800020'
-    endcase
+      elsif color_key contains 'bronze' or color_key contains 'copper'
+        assign swatch_hex = '#8C6239'
+      elsif color_key contains 'multi'
+        assign swatch_style = '--swatch--background: linear-gradient(135deg, #E67E22 0%, #27AE60 50%, #2980B9 100%); background: linear-gradient(135deg, #E67E22 0%, #27AE60 50%, #2980B9 100%);'
+      endif
+  endcase
+
+  comment
+    2. Fallback to Shopify swatch image/color if not in brand palette
+  endcomment
+  if swatch_hex == blank and swatch_style == blank
+    assign swatch_obj = color_name.swatch | default: nil
+    if swatch_obj.image
+      assign swatch_image = swatch_obj.image | image_url: width: 80
+      assign swatch_style = '--swatch--background: url(' | append: swatch_image | append: '); background-image: url(' | append: swatch_image | append: '); background-size: cover; background-position: center;'
+    elsif swatch_obj.color
+      assign swatch_rgb = 'rgb(' | append: swatch_obj.color.rgb | append: ')'
+      assign swatch_style = '--swatch--background: ' | append: swatch_rgb | append: '; background-color: ' | append: swatch_rgb | append: ';'
+    else
+      assign swatch_hex = '#1B4965'
+    endif
+  endif
+
+  if swatch_style == blank
     assign swatch_style = '--swatch--background: ' | append: swatch_hex | append: '; background-color: ' | append: swatch_hex | append: ';'
   endif
 -%}
 
 <span
-  class="swatch kixro-color-swatch{% if color_key == 'white' or color_key == 'cream' or color_key == 'ivory' %} swatch--light{% endif %}"
+  class="swatch kixro-color-swatch{% if color_key == 'white' or color_key contains 'cream' or color_key contains 'ivory' or color_key contains 'off-white' %} swatch--light{% endif %}"
   style="{{ swatch_style }}"
   aria-hidden="true"
 ></span>
